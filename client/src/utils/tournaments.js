@@ -1,12 +1,14 @@
 import api from './api-config'
+import { key } from './api-config'
 
 export const getTournaments = async () => {
-  const resp = await api.get('/tournaments.json')
+  const resp = await api.get(`/tournaments.json${key}`)
   return resp.data
 }
 
 export const getCurrentTournaments = async () => {
-  const resp = await api.get('/tournaments/ongoing.json')
+  const resp = await api.get(`/tournaments/ongoing.json${key}`)
+  console.log('here')
   return resp.data
 }
 
