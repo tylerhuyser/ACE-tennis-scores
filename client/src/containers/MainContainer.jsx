@@ -15,7 +15,7 @@ export default function MainContainer(props) {
 
 
   return (
-    <div className="body-container">
+    <>
 
       <Switch>
 
@@ -45,6 +45,6 @@ export default function MainContainer(props) {
 
       </Switch>
 
-    </div>
+    </>
   )
 }

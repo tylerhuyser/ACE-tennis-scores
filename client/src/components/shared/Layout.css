@@ -21,6 +21,7 @@
 
     position: relative;
     top: 125px;
+    background: #172a45;
 }
 
   @media only screen and (max-width: 800px) {
