@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import IconLogo from '../IconLogo'
+
 import './Header.css'
 
 export default function Header(props) {
@@ -19,7 +21,7 @@ export default function Header(props) {
 
         <div className="desktop-logo-container">
 
-          <img className="desktop-logo" id="logo-copy" alt="logo-copy" src="https://i.imgur.com/96N7jFM.png" />
+          <IconLogo />
           
         </div>
 
@@ -52,7 +54,12 @@ export default function Header(props) {
 
         <div className="mobile-logo-container">
 
-          <img className="mobile-logo" id="symbol-only white" alt="symbol-only white" src="https://i.imgur.com/XRY6jqr.png" />
+          <IconLogo style={{
+            zIndex: "5",
+            textAlign: "center",
+            verticalAlign: "center",
+            
+        }} />
 
         </div>
 

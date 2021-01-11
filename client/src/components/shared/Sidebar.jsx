@@ -9,17 +9,17 @@ export default function Sidebar() {
   return (
     <div className="sidebar-container">
 
-      <Link to="/home">
-        <i className="fas fa-home sidebar-icon"></i>
-      </Link>
-      
-      <Link to="/order-create">
-        <i className="fas fa-pills sidebar-icon"></i>
-      </Link>
+        <Link to="/home">
+          <i className="fas fa-home mobile-footer-icon"></i>
+        </Link>
 
-      <Link to="/orders">
-        <i className="fas fa-clock sidebar-icon"></i>
-      </Link>
+        <Link to="/calendar">
+          <i className="far fa-calendar-alt mobile-footer-icon"></i>
+        </Link>
+
+        <Link to="/rankings">
+          <i className="fas fa-list-ul mobile-footer-icon"></i>
+        </Link>
 
     </div>
   )  

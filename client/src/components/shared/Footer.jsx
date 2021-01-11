@@ -11,12 +11,12 @@ export default function Footer () {
           <i className="fas fa-home mobile-footer-icon"></i>
         </Link>
 
-        <Link to="/order-create">
-          <i className="fas fa-pills mobile-footer-icon"></i>
+        <Link to="/calendar">
+          <i className="far fa-calendar-alt mobile-footer-icon"></i>
         </Link>
 
-        <Link to="/orders">
-          <i className="fas fa-clock mobile-footer-icon"></i>
+        <Link to="/rankings">
+          <i className="fas fa-list-ul mobile-footer-icon"></i>
         </Link>
 
       </div>

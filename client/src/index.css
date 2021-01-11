@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'bogart-semibold';
+  src: local('bogart-semibold'), url(./fonts/bogart-semibold.otf) format('otf');
+}
+
+@font-face {
+  font-family: 'amagro-bold';
+  src: local('amagro-bold'), url(./fonts/Amagro-bold.ttf) format('ttf');
+}
