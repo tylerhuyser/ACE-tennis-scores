@@ -10,15 +10,15 @@ export default function Sidebar() {
     <div className="sidebar-container">
 
         <Link to="/">
-          <i className="fas fa-home mobile-footer-icon"></i>
+          <i className="fas fa-home sidebar-icon"></i>
         </Link>
 
         <Link to="/calendar">
-          <i className="far fa-calendar-alt mobile-footer-icon"></i>
+          <i className="far fa-calendar-alt sidebar-icon"></i>
         </Link>
 
         <Link to="/rankings">
-          <i className="fas fa-list-ul mobile-footer-icon"></i>
+          <i className="fas fa-list-ul sidebar-icon"></i>
         </Link>
 
     </div>

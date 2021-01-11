@@ -34,7 +34,7 @@ export default function MainContainer(props) {
         </Route>
 
         <Route path="/tournament/:id">
-          <TournamentDetail />
+          <TournamentDetail currentTournaments={currentTournaments} />
         </Route>
         
         <Route path="/match/:id">

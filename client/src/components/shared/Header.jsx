@@ -27,7 +27,7 @@ export default function Header(props) {
 
           <div className="desktop-logo-symbol-container">
 
-            <img className="logo" id="logo-symbol" atl="logo-symbol" src="https://i.imgur.com/2Bu6x5X.png" />
+            <p className="desktop-nav-link">ACE Tennis Scores</p>
 
           </div>
 

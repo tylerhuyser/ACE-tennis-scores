@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import './TournamentCard.css'
 
-export default function TournamentCard (props) {
+export default function TournamentCard(props) {
 
-  const [ tournamentName, setTournamentName ] = useState("")
-  const [ tournamentCategory, setTournamentCategory ] = useState("")
-  const [ tournamentCategoryIcon, setTournamentCategoryIcon ] = useState("")
+  const [tournamentName, setTournamentName] = useState("")
+  const [tournamentCategory, setTournamentCategory] = useState("")
+  const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
   
-  const { tournament, index } = props;
+  const { tournament } = props;
 
   useEffect(() => {
     
@@ -25,7 +26,7 @@ export default function TournamentCard (props) {
         setTournamentName(isolatedTournamentName.join(" "))
         setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-      }  else if (tournament.name.includes("ATP")) {
+      } else if (tournament.name.includes("ATP")) {
         setTournamentName(isolatedTournamentName.join(" "))
         setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
@@ -33,7 +34,11 @@ export default function TournamentCard (props) {
         const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
         setTournamentName(isolatedITFTournamentName.join(" "))
         setTournamentCategory(isolatedTournamentTier)
-        setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
+        setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
+      } else {
+        setTournamentName(isolatedTournamentNameAndTier.slice(0, 2).join(" "))
+        setTournamentCategory("Grand Slam")
+        setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
       }
     }
     parseTournamentInfo(tournament)
@@ -41,12 +46,12 @@ export default function TournamentCard (props) {
 
 
   return (
-    <div className="tournament-card-container">
+    <Link className="tournament-card-container" to={`/tournament/${tournament.id}`}>
       <p className="tournament-card-name">{tournamentName}</p>
       <div className="tournament-category-container">
         <p className="tournament-category">{tournamentCategory}</p>
         <img className="tournament-category-icon" src={tournamentCategoryIcon} />
       </div>
-    </div>
+    </Link>
   )
 }
