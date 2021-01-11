@@ -9,7 +9,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar-container">
 
-        <Link to="/home">
+        <Link to="/">
           <i className="fas fa-home mobile-footer-icon"></i>
         </Link>
 

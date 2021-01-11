@@ -13,6 +13,8 @@ import PlayerDetail from '../screens/PlayerDetail'
 
 export default function MainContainer(props) {
 
+  const { currentTournaments } = props
+
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function MainContainer(props) {
       <Switch>
 
         <Route exact path="/">
-          <Home />
+          <Home currentTournaments={currentTournaments} />
         </Route>
 
         <Route path="/calendar">

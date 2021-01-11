@@ -13,25 +13,34 @@ function App () {
 
   const [ searchQuery, setSearchQuery ] = useState("")
   
-  // useEffect(() => {
-  //   const gatherCurrentTournaments = async () => {
-  //     console.log('begin')
-  //     const activeTournaments = await getCurrentTournaments()
-  //     console.log('finish')
-  //     setCurrentTournaments(activeTournaments)
-  //     localStorage.setItem('currentTournaments', activeTournaments)
-  //   }
-  //   gatherCurrentTournaments()
-  // }, [])
+  useEffect(() => {
+    const gatherCurrentTournaments = async () => {
+      console.log('begin')
+      const activeTournaments = await getCurrentTournaments()
+      console.log('finish')
+      setCurrentTournaments(activeTournaments.tournaments)
+      localStorage.setItem('currentTournaments', activeTournaments)
+    }
+    gatherCurrentTournaments()
+  }, [])
 
   console.log(currentTournaments)
 
   return (
     <div className="app-container">
 
-      <Layout>
-        <MainContainer currentTournaments={currentTournaments} />
-      </Layout>
+      { currentTournaments ?
+
+        <Layout>
+          <MainContainer currentTournaments={currentTournaments} />
+        </Layout>
+        
+        :
+      
+        <>
+        </>
+
+      }
 
     </div>
   );

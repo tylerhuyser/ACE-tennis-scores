@@ -7,7 +7,7 @@ const IconLogo = () => (
     <g transform="translate(3.000000, 3.000000)">
       <g>
         
-        <text x="21" y="31" class="small" font-family="bogart-semibold" font-size="24px" font-stretch="semi-expanded" fill="white">ACE</text>
+        <text x="21" y="31" fontFamily="bogart-semibold" fontSize="24px" fontStretch="semi-expanded" fill="white">ACE</text>
         <polygon
           id="Shape"
           stroke="white"

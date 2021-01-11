@@ -7,7 +7,7 @@ export default function Footer () {
     return (
       <div className="footer-container slide-in-bottom-nav">
 
-        <Link to="/home">
+        <Link to="/">
           <i className="fas fa-home mobile-footer-icon"></i>
         </Link>
 
