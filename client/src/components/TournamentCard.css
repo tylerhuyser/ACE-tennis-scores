@@ -1,0 +1,44 @@
+.tournament-card-container {
+  height: 100px;
+  width: 100%;
+  padding: 10px 25px;
+  z-index: 2;
+  margin-bottom: 25px;
+  color: white;
+
+  border: solid white 5px;
+  border-radius: 15px;
+  box-shadow: inset 0px -1px 5px #0a192f;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.tournament-card-name {
+
+  color: white;
+  letter-spacing: 4px;
+}
+
+.tournament-category-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 30%;
+
+}
+
+.tournament-category-icon {
+  max-height: 100%;
+  max-width: 66%;
+
+  object-fit: contain;
+}
