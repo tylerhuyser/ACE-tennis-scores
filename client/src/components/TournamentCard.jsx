@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import './TournamentCard.css'
 
@@ -8,6 +8,7 @@ export default function TournamentCard(props) {
   const [tournamentName, setTournamentName] = useState("")
   const [tournamentCategory, setTournamentCategory] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
+  const history = useHistory()
   
   const { tournament } = props;
 
@@ -44,14 +45,23 @@ export default function TournamentCard(props) {
     parseTournamentInfo(tournament)
   }, [])
 
+  const handleTournament = (tournament, tournamentid) => {
+    console.log(tournament)
+    localStorage.setItem('currentTournament', JSON.stringify(tournament))
+    history.push(`/tournament/${tournamentid}`)
+  }
+
 
   return (
-    <Link className="tournament-card-container" to={`/tournament/${tournament.id}`}>
+    <div className="tournament-card-container" onClick={(e) => handleTournament(tournament, tournament.id)} >
+
       <p className="tournament-card-name">{tournamentName}</p>
+
       <div className="tournament-category-container">
         <p className="tournament-category">{tournamentCategory}</p>
-        <img className="tournament-category-icon" src={tournamentCategoryIcon} />
+        <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
       </div>
-    </Link>
+
+    </div>
   )
 }
