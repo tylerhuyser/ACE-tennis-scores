@@ -111,7 +111,7 @@ export default function TournamentDetail(props) {
         <button className="tournament-views-button" id="results-button">Completed Matches</button>
 
         <button className="tournament-views-button" id="draws-button">Draws</button>
-        
+         
       </div>
 
     </div>
