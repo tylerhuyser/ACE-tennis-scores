@@ -8,26 +8,25 @@ export const getTournaments = async () => {
 
 export const getCurrentTournaments = async () => {
   const resp = await api.get(`/tournaments/ongoing.json${key}`)
-  console.log('here')
   return resp.data
 }
 
 export const getDetailedTournamentInfo = async (id) => {
-  const resp = await api.get(`/tournaments/${id}/info.json`)
+  const resp = await api.get(`/tournaments/${id}/info.json${key}`)
   return resp.data
 }
 
 export const getTournamentSummary = async (id) => {
-  const resp = await api.get(`/tournaments/${id}/summaries.json`)
+  const resp = await api.get(`/tournaments/${id}/summaries.json${key}`)
   return resp.data
 }
 
 export const getTournamentSchedule = async (id) => {
-  const resp = await api.get(`/tournaments/${id}/schedule.json`)
+  const resp = await api.get(`/tournaments/${id}/schedule.json${key}`)
   return resp.data
 }
 
 export const getTournamentResults = async (id) => {
-  const resp = await api.get(`/tournaments/${id}/resutls.json`)
+  const resp = await api.get(`/tournaments/${id}/resutls.json${key}`)
   return resp.data
 }

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import Switch from "react-switch";
 
+import Matches from '../components/Matches'
 import MatchCard from '../components/MatchCard'
 
 import './TournamentDetail.css'
@@ -9,57 +10,65 @@ import './TournamentDetail.css'
 export default function TournamentDetail(props) {
 
   // Switches
-  const [loaded, setLoaded] = useState(false)
-  const [currentDiscipline, setCurrentDiscipline] = useState(false)
+  const [ loaded, setLoaded ] = useState(false)
+  const [ currentMode, setCurrentMode ] = useState(false)
+  const [ view, setView ] = useState("live scores")
 
   // Data
-  const [currentTournament, setCurrentTournament] = useState(null)
+  const [currentSinglesTournament, setCurrentSinglesTournament] = useState(null)
+  // const []
+
   const [doublesTournament, setDoublesTournament] = useState(null)
+
   const [tournamentName, setTournamentName] = useState("")
   const [tournamentCategory, setTournamentCategory] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
 
+  const [liveMatchesCurrentTournament, setLiveMatchesCurrentTournament] = useState(null)
+  const [liveSinglesMatchesCurrentTournament, setLiveSinglesMatchesCurrentTournament] = useState(null)
+  const [liveDoublesMatchesCurrentTournament, setLiveDoublesMatchesCurrentTournament] = useState(null)
+
   const params = useParams();
-  const { currentTournaments } = props;
+
+  const { tournaments, dailySchedule, dailyResults, liveMatches, currentDate } = props;
+
+// UseEffects
   
-  const tournament = currentTournaments.find((tournament) => params.id === tournament.id)
-
-  console.log(tournament)
-
+  // Sets Current Tournament Object
   useEffect(() => {
-    setLoaded(true)
-    if (currentTournaments === undefined) {
-      console.log("undefined")
-      setCurrentTournament(tournament)
+    if (tournaments !== undefined && tournaments !== null) {
+      const currentTournamentData = tournaments.find((tournament) => params.id === tournament.id)
+      setCurrentSinglesTournament(currentTournamentData)
+      setLoaded(true)
     } else {
-      console.log('storage')
-      const tournamentData = localStorage.getItem('currentTournament')
-      console.log(tournamentData)
-      setCurrentTournament(JSON.parse(tournamentData))
+      const currentTournamentData = localStorage.getItem('currentSinglesTournament')
+      setCurrentSinglesTournament(JSON.parse(currentTournamentData))
+      setLoaded(true)
     }
   }, [])
 
+  // Parses & Sets Key Tournament Info
   useEffect(() => {
     
     if (loaded) {
-      const parseTournamentInfo = (currentTournament) => {
+      const parseTournamentInfo = (currentSinglesTournament) => {
 
-        const splitTournamentName = currentTournament.name.split(",")
+        const splitTournamentName = currentSinglesTournament.name.split(",")
         const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
         const isolatedTournamentTier = isolatedTournamentNameAndTier[0]
         const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
     
         if (tournamentName.includes("doubles")) {
           return
-        } else if (currentTournament.name.includes("WTA")) {
+        } else if (currentSinglesTournament.name.includes("WTA")) {
           setTournamentName(isolatedTournamentName.join(" "))
           setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-        } else if (currentTournament.name.includes("ATP")) {
+        } else if (currentSinglesTournament.name.includes("ATP")) {
           setTournamentName(isolatedTournamentName.join(" "))
           setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-        } else if (currentTournament.name.includes("ITF")) {
+        } else if (currentSinglesTournament.name.includes("ITF")) {
           const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
           setTournamentName(isolatedITFTournamentName.join(" "))
           setTournamentCategory(isolatedTournamentTier)
@@ -70,22 +79,44 @@ export default function TournamentDetail(props) {
           setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
         }
       }
-      parseTournamentInfo(currentTournament)
+      parseTournamentInfo(currentSinglesTournament)
     }
   }, [loaded])
 
+  // Collects Corresponding Doubles Tournament Data
   useEffect(() => {
 
     if (tournamentName) {
-      const doublesData = currentTournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.name.includes(tournamentName))))
-      console.log(doublesData)
+      const doublesData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.name.includes(tournamentName))))
       setDoublesTournament(doublesData)
-      localStorage.setItem('currentDoublesTournament', JSON.stringify(doublesData))
+
     }
   }, [tournamentName])
 
+  useEffect(() => {
+    if (liveMatches !== null) {
+      console.log(liveMatches)
+      const currentMatches = liveMatches.find((match) => (match.sport_event.tournament.name.includes(tournamentName)))
+      setLiveMatchesCurrentTournament(currentMatches)
+      const singlesMatches = liveMatches.find((match) => ((match.sport_event.tournament.name.includes(tournamentName)) && (match.sport_event.tournament.type === "singles")))
+      setLiveSinglesMatchesCurrentTournament(singlesMatches)
+      const doublesMatches = liveMatches.find((match) => ((match.sport_event.tournament.name.includes(tournamentName)) && (match.sport_event.tournament.type === "singles")))
+      setLiveDoublesMatchesCurrentTournament(doublesMatches)
+
+      console.log(currentMatches)
+      console.log(singlesMatches)
+      console.log(doublesMatches)
+    }
+  }, [liveMatches])
+
+
+
   const handleSwitch = () => {
-    setCurrentDiscipline(!currentDiscipline)
+    setCurrentMode(!currentMode)
+  }
+
+  const handleView = () => {
+    
   }
   
   return (
@@ -102,7 +133,7 @@ export default function TournamentDetail(props) {
 
       </div>
 
-      <Switch onChange={handleSwitch} checked={currentDiscipline ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+      <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
       <div className="tournament-views-container">
 
@@ -113,6 +144,30 @@ export default function TournamentDetail(props) {
         <button className="tournament-views-button" id="draws-button">Draws</button>
          
       </div>
+
+      { view === "live scores" ?
+      
+        <Matches matchData={currentMode? liveDoublesMatchesCurrentTournament : liveSinglesMatchesCurrentTournament } />
+
+      :
+      
+      <>
+        
+        { view === "completed matches" ?
+      
+            <Matches />
+            
+        :
+          
+        <div className="draws-container">
+              
+        </div>
+      
+        }
+      
+      </>
+    
+      }
 
     </div>
   )

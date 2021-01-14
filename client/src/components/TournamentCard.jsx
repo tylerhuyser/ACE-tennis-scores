@@ -46,8 +46,7 @@ export default function TournamentCard(props) {
   }, [])
 
   const handleTournament = (tournament, tournamentid) => {
-    console.log(tournament)
-    localStorage.setItem('currentTournament', JSON.stringify(tournament))
+    localStorage.setItem('currentSinglesTournament', JSON.stringify(tournament))
     history.push(`/tournament/${tournamentid}`)
   }
 

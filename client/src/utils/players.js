@@ -1,24 +1,25 @@
 import api from './api-config'
+import { key } from './api-config'
 
 // Singles
 
   export const getPlayer = async (id) => {
-    const resp = await api.get(`/players/${id}/profile.json`)
+    const resp = await api.get(`/players/${id}/profile.json${key}`)
     return resp.data
   }
 
   export const getPlayerResults = async (id) => {
-    const resp = await api.get(`/players/${id}/results.json`)
+    const resp = await api.get(`/players/${id}/results.json${key}`)
     return resp.data
   }
 
   export const getPlayerSchedule = async (id) => {
-    const resp = await api.get(`/players/${id}/schedule.json`)
+    const resp = await api.get(`/players/${id}/schedule.json${key}`)
     return resp.data
   }
 
   export const getPlayerRivalry = async (home_id, away_id) => {
-    const resp = await api.get(`/players/${home_id}/versus/${away_id}/matches.json`)
+    const resp = await api.get(`/players/${home_id}/versus/${away_id}/matches.json${key}`)
     return resp.data
   }
 
