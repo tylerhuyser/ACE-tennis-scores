@@ -9,7 +9,9 @@ export default function Loader() {
   return (
     <div className="loader-container">
 
-      <IconLogo />
+      <div className="loader-icon heartbeat">
+        <IconLogo />
+      </div>
 
     </div>
   )

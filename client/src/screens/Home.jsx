@@ -5,7 +5,7 @@ import TournamentCard from '../components/TournamentCard'
 import './Home.css'
 
 
-export default function Home(props) {
+export default function Home (props) {
 
   const { tournaments, currentDate } = props
 
@@ -18,7 +18,7 @@ export default function Home(props) {
   
       return (
         
-        (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ( (tournament.type.toLowerCase() !== "doubles") && (tournamentCategory !== "itf")))
+        (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ( (tournament.type.toLowerCase() !== "doubles") && (tournamentCategory !== "itf") && ((tournamentCategory.includes("atp") || (tournamentCategory.includes('wta'))))))
         
       )
     }

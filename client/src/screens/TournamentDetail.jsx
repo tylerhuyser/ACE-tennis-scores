@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Switch from "react-switch";
 
 import Matches from '../components/Matches'
-import MatchCard from '../components/MatchCard'
+import Schedule from '../components/Schedule'
 
 import './TournamentDetail.css'
 
@@ -12,21 +12,24 @@ export default function TournamentDetail(props) {
   // Switches
   const [ loaded, setLoaded ] = useState(false)
   const [ currentMode, setCurrentMode ] = useState(false)
-  const [ view, setView ] = useState("live scores")
+  const [ view, setView ] = useState("Live Scores")
 
   // Data
-  const [currentSinglesTournament, setCurrentSinglesTournament] = useState(null)
-  // const []
-
-  const [doublesTournament, setDoublesTournament] = useState(null)
+    // Tournament Info
+  const [ currentSinglesTournament, setCurrentSinglesTournament ] = useState([])
+  const [ currentDoublesTournament, setCurrentDoublesTournament ] = useState([])
+    // Tournament Schedule
+  const [ currentTournamentSchedule, setCurrentTournamentSchedule ] = useState([])
+    // Completed Matches (Results)
+  const [ completedSinglesMatches, setCompletedSinglesMatches ] = useState([])
+  const [ completedDoublesMatches, setCompletedDoublesMatches ] = useState([])
+    // Live Matches
+  const [ liveSinglesMatches, setLiveSinglesMatches ] = useState([])
+  const [ liveDoublesMatches, setLiveDoublesMatches ] = useState([])
 
   const [tournamentName, setTournamentName] = useState("")
   const [tournamentCategory, setTournamentCategory] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
-
-  const [liveMatchesCurrentTournament, setLiveMatchesCurrentTournament] = useState(null)
-  const [liveSinglesMatchesCurrentTournament, setLiveSinglesMatchesCurrentTournament] = useState(null)
-  const [liveDoublesMatchesCurrentTournament, setLiveDoublesMatchesCurrentTournament] = useState(null)
 
   const params = useParams();
 
@@ -34,7 +37,7 @@ export default function TournamentDetail(props) {
 
 // UseEffects
   
-  // Sets Current Tournament Object
+  // Sets currentSinglesTournament Object
   useEffect(() => {
     if (tournaments !== undefined && tournaments !== null) {
       const currentTournamentData = tournaments.find((tournament) => params.id === tournament.id)
@@ -47,7 +50,7 @@ export default function TournamentDetail(props) {
     }
   }, [])
 
-  // Parses & Sets Key Tournament Info
+  // Parses Key Tournament Info
   useEffect(() => {
     
     if (loaded) {
@@ -87,81 +90,129 @@ export default function TournamentDetail(props) {
   useEffect(() => {
 
     if (tournamentName) {
-      const doublesData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.name.includes(tournamentName))))
-      setDoublesTournament(doublesData)
-
+      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.name.includes(tournamentName))))
+      setCurrentDoublesTournament(currentDoublesTournamentData)
     }
   }, [tournamentName])
 
+
+  // Collects Tournament Schedule
   useEffect(() => {
-    if (liveMatches !== null) {
-      console.log(liveMatches)
-      const currentMatches = liveMatches.find((match) => (match.sport_event.tournament.name.includes(tournamentName)))
-      setLiveMatchesCurrentTournament(currentMatches)
-      const singlesMatches = liveMatches.find((match) => ((match.sport_event.tournament.name.includes(tournamentName)) && (match.sport_event.tournament.type === "singles")))
-      setLiveSinglesMatchesCurrentTournament(singlesMatches)
-      const doublesMatches = liveMatches.find((match) => ((match.sport_event.tournament.name.includes(tournamentName)) && (match.sport_event.tournament.type === "singles")))
-      setLiveDoublesMatchesCurrentTournament(doublesMatches)
-
-      console.log(currentMatches)
-      console.log(singlesMatches)
-      console.log(doublesMatches)
+    if (currentDoublesTournament && dailySchedule.length > 0) {
+      console.log('here schedule')
+      const currentTournamentScheduleData = dailySchedule.find((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
+      setCurrentTournamentSchedule(currentTournamentScheduleData)
     }
-  }, [liveMatches])
+  }, [currentDoublesTournament])
 
+  // Collect Completed Matches (Results)
+  useEffect(() => {
+    if (currentDoublesTournament && dailySchedule.length > 0) {
+      const completedSinglesMatchesData = dailyResults.find((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
+      setCompletedSinglesMatches(completedSinglesMatchesData)
+      const completedDoublesMatchesData = dailyResults.find((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentDoublesTournament.id)))
+      setCompletedDoublesMatches(completedDoublesMatchesData)
+      console.log(dailyResults)
+      console.log(completedSinglesMatchesData)
+      console.log('here completed')
+    }
+  }, [currentDoublesTournament])
+  
+  
+  // Collects Live Singles & Doubles Matches
+  useEffect(() => {
 
+    if (currentDoublesTournament && dailySchedule.length > 0) {
+      const liveSinglesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
+      setLiveSinglesMatches(liveSinglesMatchesData)
+      const liveDoublesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
+      setLiveDoublesMatches(liveDoublesMatchesData)
+      console.log('here live')
+      console.log(liveMatches)
+      console.log(currentSinglesTournament.id)
+      console.log(liveSinglesMatchesData)
+    }
+  }, [currentDoublesTournament])
+
+  // Switch Functions
 
   const handleSwitch = () => {
     setCurrentMode(!currentMode)
   }
 
-  const handleView = () => {
-    
+  const handleChangeView = (view) => {
+    switch (view) {
+      case "Live Scores":
+        setView("Live Scores")
+        break;
+      case "Completed Matches":
+        setView("CompletedMatches")
+        break;
+      case "Schedule":
+        setView("Schedule")
+        break;
+    }
   }
   
   return (
     <div className="tournament-detail-container">
       
+
       <div className="tournament-card-container">
 
         <p className="tournament-card-name">{tournamentName}</p>
 
         <div className="tournament-category-container">
+
           <p className="tournament-category">{tournamentCategory}</p>
+
           <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
+        
         </div>
 
       </div>
 
-      <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
+
+      <div className="switch-container">
+
+        <p className="switch-container-copy">SINGLES</p>
+
+        <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+
+        <p className="switch-container-copy">SINGLES</p>
+
+      </div>
+
+
+        
       <div className="tournament-views-container">
 
-        <button className="tournament-views-button" id="live-scores-button">Live Matches</button>
+        <button className="tournament-views-button" id="live-scores-button" onClick={(e) => handleChangeView("Live Scores")} > Live Matches</button>
 
-        <button className="tournament-views-button" id="results-button">Completed Matches</button>
+        <button className="tournament-views-button" id="results-button" onClick={(e) => handleChangeView("Completed Matches")}> Completed Matches</button>
 
-        <button className="tournament-views-button" id="draws-button">Draws</button>
+        <button className="tournament-views-button" id="draws-button" onClick={(e) => handleChangeView("Schedule")} > Schedule</button>
          
       </div>
 
-      { view === "live scores" ?
+
+
+      { view === "Live Scores" ?
       
-        <Matches matchData={currentMode? liveDoublesMatchesCurrentTournament : liveSinglesMatchesCurrentTournament } />
+        <Matches matchData={ currentMode ? liveDoublesMatches : liveSinglesMatches } />
 
       :
       
       <>
         
-        { view === "completed matches" ?
+        { view === "Completed Matches" ?
       
-            <Matches />
+          <Matches matchData={ currentMode ? completedDoublesMatches : completedSinglesMatches } />
             
         :
           
-        <div className="draws-container">
-              
-        </div>
+          <Schedule currentTournamentSchedule={currentTournamentSchedule} />
       
         }
       

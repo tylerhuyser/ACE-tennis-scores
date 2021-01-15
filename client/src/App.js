@@ -22,10 +22,10 @@ function App () {
 // API Data
   const [ tournaments, setTournaments ] = useState([])
   const [ dailySchedule, setDailySchedule ] = useState([])
-  const [dailyResults, setDailyResults] = useState([])
+  const [ dailyResults, setDailyResults ] = useState([])
   const [ liveMatches, setLiveMatches ] = useState([])
 
-  const [searchQuery, setSearchQuery] = useState("")
+  const [ searchQuery, setSearchQuery ] = useState("")
  
 // Switches
   const [ loaded, setLoaded ] = useState(false)
