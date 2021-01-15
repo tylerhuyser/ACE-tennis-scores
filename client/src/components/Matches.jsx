@@ -5,8 +5,10 @@ import MatchCard from '../components/MatchCard'
 export default function Matches(props) {
   
   const { matchData } = props
+
+  console.log(matchData)
   
-  const matches = matchData?.map((match, index) => (
+  const matches = matchData && matchData?.map((match, index) => (
     <MatchCard 
       match={match}
       index={index}

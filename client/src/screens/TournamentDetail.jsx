@@ -100,17 +100,21 @@ export default function TournamentDetail(props) {
   useEffect(() => {
     if (currentDoublesTournament && dailySchedule.length > 0) {
       console.log('here schedule')
-      const currentTournamentScheduleData = dailySchedule.find((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
-      setCurrentTournamentSchedule(currentTournamentScheduleData)
+      const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
+      if (currentTournamentScheduleData === undefined) {
+        return
+      } else {
+        setCurrentTournamentSchedule(currentTournamentScheduleData)
+      }
     }
   }, [currentDoublesTournament])
 
   // Collect Completed Matches (Results)
   useEffect(() => {
     if (currentDoublesTournament && dailySchedule.length > 0) {
-      const completedSinglesMatchesData = dailyResults.find((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
+      const completedSinglesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
       setCompletedSinglesMatches(completedSinglesMatchesData)
-      const completedDoublesMatchesData = dailyResults.find((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentDoublesTournament.id)))
+      const completedDoublesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentDoublesTournament.id)))
       setCompletedDoublesMatches(completedDoublesMatchesData)
       console.log(dailyResults)
       console.log(completedSinglesMatchesData)
@@ -124,9 +128,17 @@ export default function TournamentDetail(props) {
 
     if (currentDoublesTournament && dailySchedule.length > 0) {
       const liveSinglesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
-      setLiveSinglesMatches(liveSinglesMatchesData)
       const liveDoublesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
-      setLiveDoublesMatches(liveDoublesMatchesData)
+      if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData === undefined)) {
+        return
+      } else if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData !== undefined)) {
+        setLiveDoublesMatches(liveDoublesMatchesData)
+      } else if ((liveSinglesMatchesData !== undefined) && (liveDoublesMatchesData === undefined)) {
+        setLiveSinglesMatches(liveSinglesMatchesData)
+      } else if ((liveSinglesMatchesData) && (liveDoublesMatchesData)) {
+        setLiveSinglesMatches(liveSinglesMatchesData)
+        setLiveDoublesMatches(liveDoublesMatchesData)
+      }
       console.log('here live')
       console.log(liveMatches)
       console.log(currentSinglesTournament.id)
