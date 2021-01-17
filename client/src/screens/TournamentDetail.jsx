@@ -127,8 +127,8 @@ export default function TournamentDetail(props) {
   useEffect(() => {
 
     if (currentDoublesTournament && dailySchedule.length > 0) {
-      const liveSinglesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
-      const liveDoublesMatchesData = liveMatches.find((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
+      const liveSinglesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
+      const liveDoublesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
       if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData === undefined)) {
         return
       } else if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData !== undefined)) {
@@ -212,7 +212,7 @@ export default function TournamentDetail(props) {
 
       { view === "Live Scores" ?
       
-        <Matches matchData={ currentMode ? liveDoublesMatches : liveSinglesMatches } />
+        <Matches matchData={ currentMode ? liveDoublesMatches : liveSinglesMatches } view={view} />
 
       :
       
@@ -220,7 +220,7 @@ export default function TournamentDetail(props) {
         
         { view === "Completed Matches" ?
       
-          <Matches matchData={ currentMode ? completedDoublesMatches : completedSinglesMatches } />
+          <Matches matchData={ currentMode ? completedDoublesMatches : completedSinglesMatches } view={view} />
             
         :
           

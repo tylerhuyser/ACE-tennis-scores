@@ -11,7 +11,7 @@ export default function MatchCard (props) {
 
 
 
-  const players = match.sport_event.competitors.map((competitor, index) =>
+  const players = match && match?.sport_event.competitors.map((competitor, index) =>
   
     <div className="competitor-container"> 
           
@@ -21,7 +21,7 @@ export default function MatchCard (props) {
       
   )
   
-  const completedSets = match.sport_event_status.period_scores.map((set, index) => 
+  const completedSets = match.sport_event_status.period_scores && match?.sport_event_status.period_scores.map((set, index) => 
   
     <div className="completed-set-container">
 

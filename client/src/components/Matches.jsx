@@ -4,7 +4,7 @@ import MatchCard from '../components/MatchCard'
 
 export default function Matches(props) {
   
-  const { matchData } = props
+  const { matchData, view } = props
 
   console.log(matchData)
   
@@ -18,7 +18,21 @@ export default function Matches(props) {
   
   return (
     <div className="matches-container">
-      {matches}
+
+      { matchData !== undefined || matchData !== null || matchData.length !== 0 ?
+
+        { matches }
+        
+        :
+        
+        <p className="match-container-copy">
+
+          {`Currently, there are no ${view.toLowerCase()} to display.`}
+
+        </p>
+      
+      }
+
     </div>
   )
 }
