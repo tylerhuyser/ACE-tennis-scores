@@ -26,7 +26,7 @@ export default function MainContainer(props) {
         </Route>
 
         <Route path="/calendar">
-          <Calendar tournaments={tournaments} />
+          <Calendar tournaments={tournaments} currentDate={currentDate} />
         </Route>
 
         <Route path="/rankings">

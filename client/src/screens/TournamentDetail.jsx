@@ -158,7 +158,7 @@ export default function TournamentDetail(props) {
         setView("Live Scores")
         break;
       case "Completed Matches":
-        setView("CompletedMatches")
+        setView("Completed Matches")
         break;
       case "Schedule":
         setView("Schedule")

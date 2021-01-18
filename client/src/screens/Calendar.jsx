@@ -4,7 +4,7 @@ import TournamentCard from '../components/TournamentCard'
 
 export default function Calendar(props) {
   
-  const { tournaments } = props
+  const { tournaments, currentDate } = props
 
   const calendar = tournaments.filter((tournament) => {
 
@@ -13,11 +13,11 @@ export default function Calendar(props) {
     const tournamentCategory = tournament.name.toLowerCase().slice(0, 3)
   
   
-      return (
+    return (
         
-        (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ( (tournament.type.toLowerCase() !== "doubles") && (tournamentCategory !== "itf") && ((tournamentCategory.includes("atp") || (tournamentCategory.includes('wta'))))))
-        
-      )
+      (((endDate >= currentDate)) && ( (tournament.type.toLowerCase() !== "doubles") ))
+      
+    )
 
   }).map((tournament, index) => (
 

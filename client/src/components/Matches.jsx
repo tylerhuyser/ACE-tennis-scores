@@ -7,6 +7,7 @@ export default function Matches(props) {
   const { matchData, view } = props
 
   console.log(matchData)
+  console.log(matchData.length !== 0)
   
   const matches = matchData && matchData?.map((match, index) => (
     <MatchCard 
@@ -19,9 +20,13 @@ export default function Matches(props) {
   return (
     <div className="matches-container">
 
-      { matchData !== undefined || matchData !== null || matchData.length !== 0 ?
+      { matchData !== undefined && matchData !== null && matchData.length !== 0 ?
 
-        { matches }
+        <>
+      
+          { matches }
+          
+        </>
         
         :
         

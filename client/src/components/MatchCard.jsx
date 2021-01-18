@@ -4,9 +4,9 @@ export default function MatchCard (props) {
   
   const { match, index, key } = props
   
-  const [matchData, setMatchData] = useState({
+  // const [matchData, setMatchData] = useState({
     
-  })
+  // })
 
 
 

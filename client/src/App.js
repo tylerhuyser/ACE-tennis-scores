@@ -28,6 +28,7 @@ function App () {
   const [ searchQuery, setSearchQuery ] = useState("")
  
 // Switches
+  const [ tournamentsLoaded, setTournamentsLoaded ] = useState(false)
   const [ loaded, setLoaded ] = useState(false)
 
 // Date
@@ -56,10 +57,11 @@ function App () {
         const dailyScheduleData = await getDailySchedule(currentYear, currentMonth, currentDay)
         console.log(dailyScheduleData.sport_events)
         if (dailyScheduleData.length === 0) {
-          setDailySchedule(dailyScheduleData.sport_events)
-          setLoaded(true)
+          setDailySchedule(dailyScheduleData)
+          setTournamentsLoaded(true)
         } else {
           setDailySchedule(dailyScheduleData.sport_events)
+          setTournamentsLoaded(true)
         }
       }
       gatherDailySchedule(currentYear, currentMonth, currentDay)
@@ -69,7 +71,7 @@ function App () {
 
   useEffect(() => {
 
-    if (dailySchedule && dailySchedule.length !== 0) {
+    if (tournamentsLoaded && dailySchedule && dailySchedule.length !== 0) {
       const gatherDailyResults = async (currentYear, currentMonth, currentDay) => {
         const dailyResultsData = await getDailyResults(currentYear, currentMonth, currentDay)
         console.log(dailyResultsData.results)
@@ -83,12 +85,16 @@ function App () {
 
   useEffect(() => {
 
-    if (dailySchedule && dailySchedule.length !== 0) {
+    if (tournamentsLoaded && dailySchedule && dailySchedule.length !== 0) {
       const gatherLiveMatches = async () => {
         const liveMatchesData = await getLiveMatches()
         console.log(liveMatchesData.summaries)
-        setLiveMatches(liveMatchesData.summaries)
-        setLoaded(true)
+        if (liveMatchesData.summaries.length === 0) {
+          setLoaded(true)
+        } else {
+          setLiveMatches(liveMatchesData.summaries)
+          setLoaded(true)
+        }
       }
       const timeOut = setTimeout(() => gatherLiveMatches(), 1001)
       return () => clearTimeout(timeOut)
