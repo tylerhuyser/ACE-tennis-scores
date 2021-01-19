@@ -32,7 +32,7 @@ export default function Matches(props) {
         
         <p className="match-container-copy">
 
-          {`Currently, there are no ${view.toLowerCase()} to display.`}
+          {`Currently, there are no ${view.toLowerCase()} to display. :(`}
 
         </p>
       

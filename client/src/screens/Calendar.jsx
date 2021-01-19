@@ -2,6 +2,8 @@ import React from 'react'
 
 import TournamentCard from '../components/TournamentCard'
 
+import './Calendar.css'
+
 export default function Calendar(props) {
   
   const { tournaments, currentDate } = props
