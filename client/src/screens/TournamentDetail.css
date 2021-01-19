@@ -1,4 +1,5 @@
 .tournament-detail-container {
+
   width: 100%;
   height: 100%;
   padding: 25px;
@@ -8,32 +9,62 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+}
+
+.discipline-switch-container {
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.discipline-switch-container-copy {
+
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+  
 }
 
 .tournament-views-container {
   width: 100%;
-  height: 25px;
-  margin: 25px;
+  padding: 25px 10px;
+  margin: 25px 0px;
   
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  border: solid white 5px;
-  border-radius: 15px;
+  border: solid white 2px;
+  border-left: none;
+  border-right: none;
   box-shadow: inset 0px -1px 5px #0a192f;
 }
 
-.tournament-views-button{
-  background: transparent;
-  color: white;
+.tournament-views-button {
 
+  font-family: amagro-bold;
+  color: white;
+  width: 33%;
+  background: transparent;
   border: none;
-  border-left: solid white 5px;
-  border-right: solid white 5px;
-  box-shadow: inset 0px -1px 5px #0a192f;
 
   padding: 5px;
+  flex-shrink: 1;
+}
+
+#completed-matches-button {
+
+  border-left: solid white 1px;
+  border-right: solid white 1px;
+  flex-shrink: 0;
   flex-grow: 1;
+
 }

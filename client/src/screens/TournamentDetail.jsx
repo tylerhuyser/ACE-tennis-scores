@@ -186,13 +186,13 @@ export default function TournamentDetail(props) {
 
 
 
-      <div className="switch-container">
+      <div className="discipline-switch-container">
 
-        <p className="switch-container-copy">SINGLES</p>
+        <p className="discipline-switch-container-copy">SINGLES</p>
 
         <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
-        <p className="switch-container-copy">SINGLES</p>
+        <p className="discipline-switch-container-copy">SINGLES</p>
 
       </div>
 
@@ -202,9 +202,9 @@ export default function TournamentDetail(props) {
 
         <button className="tournament-views-button" id="live-scores-button" onClick={(e) => handleChangeView("Live Scores")} > Live Matches</button>
 
-        <button className="tournament-views-button" id="results-button" onClick={(e) => handleChangeView("Completed Matches")}> Completed Matches</button>
+        <button className="tournament-views-button" id="completed-matches-button" onClick={(e) => handleChangeView("Completed Matches")}> Completed Matches</button>
 
-        <button className="tournament-views-button" id="draws-button" onClick={(e) => handleChangeView("Schedule")} > Schedule</button>
+        <button className="tournament-views-button" id="schedule-button" onClick={(e) => handleChangeView("Schedule")} > Schedule</button>
          
       </div>
 

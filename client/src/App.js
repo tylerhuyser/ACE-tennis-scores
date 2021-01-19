@@ -71,7 +71,7 @@ function App () {
 
   useEffect(() => {
 
-    if (tournamentsLoaded && dailySchedule && dailySchedule.length !== 0) {
+    if (dailySchedule && dailySchedule.length !== 0) {
       const gatherDailyResults = async (currentYear, currentMonth, currentDay) => {
         const dailyResultsData = await getDailyResults(currentYear, currentMonth, currentDay)
         console.log(dailyResultsData.results)
@@ -85,7 +85,7 @@ function App () {
 
   useEffect(() => {
 
-    if (tournamentsLoaded && dailySchedule && dailySchedule.length !== 0) {
+    if (dailySchedule && dailySchedule.length !== 0) {
       const gatherLiveMatches = async () => {
         const liveMatchesData = await getLiveMatches()
         console.log(liveMatchesData.summaries)
