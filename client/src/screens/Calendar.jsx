@@ -21,15 +21,28 @@ export default function Calendar(props) {
       
     )
 
-  }).map((tournament, index) => (
+  }).map((tournament, index) => {
+    
+    const startDate = new Date(tournament.current_season.start_date)
+    const startDay = startDate.getDay()
+    const startMonth = startDate.getMonth() + 1
+   
+    const endDate = new Date(tournament.current_season.end_date)
+    const endDay = endDate.getDay()
+    const endMonth = endDate.getMonth() + 1
+    
+    return (
 
-    <TournamentCard 
-      tournament={tournament}
-      index={index}
-      key={tournament.id}
-    />
+      <TournamentCard
+        tournament={tournament}
+        index={index}
+        key={tournament.id}
+        startDate={`${startMonth}/${startDay}`}
+        endDate={`${endMonth}/${endDay}`}
+      />
 
-  ))
+    )
+  })
 
   return (
     <div className="calendar-container">

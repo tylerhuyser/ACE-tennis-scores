@@ -26,6 +26,10 @@
   letter-spacing: 4px;
   font-weight: 500;
   font-size: 24px;
+  flex-shrink: 1;
+  /* text-overflow: ellipsis; */
+  /* overflow: hidden;
+  white-space: nowrap; */
 }
 
 .tournament-category-container {
@@ -34,13 +38,22 @@
   justify-content: space-between;
   align-items: center;
 
-  width: 30%;
+  width: 50%;
+  flex-grow: 1;
 
+}
+
+.tournament-date {
+  max-width: 75%;
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .tournament-category-icon {
   max-height: 100%;
-  max-width: 66%;
+  width: 33%;
 
+  flex-shrink: 1;
   object-fit: contain;
 }

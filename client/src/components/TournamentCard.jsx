@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import './TournamentCard.css'
 
@@ -10,7 +10,7 @@ export default function TournamentCard(props) {
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
   const history = useHistory()
   
-  const { tournament } = props;
+  const { tournament, startDate, endDate } = props;
 
   useEffect(() => {
     
@@ -57,7 +57,7 @@ export default function TournamentCard(props) {
       <p className="tournament-card-name">{tournamentName}</p>
 
       <div className="tournament-category-container">
-        <p className="tournament-category">{tournamentCategory}</p>
+        <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
         <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
       </div>
 

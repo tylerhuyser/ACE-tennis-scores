@@ -22,15 +22,24 @@ export default function Home (props) {
       )
   
     }
-  ).map((tournament, index) => (
+  ).map((tournament, index) => {
 
-      <TournamentCard 
-        tournament={tournament}
-        index={index}
-        key={tournament.id}
-      />
+    const startDate = new Date(tournament.current_season.start_date)
+    const endDate = new Date(tournament.current_season.end_date)
 
-    ))
+    console.log(startDate)
+
+    return (
+
+    <TournamentCard
+      tournament={tournament}
+      index={index}
+      key={tournament.id}
+      startDate={startDate}
+      endDate={endDate}
+    />
+      
+  )})
 
   return (
     <div className="home-container">

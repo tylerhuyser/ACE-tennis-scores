@@ -192,7 +192,7 @@ export default function TournamentDetail(props) {
 
         <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
-        <p className="discipline-switch-container-copy">SINGLES</p>
+        <p className="discipline-switch-container-copy">DOUBLES</p>
 
       </div>
 
