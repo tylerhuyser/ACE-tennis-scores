@@ -17,15 +17,13 @@
   justify-content: flex-start;
   align-items: flex-start;
 
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
+
 }
 
 .match-card-header-container {
   background-color: white;
   width: 100%;
-  height: 20%;
+  height: 15%;
   padding: 25px;
   z-index: 0;
 
@@ -34,9 +32,6 @@
   font-weight: 500;
   letter-spacing: 4px;
   color: #172a45;
-
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
 
   display: flex;
   flex-direction: row;
@@ -51,8 +46,8 @@
 .match-container {
   background-color: #172a45;
   width: 100%;
-  height: 70%;
-  padding: 25px;
+  height: 75%;
+  padding: 15px 15px;
 
   font-family: helvetica;
   font-weight: 300;
@@ -62,6 +57,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  flex-shrink: 1;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -80,6 +76,10 @@
 
   text-align: left;
   font-weight: 500;
+
+  -webkit-box-sizing: padding-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: padding-box;
   
 }
 
@@ -129,13 +129,10 @@
   width: 100%;
   height: 10%;
   padding: 25px;
-  z-index: 3;
+  z-index: 1;
 
   display: flex;
   align-items: center;
-
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 12px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */

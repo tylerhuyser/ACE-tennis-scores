@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import "./MatchCard.css";
@@ -7,143 +7,229 @@ export default function MatchCard(props) {
   const { match, index, key } = props;
   const history = useHistory();
 
-  // const [matchData, setMatchData] = useState({
+  const [matchInfo, setMatchInfo] = useState({
 
-  // })
+    tournamentEvent: match.sport_event.tournament.gender,
+    tournamentDiscipline: match.sport_event.sport_event_type,
+    tournamentRound: match.sport_event.tournament_round.name,
 
-  const parseTournamentRound = (tournamentRound) => {
-    switch (tournamentRound) {
-      case "round_of_128":
-        return "Round of 128";
-      case "round_of_64":
-        return "Round of 64";
-      case "round_of_32":
-        return "Round of 32";
-      case "Round of 16":
-        return "Completed Matches";
-      case "round_of_8":
-        return "Quarterfinal";
-      case "quarterfinal":
-        return "Quarterfinal";
-      case "round_of_4":
-        return "Semifinal";
-      case "round_of_4":
-        return "Semifinal";
-      case "round_of_2":
-        return "Final";
-      case "final":
-        return "Final";
-      default:
-        return "";
-    }
-  };
+    matchFormat: match.sport_event_conditions.match_mode,
+    matchCourt: match.sport_event_conditions.venue.name,
+    matchStatus: match.sport_event_status.status,
 
-  const tournamentRound = parseTournamentRound(
-    match.sport_event.tournament_round.name
-  );
+    homeCompetitor: match.sport_event.competitors[0].name,
+    awayCompetitor: match.sport_event.competitors[1].name
 
-  const parseTournamentDiscipline = (tournamentType) => {
-    switch (tournamentType) {
-      case "singles":
-        return "Singles";
-      case "doubles":
-        return "Doubles";
-      case "mixed":
-        return "Mixed";
-      default:
-        return "";
-    }
-  };
+  })
 
-  const tournamentDiscipline = parseTournamentDiscipline(
-    match.sport_event.sport_event_type
-  );
+  const [scoreInfo, setScoreInfo] = useState({
 
-  const parseTournamentGender = (tournamentGender) => {
-    switch (tournamentGender) {
-      case "men":
-        return "Men's";
-      case "women":
-        return "Women's";
-      case "mixed":
-        return "Mixed";
-      default:
-        return "";
-    }
-  };
+    setOneScoreHome: "",
+    setOneScoreAway: "",
+    setTwoScoreHome: "",
+    setTwoScoreAway: "",
+    setThreeScoreHome: "",
+    setThreeScoreAway: "",
+    setFourScoreHome: "",
+    setFourScoreAway: "",
+    setFiveScoreHome: "",
+    setFiveScoreAway: "",
+    serviceScoreHome: "",
+    serviceScoreAway: "",
+    server: ""
 
-  const tournamentGender = parseTournamentGender(
-    match.sport_event.tournament.gender
-  );
+  })
 
-  const players =
-    match &&
-    match?.sport_event.competitors.map((competitor, index) => (
-      <div className={ index === 0 ? "competitor-container home" : "competitor-container away" } >
-        <p className="competitor-name">{`${competitor.name}`}</p>
-      </div>
-    ));
+  useEffect(() => {
 
-  const completedSets =
-    match.sport_event_status.period_scores &&
-    match?.sport_event_status.period_scores.map((set, index) => (
-      <div className="completed-set-container" id={index} >
-        <p className="completed-set-score home">{set.home}</p>
+    const parseTournamentRound = (tournamentRound) => {
+      switch (tournamentRound) {
+        case "round_of_128":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Round of 128"
+          }));
+          break;
+        case "round_of_64":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Round of 64"
+          }));
+          break;
+        case "round_of_32":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Round of 32"
+          }));
+          break;
+        case "Round of 16":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Round of 16"
+          }));
+          break;
+        case "round_of_8":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Quarterfinal"
+          }));
+          break;
+        case "quarterfinal":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Quarterfinal"
+          }));
+          break;
+        case "round_of_4":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Semifinal"
+          }));
+          break;
+        case "semifinal":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Semifinal"
+          }));
+          break;
+        case "round_of_2":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Final"
+          }));
+          break;
+        case "final":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentRound: "Final"
+          }));
+          break;
+        default:
+          break;
+      }
+    };
 
-        <p className="completed-set-score away">{set.away}</p>
-      </div>
-    ));
+    parseTournamentRound(
+      match.sport_event.tournament_round.name
+    );
 
-  const generateSets = function (match, completedSets) {
-    let totalCompletedSets =
-      completedSets === undefined ? 0 : completedSets.length;
+    const parseTournamentDiscipline = (tournamentType) => {
+      switch (tournamentType) {
+        case "singles":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentDiscipline: "Singles"
+          }));
+          break;
+        case "doubles":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentDiscipline: "Doubles"
+          }));
+          break;
+        case "mixed":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentDiscipline: "Mixed"
+          }));
+          break;
+        default:
+          break;
+      }
+    };
 
-    console.log(totalCompletedSets)
+    parseTournamentDiscipline(
+      match.sport_event.sport_event_type
+    );
 
-    let incompleteSets = []
+    const parseTournamentGender = (tournamentGender) => {
+      switch (tournamentGender) {
+        case "men":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentEvent: "Men's"
+          }));
+          break;
+        case "women":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentEvent: "Women's"
+          }));
+          break;
+        case "mixed":
+          setMatchInfo(prevState => ({
+            ...prevState,
+            tournamentEvent: "Mixed"
+          }));
+          break;
+        default:
+          break;
+      }
+    };
 
-    if (match.sport_event_conditions.match_mode === "bo3") {
+    parseTournamentGender(
+        match.sport_event.tournament.gender
+      );
 
-      for (let i = 1; i <= 3 - totalCompletedSets; i++) {
-        
-        incompleteSets[i] =
+  }, [])
 
-          <div className="uncompleted-set-container" id={i} >
-            <p className="uncompleted-set-score home"></p>
+  useEffect(() => {
 
-            <p className="uncompleted-set-score away"></p>
-          </div>
-        
+    if (matchInfo.matchStatus === "live") {
+
+      setScoreInfo(prevState => ({
+        server: match.sport_event_status.game_state.serving
+      }))
+
+      setScoreInfo(prevState => ({
+        serviceScoreHome: match.sport_event_status.game_state.home_score
+      }))
+
+      setScoreInfo(prevState => ({
+        serviceScoreAway: match.sport_event_status.game_state.away_score
+      }))
+
+      let formatValue
+
+      const generateSets = (formatValue) => {
+
+        const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
+
+        for (let i = 0; i < formatValue; i++) {
+
+          if (match.sport_event_status.period_scores[i] !== undefined) {
+            
+            let homeScore = sets[i] + "Home"
+            let awayScore = sets[i] + "Away"
+
+            setScoreInfo(prevState => ({
+              ...prevState,
+              [homeScore]: match.sport_event_status.period_scores[i].home,
+              [awayScore]: match.sport_event_status.period_scores[i].away
+            }))
+          }
+        }
       }
 
-      return incompleteSets
+      if (matchInfo.matchFormat === "bo3") {
 
-    } else {
+        formatValue = 3
 
-      for (let i = 1; i <= 5 - totalCompletedSets; i++) {
-        
-        incompleteSets[i] =
-          
-          <div className="uncompleted-set-container" id={i} >
-            <p className="uncompleted-set-score home"></p>
+        generateSets(formatValue)
 
-            <p className="uncompleted-set-score away"></p>
-          </div>
-        
+      } else if (matchInfo.matchFormat === "bo5") {
+
+        formatValue = 5
+
+        generateSets(formatValue)
+
       }
-
-      return incompleteSets
-
     }
-  };
+  }, [matchInfo])
 
-  const incompleteSets = generateSets(match, completedSets);
-
-  console.log(completedSets)
-  console.log(incompleteSets)
-
-  const handleMatch = (match, matchid) => {
-    localStorage.setItem("currentSinglesTournament", JSON.stringify(match));
+  const handleMatch = (matchInfo, scoreInfo, matchid) => {
+    localStorage.setItem("currentMatchInfo", JSON.stringify(matchInfo))
+    localStorage.setItem("currentMatchScore", JSON.stringify(scoreInfo));
     history.push(`/tournament/${matchid}`);
   };
 
@@ -152,79 +238,81 @@ export default function MatchCard(props) {
       className="match-card-container"
       id={key}
       key={key}
-      onClick={(e) => handleMatch(match, match.id)}
+      onClick={(e) => handleMatch(matchInfo, match.id)}
     >
       <div className="match-card-header-container">
-        <p className="match-card-title">{`${tournamentGender} ${tournamentDiscipline} - ${tournamentRound}`}</p>
-        <p className="match-court">{`${match.sport_event_conditions.venue.name}`}</p>
+        <p className="match-card-title">{`${matchInfo.tournamentEvent} ${matchInfo.tournamentDiscipline}`}</p>
+        <p className="match-court">{`${matchInfo.matchCourt}`}</p>
       </div>
 
       <div className="match-container">
 
-        <div className="competitors-container">
-          {players}
-        </div>
+        <p className="match-round">{`${matchInfo.tournamentRound}`}</p>
 
-        <div className="score-container">
+        <div className="competitor-container" id="home">
 
-          <div className="service-container">
+          <p className="competitor-name">{`${matchInfo.homeCompetitor}`}</p>
 
-            {match.sport_event_status.status === "live" ? (
-
-              match.sport_event_status.game_state.serving === "home" ? (
-                <>
-                  <i className="fas fa-circle server-icon home"></i>
-
-                  <div className="receiver-icon away" />
-                </>
-              ) : (
-                <>
-                  <div className="receiver-icon home" />
-
-                  <i className="fas fa-circle server-icon away"></i>
-                </>
-              )
-            ) : (
-              <>
-                <i className="fas fa-circle server-icon home"></i>
-
-                <div className="receiver-icon away" />
-              </>
-            )}
+          {matchInfo.serving === "home" ? 
+          
+            <i className="fas fa-circle service-icon" id="server home"></i>
             
-          </div>
+          :
+            
+            <div className="service-icon" id="receiver home" />
+          
+          }
 
-          <div className="service-score-container">
+          <p className="service-score home">{scoreInfo.serviceScoreHome}</p>
 
-            {match.sport_event_status.status === "live" ? (
-              <>
-                <p className="service-score home">
-                  {match.sport_event_status.game_state.home_score}
-                </p>
+          <p className="set-score home" id="set-one">{scoreInfo.setOneScoreHome}</p>
 
-                <p className="service-score away">
-                  {match.sport_event_status.game_state.away_score}
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="service-score home"></p>
+          <p className="set-score home" id="set-two">{scoreInfo.setTwoScoreHome}</p>
 
-                <p className="service-score away"></p>
-              </>
-            )}
-          </div>
+          <p className="set-score home" id="set-three">{scoreInfo.setThreeScoreHome}</p>
 
-          {completedSets}
+          <p className="set-score home" id="set-four">{scoreInfo.setFourScoreHome}</p>
 
-          {incompleteSets}
+          <p className="set-score home" id="set-five">{scoreInfo.setFiveScoreHome}</p>
 
         </div>
+
+        <div className="competitor-container" id="away">
+
+          <p className="competitor-name">{`${matchInfo.awayCompetitor}`}</p>
+
+          {matchInfo.serving === "away" ? 
+
+            <i className="fas fa-circle service-icon" id="server away"></i>
+            
+          :
+            
+            <div className="service-icon" id="receiver away" />
+
+          }
+
+          <p className="service-score away">{scoreInfo.serviceScoreAway}</p>
+
+          <p className="set-score away" id="set-one">{scoreInfo.setOneScoreAway}</p>
+
+          <p className="set-score away" id="set-two">{scoreInfo.setTwoScoreAway}</p>
+
+          <p className="set-score away" id="set-three">{scoreInfo.setThreeScoreAway}</p>
+
+          <p className="set-score away" id="set-four">{scoreInfo.setFourScoreAway}</p>
+
+          <p className="set-score away" id="set-five">{scoreInfo.setFiveScoreAway}</p>
+
+        </div>
+
+        <p className="match-status">{`${matchInfo.matchStatus}`}</p>
+
       </div>
 
-      <div className="match-status-container">
-        {match.sport_event_status.status}
+      <div className="match-stats-container">
+        VIEW MATCH STATS
       </div>
+      
     </div>
   );
 }
