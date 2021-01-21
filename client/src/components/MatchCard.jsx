@@ -3,6 +3,11 @@ import { useHistory } from "react-router-dom";
 
 import "./MatchCard.css";
 
+import {
+  getMatch,
+  getMatchDetails
+} from '../utils/matches'
+
 export default function MatchCard(props) {
   const { match, index, key } = props;
   const history = useHistory();
@@ -62,7 +67,7 @@ export default function MatchCard(props) {
             tournamentRound: "Round of 32"
           }));
           break;
-        case "Round of 16":
+        case "round_of_16":
           setMatchInfo(prevState => ({
             ...prevState,
             tournamentRound: "Round of 16"
@@ -178,14 +183,17 @@ export default function MatchCard(props) {
     if (matchInfo.matchStatus === "live") {
 
       setScoreInfo(prevState => ({
+        ...prevState,
         server: match.sport_event_status.game_state.serving
       }))
 
       setScoreInfo(prevState => ({
+        ...prevState,
         serviceScoreHome: match.sport_event_status.game_state.home_score
       }))
 
       setScoreInfo(prevState => ({
+        ...prevState,
         serviceScoreAway: match.sport_event_status.game_state.away_score
       }))
 
@@ -204,8 +212,8 @@ export default function MatchCard(props) {
 
             setScoreInfo(prevState => ({
               ...prevState,
-              [homeScore]: match.sport_event_status.period_scores[i].home,
-              [awayScore]: match.sport_event_status.period_scores[i].away
+              [homeScore]: match.sport_event_status.period_scores[i].home_score,
+              [awayScore]: match.sport_event_status.period_scores[i].away_score
             }))
           }
         }
@@ -262,7 +270,7 @@ export default function MatchCard(props) {
 
           <p className="competitor-name">{`${matchInfo.homeCompetitor}`}</p>
 
-          {matchInfo.serving === "home" ? 
+          {scoreInfo.server === "home" ? 
           
             <i className="fas fa-circle service-icon" id="server home"></i>
             
@@ -305,7 +313,7 @@ export default function MatchCard(props) {
 
           <p className="competitor-name">{`${matchInfo.awayCompetitor}`}</p>
 
-          {matchInfo.serving === "away" ? 
+          {scoreInfo.server === "away" ? 
 
             <i className="fas fa-circle service-icon" id="server away"></i>
             
