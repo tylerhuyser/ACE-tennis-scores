@@ -1,7 +1,7 @@
 .match-card-container {
   height: 250px;
   width: 100%;
-  z-index: 2;
+  z-index: 3;
   margin-bottom: 50px;
 
   border: solid white 5px;
@@ -17,7 +17,9 @@
   justify-content: flex-start;
   align-items: flex-start;
 
-
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
 
 .match-card-header-container {
@@ -46,7 +48,7 @@
 .match-container {
   background-color: #172a45;
   width: 100%;
-  height: 75%;
+  max-height: 70%;
   padding: 15px 15px;
 
   font-family: helvetica;
@@ -54,7 +56,7 @@
   color: white;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   flex-shrink: 1;
@@ -64,74 +66,105 @@
   box-sizing: border-box;
 }
 
-.competitors-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+.match-info-container {
+  width: 100%;
+  height: 20%;
 
-  height: 100%;
-  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.match-round, .match-status {
+  width: 50%;
+  margin: 0px;
+  
+  font-family: amagro-bold;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 4px;
+}
+
+.match-round {
+  text-align: left;
+}
+
+.match-status {
+  text-align: right;
+}
+
+.competitor-container, .set-labels-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  height: 30%;
+  width: 100%;
   padding: 5px 10px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+
+  border: 1px solid white;
 
   text-align: left;
   font-weight: 500;
 
   -webkit-box-sizing: padding-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: padding-box;
+  box-sizing: border-box;
   
 }
 
-.score-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-
-  height: 100%;
-  width: 60%;
-}
-
-.service-container,
-.completed-set-container,
-.uncompleted-set-container, .service-score-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  height: 100%;
-  width: 15%;
-  padding: 5px 10px;
-  
-}
-
-.home, .away {
-  height: 45%;
-  width: 100%;
+.set-labels-container {
+  height: 5%;
   margin: 0px;
+  border: none;
+  justify-content: flex-end;
 
-  border-top: solid white 1px;
-  border-bottom: solid white 1px;
- 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
 
-.home {
-  margin-bottom: 25px;
+.set-score, .service-score, .service-icon, .set-label {
+  width: 10%;
+  height: 25px;
+  margin: 0;
+
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.match-status-container {
+.set-label {
+  height: 5px;
+  line-height: 5px;
+  font-size: 8px;
+}
+
+.competitor-name {
+  width: 30%;
+  height: 25px;
+  line-height: 25px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.match-stats-container {
   background-color: #f39c12;
   width: 100%;
-  height: 10%;
+  height: 15%;
   padding: 25px;
   z-index: 1;
 
   display: flex;
+  justify-content: center;
   align-items: center;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */

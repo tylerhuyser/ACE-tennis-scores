@@ -241,13 +241,22 @@ export default function MatchCard(props) {
       onClick={(e) => handleMatch(matchInfo, match.id)}
     >
       <div className="match-card-header-container">
+
         <p className="match-card-title">{`${matchInfo.tournamentEvent} ${matchInfo.tournamentDiscipline}`}</p>
+
         <p className="match-court">{`${matchInfo.matchCourt}`}</p>
+
       </div>
 
       <div className="match-container">
 
-        <p className="match-round">{`${matchInfo.tournamentRound}`}</p>
+        <div className="match-info-container">
+
+          <p className="match-round">{`${matchInfo.tournamentRound}`}</p>
+
+          <p className="match-status">{`${matchInfo.matchStatus}`}</p>
+
+        </div>
 
         <div className="competitor-container" id="home">
 
@@ -277,6 +286,21 @@ export default function MatchCard(props) {
 
         </div>
 
+        <div className="set-labels-container">
+
+          <p className="set-label" id="set-one">1</p>
+
+          <p className="set-label" id="set-two">2</p>
+
+          <p className="set-label" id="set-three">3</p>
+
+          <p className="set-label" id="set-four">4</p>
+
+          <p className="set-label" id="set-five">5</p>
+
+        </div>
+        
+
         <div className="competitor-container" id="away">
 
           <p className="competitor-name">{`${matchInfo.awayCompetitor}`}</p>
@@ -304,8 +328,6 @@ export default function MatchCard(props) {
           <p className="set-score away" id="set-five">{scoreInfo.setFiveScoreAway}</p>
 
         </div>
-
-        <p className="match-status">{`${matchInfo.matchStatus}`}</p>
 
       </div>
 
