@@ -5,22 +5,22 @@ import MatchCard from "../components/MatchCard";
 import "./Matches.css";
 
 export default function Matches(props) {
-  const { matchData, view } = props;
+  const { matchesData, view } = props;
 
-  console.log(matchData);
-  console.log(matchData.length !== 0);
+  console.log(matchesData);
+  console.log(matchesData.length !== 0);
 
   const matches =
-    matchData &&
-    matchData?.map((match, index) => (
-      <MatchCard match={match} index={index} key={match.id} />
+    matchesData &&
+    matchesData?.map((matchData, index) => (
+      <MatchCard matchData={matchData} index={index} key={matchData.id} />
     ));
 
   return (
     <div className="matches-container">
-      {matchData !== undefined &&
-      matchData !== null &&
-      matchData.length !== 0 ? (
+      {matchesData !== undefined &&
+      matchesData !== null &&
+      matchesData.length !== 0 ? (
         <>{matches}</>
       ) : (
         <p className="match-container-copy">

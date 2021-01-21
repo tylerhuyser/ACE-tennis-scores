@@ -9,8 +9,10 @@ import {
 } from '../utils/matches'
 
 export default function MatchCard(props) {
-  const { match, index, key } = props;
+  const { matchData, index, key } = props;
   const history = useHistory();
+
+  const [ match, setMatch ] = useState(null)
 
   const [matchInfo, setMatchInfo] = useState({
 
@@ -46,137 +48,151 @@ export default function MatchCard(props) {
   })
 
   useEffect(() => {
-
-    const parseTournamentRound = (tournamentRound) => {
-      switch (tournamentRound) {
-        case "round_of_128":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Round of 128"
-          }));
-          break;
-        case "round_of_64":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Round of 64"
-          }));
-          break;
-        case "round_of_32":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Round of 32"
-          }));
-          break;
-        case "round_of_16":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Round of 16"
-          }));
-          break;
-        case "round_of_8":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Quarterfinal"
-          }));
-          break;
-        case "quarterfinal":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Quarterfinal"
-          }));
-          break;
-        case "round_of_4":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Semifinal"
-          }));
-          break;
-        case "semifinal":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Semifinal"
-          }));
-          break;
-        case "round_of_2":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Final"
-          }));
-          break;
-        case "final":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentRound: "Final"
-          }));
-          break;
-        default:
-          break;
+    if (match === null) {
+      setMatch(matchData)
+    } else {
+      const fetchMatch = async (matchID) => {
+        const data = await getMatch(matchID)
+        setMatch(data)
       }
-    };
+      fetchMatch(matchData.id)
+    }  
+  }, [])
 
-    parseTournamentRound(
-      match.sport_event.tournament_round.name
-    );
+  useEffect(() => {
 
-    const parseTournamentDiscipline = (tournamentType) => {
-      switch (tournamentType) {
-        case "singles":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentDiscipline: "Singles"
-          }));
-          break;
-        case "doubles":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentDiscipline: "Doubles"
-          }));
-          break;
-        case "mixed":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentDiscipline: "Mixed"
-          }));
-          break;
-        default:
-          break;
-      }
-    };
+    if (match !== null) {
 
-    parseTournamentDiscipline(
-      match.sport_event.sport_event_type
-    );
+      const parseTournamentRound = (tournamentRound) => {
+        switch (tournamentRound) {
+          case "round_of_128":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 128"
+            }));
+            break;
+          case "round_of_64":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 64"
+            }));
+            break;
+          case "round_of_32":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 32"
+            }));
+            break;
+          case "round_of_16":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 16"
+            }));
+            break;
+          case "round_of_8":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Quarterfinal"
+            }));
+            break;
+          case "quarterfinal":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Quarterfinal"
+            }));
+            break;
+          case "round_of_4":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Semifinal"
+            }));
+            break;
+          case "semifinal":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Semifinal"
+            }));
+            break;
+          case "round_of_2":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Final"
+            }));
+            break;
+          case "final":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Final"
+            }));
+            break;
+          default:
+            break;
+        }
+      };
 
-    const parseTournamentGender = (tournamentGender) => {
-      switch (tournamentGender) {
-        case "men":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentEvent: "Men's"
-          }));
-          break;
-        case "women":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentEvent: "Women's"
-          }));
-          break;
-        case "mixed":
-          setMatchInfo(prevState => ({
-            ...prevState,
-            tournamentEvent: "Mixed"
-          }));
-          break;
-        default:
-          break;
-      }
-    };
-
-    parseTournamentGender(
-        match.sport_event.tournament.gender
+      parseTournamentRound(
+        match.sport_event.tournament_round.name
       );
 
-  }, [])
+      const parseTournamentDiscipline = (tournamentType) => {
+        switch (tournamentType) {
+          case "singles":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentDiscipline: "Singles"
+            }));
+            break;
+          case "doubles":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentDiscipline: "Doubles"
+            }));
+            break;
+          case "mixed":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentDiscipline: "Mixed"
+            }));
+            break;
+          default:
+            break;
+        }
+      };
+
+      parseTournamentDiscipline(
+        match.sport_event.sport_event_type
+      );
+
+      const parseTournamentGender = (tournamentGender) => {
+        switch (tournamentGender) {
+          case "men":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentEvent: "Men's"
+            }));
+            break;
+          case "women":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentEvent: "Women's"
+            }));
+            break;
+          case "mixed":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentEvent: "Mixed"
+            }));
+            break;
+          default:
+            break;
+        }
+      };
+
+      parseTournamentGender(
+        match.sport_event.tournament.gender
+      );
+    }
+  }, [match])
 
   useEffect(() => {
 
@@ -246,7 +262,6 @@ export default function MatchCard(props) {
       className="match-card-container"
       id={key}
       key={key}
-      onClick={(e) => handleMatch(matchInfo, match.id)}
     >
       <div className="match-card-header-container">
 
@@ -339,7 +354,8 @@ export default function MatchCard(props) {
 
       </div>
 
-      <div className="match-stats-container">
+      <div className="match-stats-container"
+           onClick={(e) => handleMatch(matchInfo, match.id)}>
         VIEW MATCH STATS
       </div>
       

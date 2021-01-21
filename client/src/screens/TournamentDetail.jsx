@@ -212,7 +212,7 @@ export default function TournamentDetail(props) {
 
       { view === "Live Scores" ?
       
-        <Matches matchData={ currentMode ? liveDoublesMatches : liveSinglesMatches } view={view} />
+        <Matches matchesData={ currentMode ? liveDoublesMatches : liveSinglesMatches } view={view} />
 
       :
       
@@ -220,7 +220,7 @@ export default function TournamentDetail(props) {
         
         { view === "Completed Matches" ?
       
-          <Matches matchData={ currentMode ? completedDoublesMatches : completedSinglesMatches } view={view} />
+          <Matches matchesData={ currentMode ? completedDoublesMatches : completedSinglesMatches } view={view} />
             
         :
           
