@@ -71,19 +71,19 @@ export default function MatchDetail(props) {
 
           <p className="statistic-category">{`${homeStats.name}`}</p>
 
-          <p className="statistic-category">First Serve Percentage</p>
+          <p className="statistic-category">{`${homeStats.statistics.first_serve_successful}/${homeStats.statistics.first_serve_successful+homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults} (${homeStats.statistics.first_serve_successful/(homeStats.statistics.first_serve_successful+homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults)*100}%)`}</p>
 
-          <p className="statistic-category">Second Serve Percentage</p>
+          <p className="statistic-category">{`${homeStats.statistics.second_serve_successful}/${homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults} (${homeStats.statistics.second_serve_successful/(homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults)*100}%)`}</p>
 
           <p className="statistic-category">{`${homeStats.statistics.aces}`}</p>
 
           <p className="statistic-category">{`${homeStats.statistics.double_faults}`}</p>
 
-          <p className="statistic-category">First Serve Points Won</p>
+          <p className="statistic-category">{`${homeStats.statistics.first_serve_points_won}/${homeStats.statistics.first_serve_successful} (${homeStats.statistics.first_serve_points_won/homeStats.statistics.first_serve_successful*100}%)`}</p>
 
-          <p className="statistic-category">Second Serve Points Won</p>
+          <p className="statistic-category">{`${homeStats.statistics.second_serve_points_won}/${homeStats.statistics.second_serve_successful}`}</p>
 
-          <p className="statistic-category">Receiving Points Won</p>
+          <p className="statistic-category">{`${homeStats.statistics.receiver_points_won}/${ (awayStats.statistics.first_serve_successful+awayStats.statistics.second_serve_successful)} (${(homeStats.statistics.receiver_points_won/(awayStats.statistics.first_serve_successful+awayStats.statistics.second_serve_successful)*100)}%)`}</p>
 
           <p className="statistic-category">{`${homeStats.statistics.breakpoints_won}/${homeStats.statistics.total_breakpoints} (${homeStats.statistics.breakpoints_won/homeStats.statistics.total_breakpoints*100}%)`}</p>
 
