@@ -71,7 +71,7 @@ export default function MatchDetail(props) {
 
           <p className="statistic-category">{`${homeStats.name}`}</p>
 
-          <p className="statistic-category">{`${homeStats.statistics.first_serve_successful}/${homeStats.statistics.first_serve_successful+homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults} (${homeStats.statistics.first_serve_successful/(homeStats.statistics.first_serve_successful+homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults)*100}%)`}</p>
+          <p className="statistic-category">{homeStats.statistics.first_serve_successful}+{`/`}+{homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults}+{`(`}+{homeStats.statistics.first_serve_successful/(homeStats.statistics.first_serve_successful+homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults)*100}+{`%)`}</p>
 
           <p className="statistic-category">{`${homeStats.statistics.second_serve_successful}/${homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults} (${homeStats.statistics.second_serve_successful/(homeStats.statistics.second_serve_successful+homeStats.statistics.double_faults)*100}%)`}</p>
 

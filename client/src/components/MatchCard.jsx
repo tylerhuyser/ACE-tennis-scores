@@ -49,10 +49,12 @@ export default function MatchCard(props) {
 
   useEffect(() => {
     
-      setInterval(() => {
-        if (match === null) {
+     const interval = setInterval(() => {
+       if (match === null) {
+          console.log('setMatchData')
           setMatch(matchData)
-        } else {
+       } else if (matchInfo.matchStatus === "live") {
+         console.log('live data')
           console.log(matchData)
           const fetchMatch = async (matchID) => {
             const data = await getMatch(matchID)
@@ -60,16 +62,18 @@ export default function MatchCard(props) {
             setMatch(data)
           }
           fetchMatch(matchData.id)
-        }  
-      }, 5000);
+        } else {
+          clearInterval(interval)
+       }
+     }, 60000);
+    
+     return () => clearInterval(interval);
     
   }, [])
 
   useEffect(() => {
 
     if (match !== null) {
-
-      console.log(match)
 
       const parseTournamentRound = (tournamentRound) => {
         switch (tournamentRound) {
@@ -206,14 +210,9 @@ export default function MatchCard(props) {
 
     if (match !== null) {
 
-      if (matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended") {
+      if (matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted" ) {
 
         console.log(match)
-
-        setScoreInfo(prevState => ({
-          ...prevState,
-          server: match.sport_event_status.game_state.serving
-        }))
 
         setScoreInfo(prevState => ({
           ...prevState,
@@ -261,6 +260,14 @@ export default function MatchCard(props) {
 
         }
       }
+
+      if (match === "live") {
+        setScoreInfo(prevState => ({
+          ...prevState,
+          server: match.sport_event_status.game_state.serving
+        }))
+      }
+
     }
   }, [matchInfo])
 
