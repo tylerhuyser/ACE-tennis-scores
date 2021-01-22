@@ -16,16 +16,16 @@ export default function MatchCard(props) {
 
   const [matchInfo, setMatchInfo] = useState({
 
-    tournamentEvent: match.sport_event.tournament.gender,
-    tournamentDiscipline: match.sport_event.sport_event_type,
-    tournamentRound: match.sport_event.tournament_round.name,
+    tournamentEvent: matchData.sport_event.tournament.gender,
+    tournamentDiscipline: matchData.sport_event.sport_event_type,
+    tournamentRound: matchData.sport_event.tournament_round.name,
 
-    matchFormat: match.sport_event_conditions.match_mode,
-    matchCourt: match.sport_event_conditions.venue.name,
-    matchStatus: match.sport_event_status.status,
+    matchFormat: matchData.sport_event_conditions.match_mode,
+    matchCourt: matchData.sport_event_conditions.venue.name,
+    matchStatus: matchData.sport_event_status.match_status,
 
-    homeCompetitor: match.sport_event.competitors[0].name,
-    awayCompetitor: match.sport_event.competitors[1].name
+    homeCompetitor: matchData.sport_event.competitors[0].name,
+    awayCompetitor: matchData.sport_event.competitors[1].name
 
   })
 
@@ -48,20 +48,27 @@ export default function MatchCard(props) {
   })
 
   useEffect(() => {
-    if (match === null) {
-      setMatch(matchData)
-    } else {
-      const fetchMatch = async (matchID) => {
-        const data = await getMatch(matchID)
-        setMatch(data)
-      }
-      fetchMatch(matchData.id)
-    }  
+    
+      const interval = setInterval(() => {
+        if (match === null) {
+          setMatch(matchData)
+        } else {
+          const fetchMatch = async (matchID) => {
+            const data = await getMatch(matchID)
+            console.log("intreval")
+            setMatch(data)
+          }
+          fetchMatch(matchData.id)
+        }  
+      }, 5000);
+    
   }, [])
 
   useEffect(() => {
 
     if (match !== null) {
+
+      console.log(match)
 
       const parseTournamentRound = (tournamentRound) => {
         switch (tournamentRound) {
@@ -196,57 +203,62 @@ export default function MatchCard(props) {
 
   useEffect(() => {
 
-    if (matchInfo.matchStatus === "live") {
+    if (match !== null) {
 
-      setScoreInfo(prevState => ({
-        ...prevState,
-        server: match.sport_event_status.game_state.serving
-      }))
+      if (matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended") {
 
-      setScoreInfo(prevState => ({
-        ...prevState,
-        serviceScoreHome: match.sport_event_status.game_state.home_score
-      }))
+        console.log(match)
 
-      setScoreInfo(prevState => ({
-        ...prevState,
-        serviceScoreAway: match.sport_event_status.game_state.away_score
-      }))
+        setScoreInfo(prevState => ({
+          ...prevState,
+          server: match.sport_event_status.game_state.serving
+        }))
 
-      let formatValue
+        setScoreInfo(prevState => ({
+          ...prevState,
+          serviceScoreHome: match.sport_event_status.game_state.home_score
+        }))
 
-      const generateSets = (formatValue) => {
+        setScoreInfo(prevState => ({
+          ...prevState,
+          serviceScoreAway: match.sport_event_status.game_state.away_score
+        }))
 
-        const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
+        let formatValue
 
-        for (let i = 0; i < formatValue; i++) {
+        const generateSets = (formatValue) => {
 
-          if (match.sport_event_status.period_scores[i] !== undefined) {
+          const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
+
+          for (let i = 0; i < formatValue; i++) {
+
+            if (match.sport_event_status.period_scores[i] !== undefined) {
             
-            let homeScore = sets[i] + "Home"
-            let awayScore = sets[i] + "Away"
+              let homeScore = sets[i] + "Home"
+              let awayScore = sets[i] + "Away"
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              [homeScore]: match.sport_event_status.period_scores[i].home_score,
-              [awayScore]: match.sport_event_status.period_scores[i].away_score
-            }))
+              setScoreInfo(prevState => ({
+                ...prevState,
+                [homeScore]: match.sport_event_status.period_scores[i].home_score,
+                [awayScore]: match.sport_event_status.period_scores[i].away_score
+              }))
+            }
           }
         }
-      }
 
-      if (matchInfo.matchFormat === "bo3") {
+        if (matchInfo.matchFormat === "bo3") {
 
-        formatValue = 3
+          formatValue = 3
 
-        generateSets(formatValue)
+          generateSets(formatValue, match)
 
-      } else if (matchInfo.matchFormat === "bo5") {
+        } else if (matchInfo.matchFormat === "bo5") {
 
-        formatValue = 5
+          formatValue = 5
 
-        generateSets(formatValue)
+          generateSets(formatValue, match)
 
+        }
       }
     }
   }, [matchInfo])
