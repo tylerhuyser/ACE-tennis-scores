@@ -22,7 +22,7 @@ export default function MatchCard(props) {
 
     matchFormat: matchData.sport_event_conditions.match_mode,
     matchCourt: matchData.sport_event_conditions.venue.name,
-    matchStatus: matchData.sport_event_status.match_status,
+    matchStatus: matchData.sport_event_status.status,
 
     homeCompetitor: matchData.sport_event.competitors[0].name,
     awayCompetitor: matchData.sport_event.competitors[1].name
@@ -53,6 +53,7 @@ export default function MatchCard(props) {
         if (match === null) {
           setMatch(matchData)
         } else {
+          console.log(matchData)
           const fetchMatch = async (matchID) => {
             const data = await getMatch(matchID)
             console.log("intreval")
@@ -274,6 +275,7 @@ export default function MatchCard(props) {
       className="match-card-container"
       id={key}
       key={key}
+      onClick={(e) => handleMatch(matchInfo, match.id)}
     >
       <div className="match-card-header-container">
 
@@ -366,8 +368,7 @@ export default function MatchCard(props) {
 
       </div>
 
-      <div className="match-stats-container"
-           onClick={(e) => handleMatch(matchInfo, match.id)}>
+      <div className="match-stats-container">
         VIEW MATCH STATS
       </div>
       
