@@ -9,7 +9,7 @@ import {
 } from '../utils/matches'
 
 export default function MatchCard(props) {
-  const { matchData, index, key } = props;
+  const { matchData, key } = props;
   const history = useHistory();
 
   const [ match, setMatch ] = useState(null)
@@ -49,7 +49,7 @@ export default function MatchCard(props) {
 
   useEffect(() => {
     
-      const interval = setInterval(() => {
+      setInterval(() => {
         if (match === null) {
           setMatch(matchData)
         } else {

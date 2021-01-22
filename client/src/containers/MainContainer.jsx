@@ -45,7 +45,13 @@ export default function MainContainer(props) {
         </Route>
 
         <Route path="/match/:id">
-          <MatchDetail />
+          <MatchDetail
+            tournaments={tournaments}
+            dailySchedule={dailySchedule}
+            dailyResults={dailyResults}
+            liveMatches={liveMatches}
+            currentDate={currentDate}
+          />
         </Route>
 
         <Route path="/player/:id">
