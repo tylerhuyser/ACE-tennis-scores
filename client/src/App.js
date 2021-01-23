@@ -40,19 +40,32 @@ function App () {
   
   useEffect(() => {
 
-    const gatherActiveTournaments = async () => {
-      const tournamentData = await getCurrentTournaments()
-      setTournaments(tournamentData.tournaments)
-      console.log(tournamentData.tournaments)
-      localStorage.setItem('tournaments', tournamentData)
+    const tournamentData = localStorage.getItem('tournaments')
+
+    if (tournaments.length === 0 && tournamentData === null) {
+
+      const gatherActiveTournaments = async () => {
+        console.log('apirequest 1')
+        const tournamentData = await getCurrentTournaments()
+        setTournaments(tournamentData.tournaments)
+        console.log(tournamentData.tournaments)
+        localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
+      }
+      gatherActiveTournaments()
+
+    } else {
+
+      console.log(JSON.parse(tournamentData))
+      setTournaments(JSON.parse(tournamentData))
+
     }
-    gatherActiveTournaments()
 
   }, [])
 
   useEffect(() => {
 
     if (tournaments && tournaments.length !== 0) {
+      console.log('apirequest 2')
       const gatherDailySchedule = async (currentYear, currentMonth, currentDay) => {
         const dailyScheduleData = await getDailySchedule(currentYear, currentMonth, currentDay)
         console.log(dailyScheduleData.sport_events)
@@ -72,6 +85,7 @@ function App () {
   useEffect(() => {
 
     if (dailySchedule && dailySchedule.length !== 0) {
+      console.log('apirequest 3')
       const gatherDailyResults = async (currentYear, currentMonth, currentDay) => {
         const dailyResultsData = await getDailyResults(currentYear, currentMonth, currentDay)
         console.log(dailyResultsData.results)
@@ -86,6 +100,7 @@ function App () {
   useEffect(() => {
 
     if (dailySchedule && dailySchedule.length !== 0) {
+      console.log('apirequest 4')
       const gatherLiveMatches = async () => {
         const liveMatchesData = await getLiveMatches()
         console.log(liveMatchesData.summaries)

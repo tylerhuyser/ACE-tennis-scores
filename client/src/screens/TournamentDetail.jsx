@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Switch from "react-switch";
 
 import Matches from '../components/Matches'
-import Schedule from '../components/Schedule'
+import OrderOfPlay from '../components/OrderOfPlay'
 
 import './TournamentDetail.css'
 
@@ -224,7 +224,7 @@ export default function TournamentDetail(props) {
             
         :
           
-          <Schedule currentTournamentSchedule={currentTournamentSchedule} />
+          <OrderOfPlay currentTournamentSchedule={currentTournamentSchedule} />
       
         }
       

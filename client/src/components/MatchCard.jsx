@@ -49,27 +49,34 @@ export default function MatchCard(props) {
 
   useEffect(() => {
     
-     const interval = setInterval(() => {
-       if (match === null) {
-          console.log('setMatchData')
-          setMatch(matchData)
-       } else if (matchInfo.matchStatus === "live") {
-         console.log('live data')
-          console.log(matchData)
-          const fetchMatch = async (matchID) => {
-            const data = await getMatch(matchID)
-            console.log("intreval")
-            setMatch(data)
-          }
-          fetchMatch(matchData.id)
-        } else {
-          clearInterval(interval)
-       }
-     }, 60000);
-    
-     return () => clearInterval(interval);
+    if (match === null) {
+      console.log('setMatchData')
+      setMatch(matchData)
+    } 
     
   }, [])
+
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+
+      if (matchInfo.matchStatus === "live") {
+        console.log('live data')
+         console.log(matchData)
+         const fetchMatch = async (matchID) => {
+           const data = await getMatch(matchID)
+           console.log("intreval")
+           setMatch(data)
+         }
+         fetchMatch(matchData.sport_event.id)
+       } else {
+         clearInterval(interval)
+      }
+    }, 60000);
+   
+    return () => clearInterval(interval);
+
+  }, [scoreInfo])
 
   useEffect(() => {
 
@@ -210,30 +217,36 @@ export default function MatchCard(props) {
 
     if (match !== null) {
 
-      if (matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted" ) {
+      const handleHomeScore = () => {
+        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
+          setScoreInfo(prevState => ({
+            ...prevState,
+            serviceScoreHome: match.sport_event_status.game_state.home_score
+          }))
+        }
+      }
 
-        console.log(match)
+      const handleAwayScore = () => {
+        
+        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
 
-        setScoreInfo(prevState => ({
-          ...prevState,
-          serviceScoreHome: match.sport_event_status.game_state.home_score
-        }))
+          setScoreInfo(prevState => ({
+            ...prevState,
+            serviceScoreAway: match.sport_event_status.game_state.away_score
+          }))
+        }
+      }
 
-        setScoreInfo(prevState => ({
-          ...prevState,
-          serviceScoreAway: match.sport_event_status.game_state.away_score
-        }))
-
-        let formatValue
-
-        const generateSets = (formatValue) => {
+      const generateSets = (formatValue) => {
+        
+        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.period_scores !== undefined) {
 
           const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
 
           for (let i = 0; i < formatValue; i++) {
 
             if (match.sport_event_status.period_scores[i] !== undefined) {
-            
+          
               let homeScore = sets[i] + "Home"
               let awayScore = sets[i] + "Away"
 
@@ -245,36 +258,42 @@ export default function MatchCard(props) {
             }
           }
         }
-
-        if (matchInfo.matchFormat === "bo3") {
-
-          formatValue = 3
-
-          generateSets(formatValue, match)
-
-        } else if (matchInfo.matchFormat === "bo5") {
-
-          formatValue = 5
-
-          generateSets(formatValue, match)
-
-        }
       }
 
-      if (match === "live") {
-        setScoreInfo(prevState => ({
-          ...prevState,
-          server: match.sport_event_status.game_state.serving
-        }))
+      const handleServer = () => {
+        if (matchInfo.matchStatus === "live" && match.sport_event_status.game_state.serving !== undefined) {
+          setScoreInfo(prevState => ({
+            ...prevState,
+            server: match.sport_event_status.game_state.serving
+          }))
+        }
+      }
+        
+      handleHomeScore()
+      handleAwayScore()
+      handleServer()
+
+      if (matchInfo.matchFormat === "bo3") {
+
+        let formatValue = 3
+
+        generateSets(formatValue, match)
+
+      } else if (matchInfo.matchFormat === "bo5") {
+
+        let formatValue = 5
+
+        generateSets(formatValue, match)
+
       }
 
     }
-  }, [matchInfo])
+  }, [match, matchInfo])
 
   const handleMatch = (matchInfo, scoreInfo, matchid) => {
     localStorage.setItem("currentMatchInfo", JSON.stringify(matchInfo))
     localStorage.setItem("currentMatchScore", JSON.stringify(scoreInfo));
-    history.push(`/tournament/${matchid}`);
+    history.push(`/tournament/${matchData.sport_event.id}`);
   };
 
   return (
