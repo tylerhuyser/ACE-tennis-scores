@@ -26,7 +26,7 @@ export default function MatchDetail(props) {
       setLoaded(true)
     }
   }, [])
- 
+
   useEffect(() => {
 
     if (loaded) {
