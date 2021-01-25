@@ -12,7 +12,7 @@ export default function MatchCard(props) {
   const { matchData, key } = props;
   const history = useHistory();
 
-  const [ match, setMatch ] = useState(null)
+  const [match, setMatch] = useState(null)
 
   const [matchInfo, setMatchInfo] = useState({
 
@@ -290,10 +290,10 @@ export default function MatchCard(props) {
     }
   }, [match, matchInfo])
 
-  const handleMatch = (matchInfo, scoreInfo, matchid) => {
+  const handleMatch = (matchInfo, scoreInfo, matchID) => {
     localStorage.setItem("currentMatchInfo", JSON.stringify(matchInfo))
     localStorage.setItem("currentMatchScore", JSON.stringify(scoreInfo));
-    history.push(`/tournament/${matchData.sport_event.id}`);
+    history.push(`/match/${matchID}`);
   };
 
   return (
@@ -301,7 +301,7 @@ export default function MatchCard(props) {
       className="match-card-container"
       id={key}
       key={key}
-      onClick={(e) => handleMatch(matchInfo, match.id)}
+      onClick={(e) => handleMatch(matchInfo, scoreInfo, matchData.sport_event.id)}
     >
       <div className="match-card-header-container">
 
