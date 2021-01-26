@@ -14,8 +14,8 @@ export default function OrderOfPlay(props) {
     let awayCompetitorCountry = '(' + match.competitors[1].country_code + ')'
     
     return (
-      <div className="match-container">
-        <p className="competitors">{homeCompetitorSeed !== undefined && homeCompetitorSeed !== null ? homeCompetitorSeed : ``}{` `}{homeCompetitorName}{` `}{homeCompetitorCountry !== undefined && homeCompetitorCountry !== null ? homeCompetitorCountry : `` }{` vs. `}{awayCompetitorSeed !== undefined && awayCompetitorSeed !== null ? awayCompetitorSeed : ``}{` `}{awayCompetitorName}{` `}{awayCompetitorCountry !== undefined && awayCompetitorCountry !== null ? awayCompetitorCountry : `` }</p>
+      <div className="match-container" key={match.id}>
+        <p className="competitors">{match.competitors[0].seed !== undefined && match.competitors[0].seed !== null ? homeCompetitorSeed : ``}{` `}{homeCompetitorName}{` `}{homeCompetitorCountry !== undefined && homeCompetitorCountry !== null ? homeCompetitorCountry : `` }{` vs. `}{match.competitors[1].seed !== undefined && match.competitors[1].seed !== null ? awayCompetitorSeed : ``}{` `}{awayCompetitorName}{` `}{awayCompetitorCountry !== undefined && awayCompetitorCountry !== null ? awayCompetitorCountry : `` }</p>
       </div>
     )})
   
