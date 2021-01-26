@@ -12,6 +12,8 @@ export default function MatchCard(props) {
   const { matchData, key } = props;
   const history = useHistory();
 
+  console.log(matchData)
+
   const [match, setMatch] = useState(null)
 
   const [matchInfo, setMatchInfo] = useState({
@@ -291,6 +293,7 @@ export default function MatchCard(props) {
   }, [match, matchInfo])
 
   const handleMatch = (matchInfo, scoreInfo, matchID) => {
+    localStorage.setItem("currentMatch", JSON.stringify(match))
     localStorage.setItem("currentMatchInfo", JSON.stringify(matchInfo))
     localStorage.setItem("currentMatchScore", JSON.stringify(scoreInfo));
     history.push(`/match/${matchID}`);

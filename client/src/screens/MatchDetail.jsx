@@ -13,16 +13,22 @@ export default function MatchDetail(props) {
 
   const params = useParams();
 
-  const { tournaments, dailySchedule, dailyResults, liveMatches, currentDate } = props;
+  const {  dailySchedule, dailyResults, liveMatches, currentDate } = props;
 
   useEffect(() => {
-    if (((dailySchedule || dailyResults || liveMatches) !== undefined) && (((dailySchedule || dailyResults || liveMatches)) !== null)) {
-      const currentMatchData = tournaments.find((tournament) => params.id === tournament.id)
-      setMatchData(currentMatchData)
-      setLoaded(true)
+
+    const match = localStorage.getItem('currentMatch')
+
+    if (match) {
+      if (((dailyResults || liveMatches) !== undefined) && (((dailyResults || liveMatches)) !== null)) {
+        console.log(dailyResults.concatlive(liveMatches))
+        const currentMatchData = dailyResults.concat(liveMatches).find((match) => params.id === match.sport_event.id)
+        console.log(currentMatchData)
+        setMatchData(currentMatchData)
+        setLoaded(true)
+      }
     } else {
-      const currentMatchData = localStorage.getItem('currentMatchData')
-      setMatchData(JSON.parse(currentMatchData))
+      setMatchData(JSON.parse(match))
       setLoaded(true)
     }
   }, [])
@@ -43,7 +49,7 @@ export default function MatchDetail(props) {
 
     <>
 
-      { loaded ? 
+      { ((loaded === false) && (matchData === null)) ? 
         
         <Loader />
      :
