@@ -6,13 +6,13 @@ import PlayerCard from '../components/PlayerCard'
 import {
   playerRankings,
   playerRaceRankings,
-  doubleTeamRankings,
-  doubleTeamRaceRankings
+  doublesTeamRankings,
+  doublesTeamRaceRankings
 } from '../utils/rankings'
 
 export default function Rankings(props) {
 
-  const [loaded, setLoaded]
+  const [loaded, setLoaded] = useState(false)
   const [event, setEvent] = useState('WTA')
   const [discpline, setDiscipline] = useState('singles')
   const [viewRace, setViewRace] = useState(false)
@@ -33,19 +33,19 @@ export default function Rankings(props) {
   if (event === "WTA" && discpline === "singles" && viewRace === false) {
     rankingCategory = femaleSinglesRankings
   } else if (event === "WTA" && discpline === "singles" && viewRace === true) {
-    rankingCategory = femaleSinglesRaceRankings
+    rankingCategory = femaleDoublesRankings
   } else if (event === "WTA" && discpline === "doubles" && viewRace === false) {
-    rankingCategory = femaleDoublesRaceRankings
+    rankingCategory = femaleSinglesRaceRankings
   } else if (event === "WTA" && discpline === "doubles" && viewRace === true) {
     rankingCategory = femaleDoublesRaceRankings
   } else if (event === "ATP" && discpline === "singles" && viewRace === false) {
-    rankingCategory = femaleSinglesRankings
+    rankingCategory = maleSinglesRankings
   } else if (event === "ATP" && discpline === "singles" && viewRace === true) {
-    rankingCategory = femaleSinglesRaceRankings
+    rankingCategory = maleDoublesRankings
   } else if (event === "ATP" && discpline === "doubles" && viewRace === false) {
-    rankingCategory = femaleDoublesRaceRankings
+    rankingCategory = maleSinglesRaceRankings
   } else if (event === "ATP" && discpline === "doubles" && viewRace === true) {
-    rankingCategory = femaleDoublesRaceRankings
+    rankingCategory = maleDoublesRaceRankings
   }
 
   
@@ -62,7 +62,7 @@ export default function Rankings(props) {
 
   useEffect(() => {
     const gatherDoublesRankings = async () => {
-      const combinedDoublesRankings = await doubleTeamRankings()
+      const combinedDoublesRankings = await doublesTeamRankings()
       setMaleDoublesRankings(combinedDoublesRankings[1])
       setFemaleDoublesRankings(combinedDoublesRankings[0])
     }
@@ -82,18 +82,18 @@ export default function Rankings(props) {
 
   useEffect(() => {
     const gatherDoublesRaceRankings = async () => {
-      const combinedDoublesRaceRankings = await playerRaceRankings()
+      const combinedDoublesRaceRankings = await doublesTeamRaceRankings()
       setMaleDoublesRaceRankings(combinedDoublesRaceRankings[1])
       setFemaleDoublesRaceRankings(combinedDoublesRaceRankings[0])
+      setLoaded(true)
     }
     const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3001)
     return () => clearTimeout(timeOut)
   }, [])
 
-  const players = rankingCategory.map(player => (
+  const players = rankingCategory && rankingCategory?.map(player => (
     <PlayerCard
       player={player}
-      index={index}
       key={player.id}
     />
   ))

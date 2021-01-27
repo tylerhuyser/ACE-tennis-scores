@@ -294,8 +294,6 @@ export default function MatchCard(props) {
 
   const handleMatch = (matchInfo, scoreInfo, matchID) => {
     localStorage.setItem("currentMatch", JSON.stringify(match))
-    localStorage.setItem("currentMatchInfo", JSON.stringify(matchInfo))
-    localStorage.setItem("currentMatchScore", JSON.stringify(scoreInfo));
     history.push(`/match/${matchID}`);
   };
 

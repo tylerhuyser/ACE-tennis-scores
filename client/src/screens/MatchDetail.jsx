@@ -4,6 +4,10 @@ import { useParams } from 'react-router-dom';
 import MatchCard from '../components/MatchCard'
 import Loader from '../components/Loader'
 
+import {
+  getMatchDetails
+} from "../utils/matches"
+
 export default function MatchDetail(props) {
   
   const [ loaded, setLoaded ] = useState(false)
@@ -18,18 +22,22 @@ export default function MatchDetail(props) {
   useEffect(() => {
 
     const match = localStorage.getItem('currentMatch')
+    const matchDetails = localStorage.getItem('matchDetails')
 
-    if (match) {
-      if (((dailyResults || liveMatches) !== undefined) && (((dailyResults || liveMatches)) !== null)) {
-        console.log(dailyResults.concatlive(liveMatches))
-        const currentMatchData = dailyResults.concat(liveMatches).find((match) => params.id === match.sport_event.id)
-        console.log(currentMatchData)
-        setMatchData(currentMatchData)
+    if (matchDetails) {
+      setMatchData(JSON.parse(matchDetails))
+      setLoaded(true)
+    } else {
+
+      const matchID = JSON.parse(match).sport_event.id
+
+      const getMatchStatistics = async (matchID) => {
+        const matchDetails = await getMatchDetails(matchID)
+        setMatchData(matchDetails)
         setLoaded(true)
       }
-    } else {
-      setMatchData(JSON.parse(match))
-      setLoaded(true)
+      getMatchStatistics(matchID)
+
     }
   }, [])
 
@@ -43,7 +51,24 @@ export default function MatchDetail(props) {
 
   }, [loaded])
 
-  console.log(matchData)
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+
+      if (matchData.matchStatus === "live") {
+         const fetchMatch = async (matchID) => {
+           const data = await getMatch(matchID)
+           setMatchData(data)
+         }
+         fetchMatch(matchData.sport_event.id)
+       } else {
+         clearInterval(interval)
+      }
+    }, 60000);
+   
+    return () => clearInterval(interval);
+
+  }, [loaded])
 
   return (
 
