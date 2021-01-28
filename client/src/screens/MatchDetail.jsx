@@ -30,10 +30,16 @@ export default function MatchDetail(props) {
     } else {
 
       const matchID = JSON.parse(match).sport_event.id
+      console.log(matchID)
 
       const getMatchStatistics = async (matchID) => {
         const matchDetails = await getMatchDetails(matchID)
+        console.log(matchDetails)
         setMatchData(matchDetails)
+        setHomeStats(matchDetails.statistics.teams[0])
+        setAwayStats(matchDetails.statistics.teams[1])
+        console.log(matchDetails.statistics.teams[0])
+        localStorage.setItem('matchDetails', JSON.stringify(matchDetails))
         setLoaded(true)
       }
       getMatchStatistics(matchID)
@@ -43,24 +49,14 @@ export default function MatchDetail(props) {
 
   useEffect(() => {
 
-    if (loaded) {
-
-      setHomeStats(matchData.statistics.teams[0])
-      setAwayStats(matchData.statistics.teams[1])
-    }
-
-  }, [loaded])
-
-  useEffect(() => {
-
     const interval = setInterval(() => {
 
       if (matchData.matchStatus === "live") {
-         const fetchMatch = async (matchID) => {
-           const data = await getMatch(matchID)
-           setMatchData(data)
-         }
-         fetchMatch(matchData.sport_event.id)
+          const getLiveMatchStatistics = async (matchID) => {
+            const matchDetails = await getMatchDetails(matchID)
+            setMatchData(matchDetails)
+          }
+          getLiveMatchStatistics(matchData.sport_event.id)
        } else {
          clearInterval(interval)
       }

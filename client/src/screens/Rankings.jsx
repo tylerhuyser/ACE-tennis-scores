@@ -28,10 +28,10 @@ export default function Rankings(props) {
   const [femaleDoublesRaceRankings, setFemaleDoublesRaceRankings] = useState(null)
 
 
-  let rankingCategory
+  const [ rankingCategory, setRankingCategory ] = useState(false)
 
   if (event === "WTA" && discpline === "singles" && viewRace === false) {
-    rankingCategory = femaleSinglesRankings
+    setRankingCategory(femaleSinglesRankings)
   } else if (event === "WTA" && discpline === "singles" && viewRace === true) {
     rankingCategory = femaleDoublesRankings
   } else if (event === "WTA" && discpline === "doubles" && viewRace === false) {
@@ -97,6 +97,8 @@ export default function Rankings(props) {
       key={player.id}
     />
   ))
+
+  console.log(rankingCategory)
   
   return (
     <div className="rankings-container">
