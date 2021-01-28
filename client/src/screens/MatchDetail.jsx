@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom';
 
 import MatchCard from '../components/MatchCard'
 import Loader from '../components/Loader'
+
+import './MatchDetail.css'
 
 import {
   getMatchDetails
@@ -15,10 +16,6 @@ export default function MatchDetail(props) {
   const [ homeStats, setHomeStats] = useState(null)
   const [ awayStats, setAwayStats ] = useState(null)
 
-  const params = useParams();
-
-  const {  dailySchedule, dailyResults, liveMatches, currentDate } = props;
-
   useEffect(() => {
 
     const match = localStorage.getItem('currentMatch')
@@ -26,7 +23,9 @@ export default function MatchDetail(props) {
 
     if (matchDetails) {
       setMatchData(JSON.parse(matchDetails))
-      setLoaded(true)
+      setHomeStats(JSON.parse(matchDetails).statistics.teams[0])
+      setAwayStats(JSON.parse(matchDetails).statistics.teams[1])
+ 
     } else {
 
       const matchID = JSON.parse(match).sport_event.id
@@ -35,17 +34,26 @@ export default function MatchDetail(props) {
       const getMatchStatistics = async (matchID) => {
         const matchDetails = await getMatchDetails(matchID)
         console.log(matchDetails)
+
         setMatchData(matchDetails)
         setHomeStats(matchDetails.statistics.teams[0])
         setAwayStats(matchDetails.statistics.teams[1])
         console.log(matchDetails.statistics.teams[0])
+
         localStorage.setItem('matchDetails', JSON.stringify(matchDetails))
-        setLoaded(true)
       }
       getMatchStatistics(matchID)
 
     }
   }, [])
+
+  useEffect(() => {
+
+    if (awayStats) {
+      setLoaded(true)
+    }
+
+  }, [awayStats])
 
   useEffect(() => {
 
@@ -70,7 +78,7 @@ export default function MatchDetail(props) {
 
     <>
 
-      { ((loaded === false) && (matchData === null)) ? 
+      { ((loaded === false) || (matchData === null)) ? 
         
         <Loader />
      :

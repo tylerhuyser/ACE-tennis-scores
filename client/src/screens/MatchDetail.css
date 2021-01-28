@@ -1,0 +1,54 @@
+.match-detail-container {
+
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  margin-bottom: 125px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.match-statistics-container {
+
+  width: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+
+}
+
+.match-statistic-categories-container, .competitor-statistic-container {
+
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+
+}
+
+.statistic-category {
+
+  height: 25px;
+  width: 100%;
+  color: white;
+
+}
