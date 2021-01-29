@@ -32,7 +32,8 @@
 
 .match-statistic-categories-container, .competitor-statistics-container {
 
-  width: 30%;
+  width: 32.5%;
+  margin: 0px 5px;
 
   display: flex;
   flex-direction: column;
@@ -51,8 +52,26 @@
   width: 100%;
 
   color: white;
-  font-size: 8px;
+  font-size: 12px;
 
+  padding-bottom: 15px;
+  border-bottom: white 1px dashed;
+
+}
+
+.match-statistic-categories-container {
+  width: 25%;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#competitor-statistics-container-title {
+  font-weight: 500;
+  font-size: 12px;
+  text-overflow: ellipsis;
+
+  border-bottom: white 1px solid;
 }
 
 #match-detail-back-button {
@@ -67,4 +86,8 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+#placeholder-category {
+  border-bottom: transparent 1px solid;
 }
