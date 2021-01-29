@@ -26,7 +26,10 @@ export default function MatchCard(props) {
     matchCourt: matchData.sport_event_conditions.venue.name,
     matchStatus: matchData.sport_event_status.status,
 
+    homeCompetitorID: matchData.sport_event.competitors[0].id,
     homeCompetitor: matchData.sport_event.competitors[0].name,
+
+    awayCompetitorID: matchData.sport_event.competitors[1].id,
     awayCompetitor: matchData.sport_event.competitors[1].name
 
   })
@@ -268,6 +271,18 @@ export default function MatchCard(props) {
             ...prevState,
             server: match.sport_event_status.game_state.serving
           }))
+        } else if (matchInfo.matchStatus === "closed" && match.sport_event_status.winner_id !== undefined) {
+          if (match.sport_event_status.winner_id === matchInfo.homeCompetitorID) {
+            setScoreInfo(prevState => ({
+              ...prevState,
+              server: "homeWinner"
+            }))
+          } else {
+            setScoreInfo(prevState => ({
+              ...prevState,
+              server: "awayWinner"
+            }))
+          }
         }
       }
         
@@ -332,7 +347,19 @@ export default function MatchCard(props) {
             
           :
             
+          <>
+            
+          {
+            scoreInfo.server === "homeWinner" ?
+            
+            <i class="fas fa-check service-icon"></i>
+              
+          :
+          
             <div className="service-icon" id="receiver home" />
+
+          }
+          </>
           
           }
 
@@ -369,13 +396,25 @@ export default function MatchCard(props) {
 
           <p className="competitor-name">{`${matchInfo.awayCompetitor}`}</p>
 
-          {scoreInfo.server === "away" ? 
+          {scoreInfo.server === "away" ?
 
             <i className="fas fa-circle service-icon" id="server away"></i>
             
-          :
+            :
+          
+            <>
             
-            <div className="service-icon" id="receiver away" />
+            {
+              scoreInfo.server === "awayWinner" ?
+              
+              <i class="fas fa-check service-icon"></i>
+                
+            :
+            
+              <div className="service-icon" id="receiver away" />
+
+            }
+            </>
 
           }
 

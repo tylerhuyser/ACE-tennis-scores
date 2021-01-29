@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import MatchCard from '../components/MatchCard'
 import Loader from '../components/Loader'
@@ -15,6 +16,8 @@ export default function MatchDetail(props) {
   const [ matchData, setMatchData ] = useState(null)
   const [ homeStats, setHomeStats] = useState(null)
   const [ awayStats, setAwayStats ] = useState(null)
+
+  const history = useHistory()
 
   useEffect(() => {
 
@@ -74,6 +77,12 @@ export default function MatchDetail(props) {
 
   }, [loaded])
 
+  const handleReturnToTournament = () => {
+    const currentTournament = localStorage.getItem('currentSinglesTournament')
+    const tournamentID = JSON.parse(currentTournament).id
+    history.push(`/tournament/${tournamentID}`)
+  }
+
   return (
 
     <>
@@ -84,6 +93,8 @@ export default function MatchDetail(props) {
      :
         
         <div className="match-detail-container">
+
+          <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >BACK</i>
 
           <MatchCard matchData={matchData} key={matchData.sport_event.id} />
 
