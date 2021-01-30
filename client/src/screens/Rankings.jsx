@@ -14,7 +14,7 @@ export default function Rankings(props) {
 
   const [loaded, setLoaded] = useState(false)
   const [event, setEvent] = useState('WTA')
-  const [discpline, setDiscipline] = useState('singles')
+  const [discipline, setDiscipline] = useState('singles')
   const [viewRace, setViewRace] = useState(false)
 
   const [maleSinglesRankings, setMaleSinglesRankings] = useState(null)
@@ -30,30 +30,35 @@ export default function Rankings(props) {
 
   const [ rankingCategory, setRankingCategory ] = useState(false)
 
-  if (event === "WTA" && discpline === "singles" && viewRace === false) {
-    setRankingCategory(femaleSinglesRankings)
-  } else if (event === "WTA" && discpline === "singles" && viewRace === true) {
-    rankingCategory = femaleDoublesRankings
-  } else if (event === "WTA" && discpline === "doubles" && viewRace === false) {
-    rankingCategory = femaleSinglesRaceRankings
-  } else if (event === "WTA" && discpline === "doubles" && viewRace === true) {
-    rankingCategory = femaleDoublesRaceRankings
-  } else if (event === "ATP" && discpline === "singles" && viewRace === false) {
-    rankingCategory = maleSinglesRankings
-  } else if (event === "ATP" && discpline === "singles" && viewRace === true) {
-    rankingCategory = maleDoublesRankings
-  } else if (event === "ATP" && discpline === "doubles" && viewRace === false) {
-    rankingCategory = maleSinglesRaceRankings
-  } else if (event === "ATP" && discpline === "doubles" && viewRace === true) {
-    rankingCategory = maleDoublesRaceRankings
-  }
+  useEffect(() => {
+    if (loaded && event === "WTA" && discipline === "singles" && viewRace === false) {
+      console.log('here')
+      console.log(femaleSinglesRankings)
+      setRankingCategory(femaleSinglesRankings)
+    } else if (event === "WTA" && discipline === "singles" && viewRace === true) {
+      rankingCategory = femaleDoublesRankings
+    } else if (event === "WTA" && discipline === "doubles" && viewRace === false) {
+      rankingCategory = femaleSinglesRaceRankings
+    } else if (event === "WTA" && discipline === "doubles" && viewRace === true) {
+      rankingCategory = femaleDoublesRaceRankings
+    } else if (event === "ATP" && discipline === "singles" && viewRace === false) {
+      rankingCategory = maleSinglesRankings
+    } else if (event === "ATP" && discipline === "singles" && viewRace === true) {
+      rankingCategory = maleDoublesRankings
+    } else if (event === "ATP" && discipline === "doubles" && viewRace === false) {
+      rankingCategory = maleSinglesRaceRankings
+    } else if (event === "ATP" && discipline === "doubles" && viewRace === true) {
+      rankingCategory = maleDoublesRaceRankings
+    }
+  }, [loaded, event, discipline, viewRace])
 
   
   useEffect(() => {
     const gatherSinglesRankings = async () => {
       const combinedSinglesRankings = await playerRankings()
-      setMaleSinglesRankings(combinedSinglesRankings[1])
-      setFemaleSinglesRankings(combinedSinglesRankings[0])
+      console.log(combinedSinglesRankings)
+      setMaleSinglesRankings(combinedSinglesRankings.rankings[1])
+      setFemaleSinglesRankings(combinedSinglesRankings.rankings[0])
     }
 
     gatherSinglesRankings()
@@ -63,8 +68,8 @@ export default function Rankings(props) {
   useEffect(() => {
     const gatherDoublesRankings = async () => {
       const combinedDoublesRankings = await doublesTeamRankings()
-      setMaleDoublesRankings(combinedDoublesRankings[1])
-      setFemaleDoublesRankings(combinedDoublesRankings[0])
+      setMaleDoublesRankings(combinedDoublesRankings.rankings[1])
+      setFemaleDoublesRankings(combinedDoublesRankings.rankings[0])
     }
     const timeOut = setTimeout(() => gatherDoublesRankings(), 1001)
     return () => clearTimeout(timeOut)
@@ -73,8 +78,8 @@ export default function Rankings(props) {
   useEffect(() => {
     const gatherSinglesRaceRankings = async () => {
       const combinedSinglesRaceRankings = await playerRaceRankings()
-      setMaleSinglesRaceRankings(combinedSinglesRaceRankings[1])
-      setFemaleSinglesRaceRankings(combinedSinglesRaceRankings[0])
+      setMaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[1])
+      setFemaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[0])
     }
     const timeOut = setTimeout(() => gatherSinglesRaceRankings(), 2001)
     return () => clearTimeout(timeOut)
@@ -83,15 +88,15 @@ export default function Rankings(props) {
   useEffect(() => {
     const gatherDoublesRaceRankings = async () => {
       const combinedDoublesRaceRankings = await doublesTeamRaceRankings()
-      setMaleDoublesRaceRankings(combinedDoublesRaceRankings[1])
-      setFemaleDoublesRaceRankings(combinedDoublesRaceRankings[0])
+      setMaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[1])
+      setFemaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[0])
       setLoaded(true)
     }
     const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3001)
     return () => clearTimeout(timeOut)
   }, [])
 
-  const players = rankingCategory && rankingCategory?.map(player => (
+  const players = rankingCategory && rankingCategory?.player_rankings.map((player) => (
     <PlayerCard
       player={player}
       key={player.id}
@@ -99,6 +104,7 @@ export default function Rankings(props) {
   ))
 
   console.log(rankingCategory)
+  console.log(players)
   
   return (
     <div className="rankings-container">
@@ -108,8 +114,12 @@ export default function Rankings(props) {
         <Loader />
 
         :
+      
+        <>
 
-        {players}
+          {players}
+          
+        </>
 
       }
       
