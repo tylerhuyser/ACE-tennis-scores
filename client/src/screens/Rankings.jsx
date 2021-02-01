@@ -98,7 +98,7 @@ export default function Rankings(props) {
 
   const players = rankingCategory && rankingCategory?.player_rankings.map((player) => (
     <PlayerCard
-      player={player.props}
+      playerData={player}
       key={player.id}
     />
   ))

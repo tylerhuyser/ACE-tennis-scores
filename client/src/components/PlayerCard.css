@@ -1,0 +1,9 @@
+.player-container {
+  font-size: 12px;
+  color: white;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
