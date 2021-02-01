@@ -13,6 +13,7 @@ import {
 
 export default function PlayerDetail(props) {
 
+  const [loaded, setLoaded] = useState(false)
   const [playerData, setPlayerData] = useState(null)
   const [playerResults, setPlayerResults] = useState(null)
   const [playerSchedule, setPlayerSchedule] = useState(null)
@@ -21,7 +22,7 @@ export default function PlayerDetail(props) {
     const currentPlayer = localStorage.getItem('currentPlayer')
 
     if (currentPlayer === undefined) {
-      
+
     } else {
       setPlayerData(currentPlayer)
     }

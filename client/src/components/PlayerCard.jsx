@@ -10,15 +10,15 @@ export default function PlayerCard(props) {
   const handlePlayerDetails = (id) => {
 
     localStorage.setItem('currentPlayer', JSON.stringify(player))
-    history.pushState(`/player/${player.id}`)
+    history.pushState(`/player/${player.player.id}`)
   }
   
   return (
     <div className="player-container" key={key} onClick={(e) => handlePlayerDetails(e)}>
-      <p className="player-ranking"></p>
-      <p className="player-name">{player.name}</p>
-      <p className="player-country"></p>
-      <p className="player-ranking-points"></p>
+      <p className="player-ranking">{player.rank}</p>
+      <p className="player-name">{player.player.name}</p>
+      <p className="player-country">{player.player.nationality}</p>
+      <p className="player-ranking-points">{player.points}</p>
     </div>
   )
 }
