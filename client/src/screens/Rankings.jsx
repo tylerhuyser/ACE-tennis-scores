@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import Loader from '../components/Loader'
 import PlayerCard from '../components/PlayerCard'
 
+import './Rankings.css'
+
 import {
   playerRankings,
   playerRaceRankings,
