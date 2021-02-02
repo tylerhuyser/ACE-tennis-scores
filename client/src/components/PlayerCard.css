@@ -11,3 +11,33 @@
   padding: 25px 10px;
   border-bottom: white 1px solid;
 }
+
+.player-nationality-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 25%;
+}
+
+.player-ranking-points {
+  width: 25%;
+  text-align: right;
+}
+
+.player-country {
+  width: 50%;
+}
+
+.player-ranking {
+  width: 10%;
+}
+
+.player-name {
+  width: 40%;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

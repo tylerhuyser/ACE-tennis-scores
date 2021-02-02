@@ -7,10 +7,10 @@ import './PlayerCard.css'
 export default function PlayerCard(props) {
 
   const { playerData, key } = props
+  const getCountryISO2 = require("country-iso-3-to-2");
 
   const history = useHistory()
-
-  const alpha2Country = new Locale("en", playerData.player.country_code).getISO2Country()
+  const alpha2Country = getCountryISO2(playerData.player.country_code)
 
   const handlePlayerDetails = (id) => {
 
@@ -25,7 +25,7 @@ export default function PlayerCard(props) {
       <div className="player-nationality-container">
         <ReactCountryFlag
           className="emojiFlag"
-          countryCode={playerData.player.country_code}
+          countryCode={alpha2Country}
           style={{
               fontSize: '2em',
               lineHeight: '2em',
