@@ -6,7 +6,7 @@ import './PlayerCard.css'
 
 export default function PlayerCard(props) {
 
-  const { playerData, key } = props
+  const { playerData } = props
   const getCountryISO2 = require("country-iso-3-to-2");
 
   const history = useHistory()
@@ -15,11 +15,11 @@ export default function PlayerCard(props) {
   const handlePlayerDetails = (id) => {
 
     localStorage.setItem('currentPlayer', JSON.stringify(playerData))
-    history.pushState(`/player/${playerData.player.id}`)
+    history.push(`/player/${playerData.player.id}`)
   }
   
   return (
-    <div className="player-container" key={key} onClick={(e) => handlePlayerDetails(e)}>
+    <div className="player-container" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
       <p className="player-ranking">{playerData.rank}</p>
       <p className="player-name">{playerData.player.name}</p>
       <div className="player-nationality-container">

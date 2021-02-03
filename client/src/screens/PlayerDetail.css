@@ -1,0 +1,28 @@
+.player-views-container {
+  width: 100%;
+  padding: 25px 10px;
+  margin: 25px 0px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border: solid white 2px;
+  border-left: none;
+  border-right: none;
+  /* box-shadow: inset 0px -1px 5px #0a192f; */
+
+}
+
+.player-views-button {
+
+  font-family: amagro-bold;
+  color: white;
+  width: 50%;
+  background: transparent;
+  border: none;
+
+  padding: 5px;
+  flex-shrink: 1;
+}

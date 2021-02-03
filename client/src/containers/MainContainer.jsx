@@ -51,6 +51,7 @@ export default function MainContainer(props) {
         <Route path="/player/:id">
           <PlayerDetail />
         </Route>
+        
       </Switch>
     </>
   );
