@@ -101,7 +101,7 @@ export default function Rankings(props) {
   const players = rankingCategory && rankingCategory?.player_rankings.map((player) => (
     <PlayerCard
       playerData={player}
-      key={player.id}
+      key={player.player.id}
     />
   ))
 
@@ -109,7 +109,7 @@ export default function Rankings(props) {
   console.log(players)
   
   return (
-    <div className="rankings-container">
+    <>
 
       {!loaded ?
         
@@ -119,12 +119,14 @@ export default function Rankings(props) {
       
         <>
 
-          {players}
+          <div className="rankings-container">
+            {players}
+          </div>
           
         </>
 
       }
       
-    </div>
+    </>
   )
 }
