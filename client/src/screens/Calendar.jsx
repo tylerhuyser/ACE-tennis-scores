@@ -17,7 +17,7 @@ export default function Calendar(props) {
   
     return (
         
-      (((endDate >= currentDate)) && ( (tournament.type.toLowerCase() !== "doubles") ))
+      (((endDate >= currentDate)) && ((tournament.type.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
       
     )
 
