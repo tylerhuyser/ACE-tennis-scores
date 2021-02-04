@@ -21,15 +21,23 @@
 }
 
 .tournament-card-name {
+  width: 50%;
+  margin-right: 5px;
 
   color: white;
   letter-spacing: 4px;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 20px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   flex-shrink: 1;
-  /* text-overflow: ellipsis; */
-  /* overflow: hidden;
-  white-space: nowrap; */
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
 
 .tournament-category-container {
@@ -39,15 +47,15 @@
   align-items: center;
 
   width: 50%;
-  flex-grow: 1;
 
 }
 
 .tournament-date {
-  max-width: 75%;
-  flex-grow: 1;
-  text-align: center;
+  width: 66%;
+  text-align: left;
   white-space: nowrap;
+
+  font-size: 10px;
 }
 
 .tournament-category-icon {

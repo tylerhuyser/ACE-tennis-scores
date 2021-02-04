@@ -16,6 +16,7 @@ import {
 
 export default function PlayerDetail(props) {
 
+  const [ dataLoaded, setDataLoadedm] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [view, setView] = useState('Player Results')
 
@@ -36,7 +37,7 @@ export default function PlayerDetail(props) {
     console.log(playerDetails)
     console.log(currentPlayer)
 
-    if (playerDetails === undefined || playerDetails.length <= 2) {
+    if (playerDetails === undefined || playerDetails === null || playerDetails.length <= 2) {
 
       console.log('ere1')
 
@@ -49,24 +50,8 @@ export default function PlayerDetail(props) {
         setPlayerData(playerInfo)
       }
 
-      gatherPlayerData(currentPlayerID)
-
-      const gatherPlayerResults = async (currentPlayerID) => {
-        const playerResultsInfo = await getPlayerResults(currentPlayerID)
-        localStorage.setItem('playerResults', JSON.stringify(playerResults))
-        setPlayerResults(playerResultsInfo)
-      }
-
-      gatherPlayerResults(currentPlayerID)
-
-      const gatherPlayerSchedule = async (currentPlayerID) => {
-        const playerScheduleInfo = await getPlayerSchedule(currentPlayerID)
-        localStorage.setItem('playerSchedule', JSON.stringify(playerScheduleInfo))
-        setPlayerSchedule(playerScheduleInfo)
-      }
-
-      gatherPlayerSchedule(currentPlayerID)
-      
+      const timeOut = setTimeout(() => gatherPlayerData(currentPlayerID), 3001)
+      return () => clearTimeout(timeOut)
 
     } else {
 
@@ -82,14 +67,53 @@ export default function PlayerDetail(props) {
 
   useEffect(() => {
 
+    if (playerData !== null && playerData !== undefined && Object.keys(playerData).length !== 0) {
+
+      const currentPlayer = localStorage.getItem('currentPlayer')
+      const currentPlayerID = JSON.parse(currentPlayer).player.id
+
+      const gatherPlayerResults = async (currentPlayerID) => {
+        const playerResultsInfo = await getPlayerResults(currentPlayerID)
+        localStorage.setItem('playerResults', JSON.stringify(playerResults))
+        setPlayerResults(playerResultsInfo)
+      }
+
+      gatherPlayerResults(currentPlayerID)
+    }
+
+  }, [playerData])
+
+  useEffect(() => {
+
+    if (playerData !== null && playerData !== undefined && Object.keys(playerData).length !== 0) {
+
+      const currentPlayer = localStorage.getItem('currentPlayer')
+      const currentPlayerID = JSON.parse(currentPlayer).player.id
+
+      const gatherPlayerSchedule = async (currentPlayerID) => {
+        const playerScheduleInfo = await getPlayerSchedule(currentPlayerID)
+        localStorage.setItem('playerSchedule', JSON.stringify(playerScheduleInfo))
+        setPlayerSchedule(playerScheduleInfo)
+      }
+
+      const timeOut = setTimeout(() => gatherPlayerSchedule(currentPlayerID), 1001)
+      return () => clearTimeout(timeOut)
+
+    }
+
+  }, [playerData])
+
+  useEffect(() => {
+
     console.log(playerData)
     console.log('evel 3')
-    if (playerData !== null) {
+
+    if (dataLoaded) {
 
       console.log(playerData)
       setLoaded(true)
     }
-  }, [playerData])
+  }, [dataLoaded])
 
   const uniqueTournamentsArray = playerResults && playerResults?.results.find((result) => {
     let tournaments = []
