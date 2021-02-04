@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './OrderOfPlay.css'
+
 export default function OrderOfPlay(props) {
 
   const { currentTournamentSchedule } = props

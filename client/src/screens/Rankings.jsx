@@ -83,7 +83,7 @@ export default function Rankings(props) {
       setMaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[1])
       setFemaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[0])
     }
-    const timeOut = setTimeout(() => gatherSinglesRaceRankings(), 2001)
+    const timeOut = setTimeout(() => gatherSinglesRaceRankings(), 2002)
     return () => clearTimeout(timeOut)
   }, [])
 
@@ -94,7 +94,7 @@ export default function Rankings(props) {
       setFemaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[0])
       setLoaded(true)
     }
-    const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3001)
+    const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3003)
     return () => clearTimeout(timeOut)
   }, [])
 

@@ -36,7 +36,7 @@ export default function PlayerDetail(props) {
     console.log(playerDetails)
     console.log(currentPlayer)
 
-    if (!playerDetails) {
+    if (playerDetails === undefined || playerDetails.length <= 2) {
 
       console.log('ere1')
 
@@ -44,6 +44,7 @@ export default function PlayerDetail(props) {
 
       const gatherPlayerData = async (currentPlayerID) => {
         const playerInfo = getPlayer(currentPlayerID)
+        console.log(playerInfo)
         localStorage.setItem('playerDetails', JSON.stringify(playerInfo))
         setPlayerData(playerInfo)
       }
