@@ -343,7 +343,7 @@ export default function MatchCard(props) {
 
           {scoreInfo.server === "home" ? 
           
-            <i className="fas fa-circle service-icon" id="server home"></i>
+            <i className="fas fa-circle service-icon heartbeat" id="server home"></i>
             
           :
             
@@ -398,7 +398,7 @@ export default function MatchCard(props) {
 
           {scoreInfo.server === "away" ?
 
-            <i className="fas fa-circle service-icon" id="server away"></i>
+            <i className="fas fa-circle service-icon heartbeat" id="server away"></i>
             
             :
           
