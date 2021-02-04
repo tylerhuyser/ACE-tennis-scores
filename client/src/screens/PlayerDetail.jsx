@@ -188,7 +188,7 @@ export default function PlayerDetail(props) {
     }
   }
 
-  const handleReturnToTournament = () => {
+  const handleReturnToTournament = (e) => {
     history.push('/rankings')
   }
   
