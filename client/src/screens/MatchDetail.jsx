@@ -98,6 +98,8 @@ export default function MatchDetail(props) {
 
           <MatchCard matchData={matchData} key={matchData.sport_event.id} />
 
+          <p className="match-statistics-title">MATCH STATISTICS</p>
+
           <div className="match-statistics-container">
 
             <div className="match-statistic-categories-container">

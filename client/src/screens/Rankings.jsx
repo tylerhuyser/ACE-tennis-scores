@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Switch from "react-switch";
 
 import Loader from '../components/Loader'
 import PlayerCard from '../components/PlayerCard'
@@ -15,8 +16,8 @@ import {
 export default function Rankings(props) {
 
   const [loaded, setLoaded] = useState(false)
-  const [event, setEvent] = useState('WTA')
-  const [discipline, setDiscipline] = useState('singles')
+  const [event, setEvent] = useState('ATP')
+  const [discipline, setDiscipline] = useState('Singles')
   const [viewRace, setViewRace] = useState(false)
 
   const [maleSinglesRankings, setMaleSinglesRankings] = useState(null)
@@ -33,24 +34,22 @@ export default function Rankings(props) {
   const [ rankingCategory, setRankingCategory ] = useState(false)
 
   useEffect(() => {
-    if (loaded && event === "WTA" && discipline === "singles" && viewRace === false) {
-      console.log('here')
-      console.log(femaleSinglesRankings)
+    if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
       setRankingCategory(femaleSinglesRankings)
-    } else if (event === "WTA" && discipline === "singles" && viewRace === true) {
-      rankingCategory = femaleDoublesRankings
-    } else if (event === "WTA" && discipline === "doubles" && viewRace === false) {
-      rankingCategory = femaleSinglesRaceRankings
-    } else if (event === "WTA" && discipline === "doubles" && viewRace === true) {
-      rankingCategory = femaleDoublesRaceRankings
-    } else if (event === "ATP" && discipline === "singles" && viewRace === false) {
-      rankingCategory = maleSinglesRankings
-    } else if (event === "ATP" && discipline === "singles" && viewRace === true) {
-      rankingCategory = maleDoublesRankings
-    } else if (event === "ATP" && discipline === "doubles" && viewRace === false) {
-      rankingCategory = maleSinglesRaceRankings
-    } else if (event === "ATP" && discipline === "doubles" && viewRace === true) {
-      rankingCategory = maleDoublesRaceRankings
+    } else if (loaded && event === "WTA" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(femaleDoublesRankings)
+    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(femaleSinglesRaceRankings)
+    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(femaleDoublesRaceRankings)
+    } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === false) {
+      setRankingCategory(maleSinglesRankings)
+    } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(maleDoublesRankings)
+    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(maleSinglesRaceRankings)
+    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(maleDoublesRaceRankings)
     }
   }, [loaded, event, discipline, viewRace])
 
@@ -107,6 +106,26 @@ export default function Rankings(props) {
 
   console.log(rankingCategory)
   console.log(players)
+
+  const handleEventSwitch = () => {
+    if (event === "WTA") {
+      setEvent("ATP")
+    } else if (event === "ATP") {
+      setEvent("WTA")
+    }
+  }
+
+  const handleDisciplineSwitch = () => {
+    if (discipline === "Singles") {
+      setDiscipline("Doubles")
+    } else if (discipline === "Doubles") {
+      setDiscipline("Singles")
+    }
+  }
+
+  const handleRaceSwitch = () => {
+    setViewRace(!viewRace)
+  }
   
   return (
     <>
@@ -120,7 +139,46 @@ export default function Rankings(props) {
         <>
 
           <div className="rankings-container">
+
+            <p className="rankings-container-title">{event} {discipline} {viewRace ? "Race" : ""} Rankings</p>
+
+            <div className="rankings-toggle-view-container">
+
+              <div className="switch-container" id="tour-view-switch-container">
+
+                <p className="tour-view-switch-container-copy">ATP</p>
+
+                <Switch onChange={handleEventSwitch} checked={event === "WTA" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+
+                <p className="tour-view-switch-container-copy">WTA</p>
+
+              </div>
+
+              <div className="switch-container" id="discipline-view-switch-container">
+
+                <p className="discipline-view-switch-container-copy">SINGLES</p>
+
+                <Switch onChange={handleDisciplineSwitch} checked={discipline === "Doubles" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+
+                <p className="discipline-view-switch-container-copy">DOUBLES</p>
+
+              </div>
+
+              <div className="switch-container" id="discipline-view-switch-container">
+
+                <p className="discipline-view-switch-container-copy">OFFICIAL</p>
+
+                <Switch onChange={handleRaceSwitch} checked={viewRace ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+
+                <p className="discipline-view-switch-container-copy">RACE</p>
+
+              </div>
+
+            </div>
+
             {players}
+
+
           </div>
           
         </>
