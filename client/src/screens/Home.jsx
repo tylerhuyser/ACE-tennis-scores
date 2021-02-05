@@ -24,10 +24,8 @@ export default function Home (props) {
     }
   ).map((tournament, index) => {
 
-    const startDate = new Date(tournament.current_season.start_date)
-    const endDate = new Date(tournament.current_season.end_date)
-
-    console.log(startDate)
+    const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
+    const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
 
     return (
 

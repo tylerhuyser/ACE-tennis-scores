@@ -224,10 +224,24 @@ export default function MatchCard(props) {
 
       const handleHomeScore = () => {
         if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
-          setScoreInfo(prevState => ({
-            ...prevState,
-            serviceScoreHome: match.sport_event_status.game_state.home_score
-          }))
+
+          if (match.sport_event_status.game_state.home_score === 50) {
+
+            setScoreInfo(prevState => ({
+              ...prevState,
+              serviceScoreHome: "AD"
+            }))
+
+          } else {
+
+            setScoreInfo(prevState => ({
+              ...prevState,
+              serviceScoreHome: match.sport_event_status.game_state.home_score
+            }))
+
+          }
+
+
         }
       }
 
@@ -235,10 +249,19 @@ export default function MatchCard(props) {
         
         if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
 
-          setScoreInfo(prevState => ({
-            ...prevState,
-            serviceScoreAway: match.sport_event_status.game_state.away_score
-          }))
+          if (match.sport_event_status.game_state.away_score === 50) {
+
+            setScoreInfo(prevState => ({
+              ...prevState,
+              serviceScoreAway: "AD"
+            }))
+
+          } else {
+            setScoreInfo(prevState => ({
+              ...prevState,
+              serviceScoreAway: match.sport_event_status.game_state.away_score
+            }))
+          }
         }
       }
 

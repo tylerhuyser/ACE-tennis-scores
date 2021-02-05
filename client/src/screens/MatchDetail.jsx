@@ -94,7 +94,7 @@ export default function MatchDetail(props) {
         
         <div className="match-detail-container">
 
-          <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >BACK</i>
+          <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >    BACK</i>
 
           <MatchCard matchData={matchData} key={matchData.sport_event.id} />
 

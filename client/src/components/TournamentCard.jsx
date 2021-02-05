@@ -28,8 +28,8 @@ export default function TournamentCard(props) {
         setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
       } else if (tournament.name.toLowerCase().includes("challenger")) {
-        const isolatedChallengerTournamentName = isolatedTournamentName.slice(11)
-        setTournamentName(isolatedChallengerTournamentName.join(" "))
+        const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
+        setTournamentName(isolatedChallengerTournamentName)
         setTournamentCategory('ATP')
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
       } else if (tournament.name.includes("ATP")) {

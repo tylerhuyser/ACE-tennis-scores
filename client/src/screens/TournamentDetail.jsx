@@ -68,9 +68,11 @@ export default function TournamentDetail(props) {
           setTournamentName(isolatedTournamentName.join(" "))
           setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-        } else if (tournament.name.toLowerCase().includes("challenger")) {
-          const isolatedChallengerTournamentName = isolatedTournamentName.slice(11)
-          setTournamentName(isolatedChallengerTournamentName.join(" "))
+        } else if (currentSinglesTournament.name.toLowerCase().includes("challenger")) {
+          console.log(isolatedTournamentName)
+          const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
+          console.log(isolatedChallengerTournamentName)
+          setTournamentName(isolatedChallengerTournamentName)
           setTournamentCategory('ATP')
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
         } else if (currentSinglesTournament.name.includes("ATP")) {
@@ -179,7 +181,7 @@ export default function TournamentDetail(props) {
   return (
     <div className="tournament-detail-container">
       
-      <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >BACK</i>
+      <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
 
       <div className="tournament-card-container">
 

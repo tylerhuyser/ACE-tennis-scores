@@ -39,12 +39,12 @@ export default function PlayerDetail(props) {
 
     if (playerDetails === undefined || playerDetails === null || playerDetails.length <= 2) {
 
-      console.log('ere1')
+      console.log('gathering player data via API Call 1')
 
       const currentPlayerID = JSON.parse(currentPlayer).player.id
 
       const gatherPlayerData = async (currentPlayerID) => {
-        const playerInfo = getPlayer(currentPlayerID)
+        const playerInfo = await getPlayer(currentPlayerID)
         console.log(playerInfo)
         localStorage.setItem('playerDetails', JSON.stringify(playerInfo))
         setPlayerData(playerInfo)
@@ -56,7 +56,7 @@ export default function PlayerDetail(props) {
     } else {
 
       console.log(
-        'here2'
+        'gathering Player Data from LocalStorage'
       )
 
       setPlayerData(JSON.parse(playerDetails))
@@ -106,11 +106,11 @@ export default function PlayerDetail(props) {
   useEffect(() => {
 
     console.log(playerData)
-    console.log('evel 3')
+    console.log('PlayerData and PlayerSchedule/Results are being checked')
 
     if (dataLoaded) {
 
-      console.log(playerData)
+      console.log('data has been loaded and component will mount')
       setLoaded(true)
     }
   }, [dataLoaded])
@@ -206,7 +206,7 @@ export default function PlayerDetail(props) {
           
           <div className="player-detail-container">
 
-            <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >BACK</i>
+            <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >    BACK</i>
 
             <PlayerCard playerData={playerData} key={playerData.player.id} />
             
