@@ -110,7 +110,7 @@ export default function Rankings(props) {
       key={player.player.id}
     />
   ))
-
+ 
   console.log(rankingCategory)
   console.log(players)
 
