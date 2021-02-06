@@ -104,6 +104,13 @@ export default function Rankings(props) {
     />
   ))
 
+  const doublesRacePlayers = rankingCategory && rankingCategory?.double_team_rankings.map((player) => (
+    <PlayerCard
+      playerData={player}
+      key={player.player.id}
+    />
+  ))
+
   console.log(rankingCategory)
   console.log(players)
 
