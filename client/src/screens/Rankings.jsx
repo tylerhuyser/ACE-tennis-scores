@@ -37,17 +37,17 @@ export default function Rankings(props) {
     if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
       setRankingCategory(femaleSinglesRankings)
     } else if (loaded && event === "WTA" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(femaleDoublesRankings)
-    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
       setRankingCategory(femaleSinglesRaceRankings)
+    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(femaleDoublesRankings)
     } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === true) {
       setRankingCategory(femaleDoublesRaceRankings)
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === false) {
       setRankingCategory(maleSinglesRankings)
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(maleDoublesRankings)
-    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
       setRankingCategory(maleSinglesRaceRankings)
+    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(maleDoublesRankings)
     } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === true) {
       setRankingCategory(maleDoublesRaceRankings)
     }
@@ -166,7 +166,7 @@ export default function Rankings(props) {
 
               <div className="switch-container" id="discipline-view-switch-container">
 
-                <p className="discipline-view-switch-container-copy">OFFICIAL</p>
+                <p className="discipline-view-switch-container-copy">ROLLING</p>
 
                 <Switch onChange={handleRaceSwitch} checked={viewRace ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 

@@ -21,8 +21,8 @@ export default function PlayerDetail(props) {
   const [view, setView] = useState('Player Results')
 
   const [playerData, setPlayerData] = useState(null)
-  const [playerResults, setPlayerResults] = useState(null)
-  const [playerSchedule, setPlayerSchedule] = useState(null)
+  const [playerResults, setPlayerResults] = useState(false)
+  const [playerSchedule, setPlayerSchedule] = useState(false)
 
   const currentYear = new Date().getFullYear()
   const history = useHistory()
@@ -115,9 +115,9 @@ export default function PlayerDetail(props) {
     }
   }, [dataLoaded])
 
-  const uniqueTournamentsArray = playerResults && playerResults?.results.find((result) => {
+  const uniqueTournamentsArray = playerResults && playerResults?.results.filter((result) => {
     let tournaments = []
-    if (!tournaments.includes(result.sport_event.id) && result.sport_event.season.name === currentYear.toString()) {
+    if (!tournaments.includes(result.sport_event.id) && (result.sport_event.season.year === currentYear.toString())) {
       tournaments.push(result.sport_event.id)
     }
     console.log(tournaments)
@@ -128,8 +128,8 @@ export default function PlayerDetail(props) {
 
   const resultsa = uniqueTournamentsArray && uniqueTournamentsArray?.forEach((tournament, index) => {
 
-    const startDate = new Date(tournament.current_season.start_date)
-    const endDate = new Date(tournament.current_season.end_date)
+    const startDate = new Date(tournament.season.start_date)
+    const endDate = new Date(tournament.season.end_date)
 
     const tournamentResults = playerResults.filter((result) => (
       results.sport_event.id === tournament
@@ -160,8 +160,8 @@ export default function PlayerDetail(props) {
 
   const scheduleItems = playerSchedule && playerSchedule?.schedule.map((tournament, index) => {
 
-    const startDate = new Date(tournament.current_season.start_date)
-    const endDate = new Date(tournament.current_season.end_date)
+    const startDate = new Date(tournament.season.start_date)
+    const endDate = new Date(tournament.season.end_date)
 
     return (
 
@@ -220,7 +220,7 @@ export default function PlayerDetail(props) {
               
                 <div className="player-results-container">
 
-                  { results }
+                  { resultsa }
 
                 </div>
               
