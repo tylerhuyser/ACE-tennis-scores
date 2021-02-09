@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Switch from "react-switch";
 
 import Loader from '../components/Loader'
-import PlayerCard from '../components/PlayerCard'
+import Players from '../components/Players'
 
 import './Rankings.css'
 
@@ -16,6 +16,7 @@ import {
 export default function Rankings(props) {
 
   const [loaded, setLoaded] = useState(false)
+
   const [event, setEvent] = useState('ATP')
   const [discipline, setDiscipline] = useState('Singles')
   const [viewRace, setViewRace] = useState(false)
@@ -97,23 +98,6 @@ export default function Rankings(props) {
     return () => clearTimeout(timeOut)
   }, [])
 
-  const players = rankingCategory && rankingCategory?.player_rankings.map((player) => (
-    <PlayerCard
-      playerData={player}
-      key={player.player.id}
-    />
-  ))
-
-  const doublesRacePlayers = rankingCategory && rankingCategory?.double_team_rankings.map((player) => (
-    <PlayerCard
-      playerData={player}
-      key={player.player.id}
-    />
-  ))
-
-  console.log(rankingCategory)
-  console.log(players)
-
   const handleEventSwitch = () => {
     if (event === "WTA") {
       setEvent("ATP")
@@ -183,7 +167,7 @@ export default function Rankings(props) {
 
             </div>
 
-            {players}
+            <Players rankingCategory={rankingCategory} event={event} discipline={discipline} viewRace={viewRace} />
 
 
           </div>
