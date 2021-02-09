@@ -126,13 +126,13 @@ export default function PlayerDetail(props) {
 
   console.log(uniqueTournamentsArray)
 
-  const resultsa = uniqueTournamentsArray && uniqueTournamentsArray?.forEach((tournament, index) => {
+  const results = uniqueTournamentsArray && uniqueTournamentsArray?.forEach((tournament, index) => {
 
     const startDate = new Date(tournament.season.start_date)
     const endDate = new Date(tournament.season.end_date)
 
     const tournamentResults = playerResults.filter((result) => (
-      results.sport_event.id === tournament
+      result.sport_event.id === tournament
     )).map((result, index) => (
       <MatchCard matchData={result} key={result.sport_event.id} />
     ))
@@ -151,12 +151,6 @@ export default function PlayerDetail(props) {
       </>
     )
   })
-
-  const results = playerResults && playerResults?.results.map((result) => (
- 
-      <MatchCard matchData={result} key={result.sport_event.id} />
-
-  ))
 
   const scheduleItems = playerSchedule && playerSchedule?.schedule.map((tournament, index) => {
 
@@ -220,7 +214,7 @@ export default function PlayerDetail(props) {
               
                 <div className="player-results-container">
 
-                  { resultsa }
+                  { results }
 
                 </div>
               
