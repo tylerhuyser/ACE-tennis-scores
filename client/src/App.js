@@ -40,9 +40,11 @@ function App () {
   
   useEffect(() => {
 
+    const totalTournaments = tournaments.length
+
     const tournamentData = localStorage.getItem('tournaments')
 
-    if (tournaments.length === 0 && tournamentData === null) {
+    if (totalTournaments === 0 && tournamentData === null) {
 
       const gatherActiveTournaments = async () => {
         console.log('apirequest 1')
@@ -66,6 +68,10 @@ function App () {
 
   useEffect(() => {
 
+    const day = currentDay
+    const month = currentMonth
+    const year = currentYear
+
     if (tournamentsLoaded) {
       console.log('apirequest 2')
       const gatherDailySchedule = async (currentYear, currentMonth, currentDay) => {
@@ -79,12 +85,16 @@ function App () {
           // setTournamentsLoaded(true)
         }
       }
-      gatherDailySchedule(currentYear, currentMonth, currentDay)
+      gatherDailySchedule(year, month, day)
     }
 
   }, [tournaments])
 
   useEffect(() => {
+
+    const day = currentDay
+    const month = currentMonth
+    const year = currentYear
 
     if (dailySchedule && dailySchedule.length !== 0) {
       console.log('apirequest 3')
@@ -94,7 +104,7 @@ function App () {
         setDailyResults(dailyResultsData.results)
       }
 
-      gatherDailyResults(currentYear, currentMonth, currentDay)
+      gatherDailyResults(year, month, day)
     }
 
   }, [dailySchedule])

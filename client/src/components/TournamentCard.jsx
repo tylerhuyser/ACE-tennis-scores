@@ -13,10 +13,12 @@ export default function TournamentCard(props) {
   const { tournament, startDate, endDate } = props;
 
   useEffect(() => {
+
+    const currentTournament = tournament
     
     const parseTournamentInfo = (tournament) => {
 
-      const splitTournamentName = tournament.name.split(",")
+      const splitTournamentName = currentTournament.name.split(",")
       const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
       const isolatedTournamentTier = isolatedTournamentNameAndTier[0]
       const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
@@ -47,7 +49,7 @@ export default function TournamentCard(props) {
         setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
       }
     }
-    parseTournamentInfo(tournament)
+    parseTournamentInfo(currentTournament)
   }, [])
 
   const handleTournament = (tournament, tournamentID) => {

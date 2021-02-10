@@ -5,7 +5,6 @@ import "./MatchCard.css";
 
 import {
   getMatch,
-  getMatchDetails
 } from '../utils/matches'
 
 export default function MatchCard(props) {
@@ -53,10 +52,13 @@ export default function MatchCard(props) {
   })
 
   useEffect(() => {
+
+    const currentMatch = match
+    const currentMatchData = matchData
     
-    if (match === null) {
+    if (currentMatch === null) {
       console.log('setMatchData')
-      setMatch(matchData)
+      setMatch(currentMatchData)
     } 
     
   }, [])
@@ -66,14 +68,17 @@ export default function MatchCard(props) {
     const interval = setInterval(() => {
 
       if (matchInfo.matchStatus === "live") {
+
+        const currentMatchID = matchData.sport_event.id
+
         console.log('live data')
          console.log(matchData)
          const fetchMatch = async (matchID) => {
            const data = await getMatch(matchID)
-           console.log("intreval")
+           console.log("interval for fetchMatch within MatchCard")
            setMatch(data)
          }
-         fetchMatch(matchData.sport_event.id)
+         fetchMatch(currentMatchID)
        } else {
          clearInterval(interval)
       }
@@ -85,7 +90,9 @@ export default function MatchCard(props) {
 
   useEffect(() => {
 
-    if (match !== null) {
+    const currentMatch = match
+
+    if (currentMatch !== null) {
 
       const parseTournamentRound = (tournamentRound) => {
         switch (tournamentRound) {
@@ -220,7 +227,9 @@ export default function MatchCard(props) {
 
   useEffect(() => {
 
-    if (match !== null) {
+    const currentMatch = match
+
+    if (currentMatch !== null) {
 
       const handleHomeScore = () => {
         if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {

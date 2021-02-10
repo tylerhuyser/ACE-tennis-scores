@@ -10,9 +10,7 @@ export default function Calendar(props) {
 
   const calendar = tournaments.filter((tournament) => {
 
-    const startDate = new Date(tournament.current_season.start_date)
     const endDate = new Date(tournament.current_season.end_date)
-    const tournamentCategory = tournament.name.toLowerCase().slice(0, 3)
   
   
     return (
@@ -23,14 +21,7 @@ export default function Calendar(props) {
 
   }).map((tournament, index) => {
     
-    // const startDate = new Date(tournament.current_season.start_date)
-    // const startDay = startDate.getDay() + 1
-    // const startMonth = (startDate.getMonth() + 1)
     const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
-   
-    // const endDate = new Date(tournament.current_season.end_date)
-    // const endDay = endDate.getDay() + 1
-    // const endMonth = endDate.getMonth() + 1
 
     const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
     
