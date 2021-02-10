@@ -50,6 +50,7 @@ function App () {
         setTournaments(tournamentData.tournaments)
         console.log(tournamentData.tournaments)
         localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
+        setTournamentsLoaded(true)
       }
       gatherActiveTournaments()
 
@@ -57,6 +58,7 @@ function App () {
 
       console.log(JSON.parse(tournamentData))
       setTournaments(JSON.parse(tournamentData))
+      setTournamentsLoaded(true)
 
     }
 
@@ -64,17 +66,17 @@ function App () {
 
   useEffect(() => {
 
-    if (tournaments && tournaments.length !== 0) {
+    if (tournamentsLoaded) {
       console.log('apirequest 2')
       const gatherDailySchedule = async (currentYear, currentMonth, currentDay) => {
         const dailyScheduleData = await getDailySchedule(currentYear, currentMonth, currentDay)
         console.log(dailyScheduleData.sport_events)
         if (dailyScheduleData.length === 0) {
           setDailySchedule(dailyScheduleData)
-          setTournamentsLoaded(true)
+          // setTournamentsLoaded(true)
         } else {
           setDailySchedule(dailyScheduleData.sport_events)
-          setTournamentsLoaded(true)
+          // setTournamentsLoaded(true)
         }
       }
       gatherDailySchedule(currentYear, currentMonth, currentDay)

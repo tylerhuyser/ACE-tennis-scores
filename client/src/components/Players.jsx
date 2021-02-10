@@ -4,10 +4,10 @@ import PlayerCard from './PlayerCard'
 
 export default function Players(props) {
 
-  const { rankingCategory, event, discipline, viewRace } = props
+  const { rankingCategory, discipline, viewRace } = props
 
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && viewRace && event === "doubles") {
+    if (rankingCategory && viewRace && discipline === "doubles") {
 
       const playerCards = rankingCategory.player_rankings.map((player) => (
         <PlayerCard
