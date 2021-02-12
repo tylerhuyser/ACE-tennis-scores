@@ -16,7 +16,7 @@ export const getCurrentTournaments = async () => {
 export const getDetailedTournamentInfo = async (id) => {
   const resp = await api.get(`/tournaments/${id}/info.json${key}`)
   return resp.data
-}
+} 
 
 export const getTournamentSummary = async (id) => {
   const resp = await api.get(`/tournaments/${id}/summaries.json${key}`)
