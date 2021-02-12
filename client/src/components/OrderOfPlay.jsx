@@ -20,7 +20,7 @@ export default function OrderOfPlay(props) {
         <p className="competitors">{match.competitors[0].seed !== undefined && match.competitors[0].seed !== null ? homeCompetitorSeed : ``}{` `}{homeCompetitorName}{` `}{homeCompetitorCountry !== undefined && homeCompetitorCountry !== null && match.sport_event_type !== "doubles" ? homeCompetitorCountry : `` }{` vs. `}{match.competitors[1].seed !== undefined && match.competitors[1].seed !== null ? awayCompetitorSeed : ``}{` `}{awayCompetitorName}{` `}{awayCompetitorCountry !== undefined && awayCompetitorCountry !== null && match.sport_event_type !== "doubles" ? awayCompetitorCountry : `` }</p>
       </div>
     )})
-  
+   
   return (
     <div className="order-of-play-container">
       {schedule}
