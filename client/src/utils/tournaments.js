@@ -7,10 +7,15 @@ export const getTournaments = async () => {
 }
 
 export const getCurrentTournaments = async () => {
-  console.log('inside api')
-  const resp = await api.get(`/tournaments/ongoing.json${key}`)
-  console.log(resp)
-  return resp.data
+  try {
+    console.log('inside api')
+    const resp = await api.get(`/tournaments/ongoing.json${key}`)
+    console.log(resp.data.contents)
+    return resp.data
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 export const getDetailedTournamentInfo = async (id) => {

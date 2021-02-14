@@ -7,12 +7,14 @@ export default function Players(props) {
   const { rankingCategory, discipline, viewRace } = props
 
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && viewRace && discipline === "doubles") {
+    if (rankingCategory && viewRace && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
 
-      const playerCards = rankingCategory.player_rankings.map((player) => (
+      console.log(rankingCategory)
+
+      const playerCards = rankingCategory?.double_team_rankings.map((player) => (
         <PlayerCard
           playerData={player}
-          key={player.player.id}
+          key={player.double_team.id}
         />
       ))
 
@@ -20,7 +22,9 @@ export default function Players(props) {
 
     } else if (rankingCategory) {
 
-     const playerCards = rankingCategory.double_team_rankings.map((player) => (
+      console.log(rankingCategory)
+
+     const playerCards = rankingCategory?.player_rankings.map((player) => (
         <PlayerCard
           playerData={player}
           key={player.player.id}

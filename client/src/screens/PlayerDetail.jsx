@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import Loader from '../components/Loader'
 import TournamentCard from '../components/TournamentCard'
-import MatchCard from '../components/MatchCard'
+import Results from '../components/Results'
 import PlayerCard from '../components/PlayerCard'
 
 import './PlayerDetail.css'
@@ -33,9 +33,6 @@ export default function PlayerDetail(props) {
     const playerScheduleData = localStorage.getItem('playerSchedule')
     const playerResultsData = localStorage.getItem('playerResults')
     const playerDetails = localStorage.getItem('playerDetails')
-
-    console.log(playerDetails)
-    console.log(currentPlayer)
 
     if (playerDetails === undefined || playerDetails === null || playerDetails.length <= 2) {
 
@@ -94,6 +91,7 @@ export default function PlayerDetail(props) {
         const playerScheduleInfo = await getPlayerSchedule(currentPlayerID)
         localStorage.setItem('playerSchedule', JSON.stringify(playerScheduleInfo))
         setPlayerSchedule(playerScheduleInfo)
+        setDataLoadedm(true)
       }
 
       const timeOut = setTimeout(() => gatherPlayerSchedule(currentPlayerID), 1001)
@@ -114,43 +112,6 @@ export default function PlayerDetail(props) {
       setLoaded(true)
     }
   }, [dataLoaded])
-
-  const uniqueTournamentsArray = playerResults && playerResults?.results.filter((result) => {
-    let tournaments = []
-    if (!tournaments.includes(result.sport_event.id) && (result.sport_event.season.year === currentYear.toString())) {
-      tournaments.push(result.sport_event.id)
-    }
-    console.log(tournaments)
-    return tournaments
-  })
-
-  console.log(uniqueTournamentsArray)
-
-  const results = uniqueTournamentsArray && uniqueTournamentsArray?.forEach((tournament, index) => {
-
-    const startDate = new Date(tournament.season.start_date)
-    const endDate = new Date(tournament.season.end_date)
-
-    const tournamentResults = playerResults.filter((result) => (
-      result.sport_event.id === tournament
-    )).map((result, index) => (
-      <MatchCard matchData={result} key={result.sport_event.id} />
-    ))
-
-    return (
-      <>
-        <TournamentCard
-          tournament={tournament}
-          index={index}
-          key={tournament.id}
-          startDate={startDate}
-          endDate={endDate}
-        />
-
-        {tournamentResults}
-      </>
-    )
-  })
 
   const scheduleItems = playerSchedule && playerSchedule?.schedule.map((tournament, index) => {
 
@@ -214,7 +175,7 @@ export default function PlayerDetail(props) {
               
                 <div className="player-results-container">
 
-                  { results }
+                  <Results playerResults={playerResults} currentYear={currentYear} />
 
                 </div>
               
