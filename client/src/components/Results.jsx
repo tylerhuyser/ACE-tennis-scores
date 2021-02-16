@@ -32,7 +32,7 @@ export default function Results(props) {
     }
 
   }, [])
-
+ 
   const results = uniqueTournaments && uniqueTournaments?.forEach((tournament, index) => {
     
     const startDate = new Date(tournament.season.start_date)
