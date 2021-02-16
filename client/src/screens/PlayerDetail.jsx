@@ -177,7 +177,7 @@ export default function PlayerDetail(props) {
               
                 <div className="player-results-container">
 
-                  <ResultsContainer playerResults={playerResults} currentYear={currentYear} />
+                  <ResultsContainer playerResults={playerResults} />
 
                 </div>
               

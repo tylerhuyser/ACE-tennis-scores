@@ -5,11 +5,15 @@ import Loader from './Loader'
 
 export default function ResultsContainer (props) {
 
-  const { playerResults, currentYear } = props
+  const { playerResults } = props
 
   const [uniqueTournaments, setUniqueTournaments] = useState(null)
+
+  const currentYear = new Date().getFullYear()
   
   console.log(currentYear)
+  console.log(playerResults)
+  console.log(uniqueTournaments)
 
   useEffect(() => {
 
