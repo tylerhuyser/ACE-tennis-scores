@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Loader from './Loader'
+import Results from './Results'
 
 
 export default function ResultsContainer (props) {
@@ -19,22 +20,32 @@ export default function ResultsContainer (props) {
 
     if (playerResults) {
 
+      console.log("generating unique tournaments")
+
       const generateUniqueTournaments = () => {
+
+        console.log('ahead of the loop')
 
         let tournaments = []
         let tournamentsData = []
 
-        const uniqueTournamentsArray = playerResults && playerResults.results.filter((result) => {
+        for (let i = 0; i < playerResults.results.length; i++) {
 
-          if (!tournaments.includes(result.sport_event.id) && (result.sport_event.season.year === currentYear.toString())) {
-            tournaments.push(result.sport_event.id)
-            tournamentsData.push(result)
+          console.log(`in the loop ${i} time`)
+
+          if (!tournaments.includes(playerResults.results[i].sport_event.tournament.id) && (playerResults.results[i].sport_event.season.year === currentYear.toString())) {
+            console.log('pushing into array')
+            tournaments.push(playerResults.results[i].sport_event.tournament.id)
+            tournamentsData.push(playerResults.results[i])
           }
-        })
-
-        setUniqueTournaments(uniqueTournamentsArray)
+        }
+        return tournamentsData
       }
-      generateUniqueTournaments()
+
+
+      const uniqueTournamentsArray = generateUniqueTournaments()
+
+      setUniqueTournaments(uniqueTournamentsArray)
     }
 
   }, [])
@@ -52,7 +63,7 @@ export default function ResultsContainer (props) {
         
           <>
       
-            <ResultsContainer uniqueTournaments={uniqueTournaments} playerResults={playerResults} />
+            <Results uniqueTournaments={uniqueTournaments} playerResults={playerResults} />
             
           </>
           
