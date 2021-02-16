@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import Loader from '../components/Loader'
 import TournamentCard from '../components/TournamentCard'
-import Results from '../components/Results'
+import ResultsContainer from '../components/ResultsContainer'
 import PlayerCard from '../components/PlayerCard'
 
 import './PlayerDetail.css'
@@ -161,7 +161,7 @@ export default function PlayerDetail(props) {
           
           <div className="player-detail-container">
 
-            <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >    BACK</i>
+            <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >    BACK</i>
 
             <PlayerCard playerData={playerData} key={playerData.player.id} />
             
@@ -171,11 +171,13 @@ export default function PlayerDetail(props) {
 
               <button className="player-views-button" id="schedule-button" onClick={(e) => handleChangeView("Player Schedule")} > Player Schedule</button>
 
+            </div>
+
               {view === "Player Results" ? 
               
                 <div className="player-results-container">
 
-                  <Results playerResults={playerResults} currentYear={currentYear} />
+                  <ResultsContainer playerResults={playerResults} currentYear={currentYear} />
 
                 </div>
               
@@ -190,8 +192,6 @@ export default function PlayerDetail(props) {
               }
               
             </div>
-
-          </div>
           
         </>
       

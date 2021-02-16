@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import TournamentCard from '../components/TournamentCard'
 import MatchCard from '../components/MatchCard'
