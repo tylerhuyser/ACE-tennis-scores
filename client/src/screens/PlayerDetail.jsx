@@ -21,7 +21,7 @@ export default function PlayerDetail(props) {
   const [view, setView] = useState('Player Results')
 
   const [playerData, setPlayerData] = useState(null)
-  const [playerResults, setPlayerResults] = useState(false)
+  const [playerResults, setPlayerResults] = useState(null)
   const [playerSchedule, setPlayerSchedule] = useState(false)
 
   const currentYear = new Date().getFullYear()
