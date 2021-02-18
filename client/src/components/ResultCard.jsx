@@ -18,17 +18,17 @@ export default function ResultCard(props) {
   return (
     <>
       
-      { playerResults === null ?
+      { ( playerResults === null || !tournament ) ?
         
-        <>
-        </>
+        <div cla="null-2">
+        </div>
         
       :
 
-        <>
+        <div className="success-2">
 
           <TournamentCard
-            tournament={tournament}
+            tournament={tournament.sport_event.tournament}
             index={index}
             key={tournament.id}
             startDate={startDate}
@@ -37,7 +37,7 @@ export default function ResultCard(props) {
 
           {tournamentResults}
             
-        </>
+        </div>
   
       }
 

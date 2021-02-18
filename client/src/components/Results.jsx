@@ -8,7 +8,7 @@ export default function Results(props) {
 
   console.log(uniqueTournaments)
 
-  const tournamentResults = uniqueTournaments && uniqueTournaments?.forEach((tournament, index) => {
+  const tournamentResults = uniqueTournaments && uniqueTournaments?.map((tournament, index) => {
     
     console.log(tournament)
     const startDate = new Date(tournament.sport_event.season.start_date)
@@ -19,21 +19,21 @@ export default function Results(props) {
     )})
 
   return (
-    <>
+    <div className="results-container-2">
       
       { uniqueTournaments === null ?
 
-        <>
-        </>
+        <div className="null">
+        </div>
         
         :
 
-        <>
+        <div className="success-1">
           {tournamentResults}
-        </>
+        </div>
         
       }
 
-    </>
+    </div>
   )
 }
