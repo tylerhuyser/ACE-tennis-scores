@@ -11,8 +11,8 @@ export default function Results(props) {
   const tournamentResults = uniqueTournaments && uniqueTournaments?.map((tournament, index) => {
     
     console.log(tournament)
-    const startDate = new Date(tournament.sport_event.season.start_date)
-    const endDate = new Date(tournament.sport_event.season.end_date)
+    const startDate = tournament.sport_event.season.start_date.split("-").splice(1).join("/")
+    const endDate = tournament.sport_event.season.end_date.split("-").splice(1).join("/")
 
     return(
       <ResultCard playerResults={playerResults} tournament={tournament} startDate={startDate} endDate={endDate} index={index} />
