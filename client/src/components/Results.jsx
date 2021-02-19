@@ -23,14 +23,14 @@ export default function Results(props) {
       
       { uniqueTournaments === null ?
 
-        <div className="null">
-        </div>
+        <>
+        </>
         
         :
 
-        <div className="success-1">
+        <>
           {tournamentResults}
-        </div>
+        </>
         
       }
 

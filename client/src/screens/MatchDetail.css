@@ -66,6 +66,18 @@
   font-weight: 500;
 }
 
+.match-statistics-title {
+  color: white;
+  font-weight: 500;
+  font-family: bogart-semibold;
+  text-align: center;
+  font-size: 24px;
+
+  padding: 25px 10px;
+  margin-bottom: 50px;
+  border-bottom: solid white 2px;
+}
+
 #competitor-statistics-container-title {
   font-weight: 500;
   font-size: 12px;

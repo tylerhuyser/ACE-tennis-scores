@@ -20,12 +20,12 @@ export default function ResultCard(props) {
       
       { ( playerResults === null || !tournament ) ?
         
-        <div cla="null-2">
-        </div>
+        <>
+        </>
         
       :
 
-        <div className="success-2">
+        <>
 
           <TournamentCard
             tournament={tournament.sport_event.tournament}
@@ -37,7 +37,7 @@ export default function ResultCard(props) {
 
           {tournamentResults}
             
-        </div>
+        </>
   
       }
 
