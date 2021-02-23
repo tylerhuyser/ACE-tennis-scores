@@ -26,7 +26,7 @@ export default function Home (props) {
 
     const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
     const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
-
+ 
     return (
 
     <TournamentCard
