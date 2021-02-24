@@ -170,19 +170,19 @@ export default function MatchCard(props) {
           case "singles":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentDiscipline: "Singles"
+              tournamentDiscipline: "SINGLES"
             }));
             break;
           case "doubles":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentDiscipline: "Doubles"
+              tournamentDiscipline: "DOUBLES"
             }));
             break;
           case "mixed":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentDiscipline: "Mixed"
+              tournamentDiscipline: "MIXED"
             }));
             break;
           default:
@@ -199,19 +199,19 @@ export default function MatchCard(props) {
           case "men":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentEvent: "Men's"
+              tournamentEvent: "MEN'S"
             }));
             break;
           case "women":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentEvent: "Women's"
+              tournamentEvent: "WOMEN'S"
             }));
             break;
           case "mixed":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentEvent: "Mixed"
+              tournamentEvent: "MIXED"
             }));
             break;
           default:
@@ -222,6 +222,79 @@ export default function MatchCard(props) {
       parseTournamentGender(
         match.sport_event.tournament.gender
       );
+
+      const parseMatchStatus = (props) => {
+        switch (props) {
+          case "not_started":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Not Started"
+            }));
+            break;
+          case "match_about_to_start":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Match To Start"
+            }));
+            break;
+          case "live":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Live"
+            }));
+            break;
+          case "closed":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Complete"
+            }));
+            break;
+          case "ended":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Complete"
+            }));
+            break;
+          case "interrupted":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Interrupted"
+            }));
+            break;
+          case "suspended":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Suspended"
+            }));
+            break;
+          case "cancelled":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Cancelled"
+            }));
+            break;
+          case "delayed":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Delayed"
+            }));
+            break;
+          case "abandoned":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: "Abandoned"
+            }));
+            break;
+          default:
+            break;
+        }
+      };
+
+
+      parseMatchStatus(
+        matchData.sport_event_status.status
+      );
+
     }
   }, [match])
 
