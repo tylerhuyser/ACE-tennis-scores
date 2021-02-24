@@ -79,10 +79,8 @@ function App () {
         console.log(dailyScheduleData.sport_events)
         if (dailyScheduleData.length === 0) {
           setDailySchedule(dailyScheduleData)
-          // setTournamentsLoaded(true)
         } else {
           setDailySchedule(dailyScheduleData.sport_events)
-          // setTournamentsLoaded(true)
         }
       }
       gatherDailySchedule(year, month, day)

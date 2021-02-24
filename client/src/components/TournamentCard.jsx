@@ -6,7 +6,6 @@ import './TournamentCard.css'
 export default function TournamentCard(props) {
 
   const [tournamentName, setTournamentName] = useState("")
-  const [tournamentCategory, setTournamentCategory] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
   const history = useHistory()
   
@@ -20,32 +19,26 @@ export default function TournamentCard(props) {
 
       const splitTournamentName = currentTournament.name.split(",")
       const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
-      const isolatedTournamentTier = isolatedTournamentNameAndTier[0]
       const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
     
       if (tournamentName.includes("doubles")) {
         return
       } else if (tournament.name.includes("WTA")) {
         setTournamentName(isolatedTournamentName.join(" "))
-        setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
       } else if (tournament.name.toLowerCase().includes("challenger")) {
         const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
         setTournamentName(isolatedChallengerTournamentName)
-        setTournamentCategory('ATP')
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
       } else if (tournament.name.includes("ATP")) {
         setTournamentName(isolatedTournamentName.join(" "))
-        setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
       } else if (tournament.name.includes("ITF")) {
         const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
         setTournamentName(isolatedITFTournamentName.join(" "))
-        setTournamentCategory(isolatedTournamentTier)
         setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
       } else {
         setTournamentName(isolatedTournamentNameAndTier.slice(0, 2).join(" "))
-        setTournamentCategory("Grand Slam")
         setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
       }
     }

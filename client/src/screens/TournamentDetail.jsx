@@ -17,7 +17,11 @@ export default function TournamentDetail(props) {
   // Data
     // Tournament Info
   const [ currentSinglesTournament, setCurrentSinglesTournament ] = useState([])
-  const [ currentDoublesTournament, setCurrentDoublesTournament ] = useState([])
+  const [currentDoublesTournament, setCurrentDoublesTournament] = useState([])
+  
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+
     // Tournament Schedule
   const [ currentTournamentSchedule, setCurrentTournamentSchedule ] = useState([])
     // Completed Matches (Results)
@@ -28,7 +32,6 @@ export default function TournamentDetail(props) {
   const [ liveDoublesMatches, setLiveDoublesMatches ] = useState([])
 
   const [tournamentName, setTournamentName] = useState("")
-  const [tournamentCategory, setTournamentCategory] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
 
   const params = useParams();
@@ -59,38 +62,34 @@ export default function TournamentDetail(props) {
 
         const splitTournamentName = currentSinglesTournament.name.split(",")
         const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
-        const isolatedTournamentTier = isolatedTournamentNameAndTier[0]
         const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
     
         if (tournamentName.includes("doubles")) {
           return
         } else if (currentSinglesTournament.name.includes("WTA")) {
           setTournamentName(isolatedTournamentName.join(" "))
-          setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
         } else if (currentSinglesTournament.name.toLowerCase().includes("challenger")) {
           console.log(isolatedTournamentName)
           const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
           console.log(isolatedChallengerTournamentName)
           setTournamentName(isolatedChallengerTournamentName)
-          setTournamentCategory('ATP')
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
         } else if (currentSinglesTournament.name.includes("ATP")) {
           setTournamentName(isolatedTournamentName.join(" "))
-          setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
         } else if (currentSinglesTournament.name.includes("ITF")) {
           const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
           setTournamentName(isolatedITFTournamentName.join(" "))
-          setTournamentCategory(isolatedTournamentTier)
           setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
         } else {
           setTournamentName(isolatedTournamentNameAndTier.slice(0, 2).join(" "))
-          setTournamentCategory("Grand Slam")
           setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
         }
       }
       parseTournamentInfo(currentSinglesTournament)
+      setStartDate(currentSinglesTournament.current_season.start_date.split("-").splice(1).join("/"))
+      setEndDate(currentSinglesTournament.current_season.end_date.split("-").splice(1).join("/"))
     }
   }, [loaded])
 
@@ -175,6 +174,7 @@ export default function TournamentDetail(props) {
   }
 
   const handleReturnToCalendar = (e) => {
+    localStorage.removeItem('currentSinglesTournament')
     history.push('/calendar')
   }
   
@@ -189,7 +189,7 @@ export default function TournamentDetail(props) {
 
         <div className="tournament-category-container">
 
-          <p className="tournament-category">{tournamentCategory}</p>
+          <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
 
           <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
         

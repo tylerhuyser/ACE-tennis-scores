@@ -144,6 +144,7 @@ export default function PlayerDetail(props) {
   }
 
   const handleReturnToTournament = (e) => {
+    localStorage.removeItem('currentPlayer')
     history.push('/rankings')
   }
   

@@ -80,6 +80,7 @@ export default function MatchDetail(props) {
   const handleReturnToTournament = () => {
     const currentTournament = localStorage.getItem('currentSinglesTournament')
     const tournamentID = JSON.parse(currentTournament).id
+    localStorage.removeItem("currentMatch")
     history.push(`/tournament/${tournamentID}`)
   }
 

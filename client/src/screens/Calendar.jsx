@@ -10,7 +10,7 @@ export default function Calendar(props) {
 
   const calendar = tournaments.filter((tournament) => {
 
-    const endDate = new Date(tournament.current_season.end_date)
+  const endDate = new Date(tournament.current_season.end_date)
   
   
     return (
@@ -22,7 +22,6 @@ export default function Calendar(props) {
   }).map((tournament, index) => {
     
     const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
-
     const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
     
     return (
