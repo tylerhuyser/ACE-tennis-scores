@@ -39,6 +39,8 @@ export default function Calendar(props) {
 
   return (
     <div className="calendar-container">
+
+      <p className="calendar-container-title">Tournament Calendar</p>
       
       {calendar}
 

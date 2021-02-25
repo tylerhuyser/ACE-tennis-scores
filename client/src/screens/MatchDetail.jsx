@@ -12,7 +12,8 @@ import {
 
 export default function MatchDetail(props) {
   
-  const [ loaded, setLoaded ] = useState(false)
+  const [matchDetailsLoaded, setMatchDetailsLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const [ matchData, setMatchData ] = useState(null)
   const [ homeStats, setHomeStats] = useState(null)
   const [ awayStats, setAwayStats ] = useState(null)
@@ -28,6 +29,7 @@ export default function MatchDetail(props) {
       setMatchData(JSON.parse(matchDetails))
       setHomeStats(JSON.parse(matchDetails).statistics.teams[0])
       setAwayStats(JSON.parse(matchDetails).statistics.teams[1])
+      setMatchDetailsLoaded(true)
  
     } else {
 
@@ -37,13 +39,16 @@ export default function MatchDetail(props) {
       const getMatchStatistics = async (matchID) => {
         const matchDetails = await getMatchDetails(matchID)
         console.log(matchDetails)
-
         setMatchData(matchDetails)
-        setHomeStats(matchDetails.statistics.teams[0])
-        setAwayStats(matchDetails.statistics.teams[1])
-        console.log(matchDetails.statistics.teams[0])
-
         localStorage.setItem('matchDetails', JSON.stringify(matchDetails))
+        if (matchDetails.statistics) {
+          setHomeStats(matchDetails.statistics.teams[0])
+          setAwayStats(matchDetails.statistics.teams[1])
+          console.log(matchDetails.statistics.teams[0])
+          setMatchDetailsLoaded(true)
+        } else {
+          setMatchDetailsLoaded(true)
+        }
       }
       getMatchStatistics(matchID)
 
@@ -52,11 +57,11 @@ export default function MatchDetail(props) {
 
   useEffect(() => {
 
-    if (awayStats) {
+    if (matchDetailsLoaded) {
       setLoaded(true)
     }
 
-  }, [awayStats])
+  }, [matchDetailsLoaded])
 
   useEffect(() => {
 

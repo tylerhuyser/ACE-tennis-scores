@@ -145,6 +145,9 @@ export default function PlayerDetail(props) {
 
   const handleReturnToTournament = (e) => {
     localStorage.removeItem('currentPlayer')
+    localStorage.removeItem('playerSchedule')
+    localStorage.removeItem('playerResults')
+    localStorage.removeItem('playerDetails')
     history.push('/rankings')
   }
   

@@ -19,6 +19,9 @@
   font-size: 24px;
   font-weight: 500;
   font-family: bogart-semibold;
+
+  padding: 25px 10px;
+  border-bottom: solid white 2px;
 }
 
 .switch-container {

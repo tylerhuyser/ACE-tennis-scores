@@ -9,3 +9,14 @@
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;
 }
+
+.calendar-container-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+
+  text-align: center;
+  padding: 25px 10px;
+  border-bottom: solid white 2px;
+}

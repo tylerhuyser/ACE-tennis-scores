@@ -9,8 +9,14 @@ import './TournamentDetail.css'
 
 export default function TournamentDetail(props) {
 
-  // Switches
-  const [ loaded, setLoaded ] = useState(false)
+  // Data Loaded Switches
+  const [currentSinglesTournamentLoaded, setCurrentSinglesTournamentLoaded] = useState(false)
+  const [currentDoublesTournamentLoaded, setCurrentDoublesTournamentLoaded] = useState(false)
+  const [currentTournamentScheduleLoaded, setCurrentTournamentScheduleLoaded] = useState(false)
+  const [currentTournamentCompletedMatchesLoaded, setCurrentTournamentCompletedMatchesLoaded] = useState(false)
+  const [currentTournamentLiveMatchesLoaded, setCurrentTournamentLiveMatchesLoaded] = useState(false)
+  
+  // Visibility Switches
   const [ currentMode, setCurrentMode ] = useState(false)
   const [ view, setView ] = useState("Live Scores")
 
@@ -22,6 +28,10 @@ export default function TournamentDetail(props) {
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
 
+  const [tournamentName, setTournamentName] = useState("")
+  const [tournamentGender, setTournamentGender] = useState("")
+  const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
+
     // Tournament Schedule
   const [ currentTournamentSchedule, setCurrentTournamentSchedule ] = useState([])
     // Completed Matches (Results)
@@ -30,9 +40,6 @@ export default function TournamentDetail(props) {
     // Live Matches
   const [ liveSinglesMatches, setLiveSinglesMatches ] = useState([])
   const [ liveDoublesMatches, setLiveDoublesMatches ] = useState([])
-
-  const [tournamentName, setTournamentName] = useState("")
-  const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
 
   const params = useParams();
   const history = useHistory()
@@ -46,18 +53,19 @@ export default function TournamentDetail(props) {
     if (tournaments !== undefined && tournaments !== null) {
       const currentTournamentData = tournaments.find((tournament) => params.id === tournament.id)
       setCurrentSinglesTournament(currentTournamentData)
-      setLoaded(true)
+      setCurrentSinglesTournamentLoaded(true)
     } else {
       const currentTournamentData = localStorage.getItem('currentSinglesTournament')
       setCurrentSinglesTournament(JSON.parse(currentTournamentData))
-      setLoaded(true)
+      setCurrentSinglesTournamentLoaded(true)
     }
   }, [])
 
   // Parses Key Tournament Info
   useEffect(() => {
     
-    if (loaded) {
+    if (currentSinglesTournamentLoaded) {
+
       const parseTournamentInfo = (currentSinglesTournament) => {
 
         const splitTournamentName = currentSinglesTournament.name.split(",")
@@ -90,68 +98,81 @@ export default function TournamentDetail(props) {
       parseTournamentInfo(currentSinglesTournament)
       setStartDate(currentSinglesTournament.current_season.start_date.split("-").splice(1).join("/"))
       setEndDate(currentSinglesTournament.current_season.end_date.split("-").splice(1).join("/"))
+      setTournamentGender(currentSinglesTournament.gender)
     }
-  }, [loaded])
+  }, [currentSinglesTournamentLoaded])
 
   // Collects Corresponding Doubles Tournament Data
   useEffect(() => {
 
     if (tournamentName) {
-      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.name.includes(tournamentName))))
+      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.name.includes(tournamentName))))
       setCurrentDoublesTournament(currentDoublesTournamentData)
+      setCurrentDoublesTournamentLoaded(true)
     }
   }, [tournamentName])
 
 
   // Collects Tournament Schedule
   useEffect(() => {
-    if (currentDoublesTournament && dailySchedule.length > 0) {
-      console.log('here schedule')
-      const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
-      if (currentTournamentScheduleData === undefined) {
-        return
-      } else {
-        setCurrentTournamentSchedule(currentTournamentScheduleData)
+    if (currentDoublesTournamentLoaded ) {
+
+      if (dailySchedule.length > 0) {
+        const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
+        if (currentTournamentScheduleData === undefined) {
+          setCurrentTournamentScheduleLoaded(true)
+        } else {
+          setCurrentTournamentSchedule(currentTournamentScheduleData)
+          setCurrentTournamentScheduleLoaded(true)
+        }
       }
+
     }
-  }, [currentDoublesTournament])
+  }, [currentDoublesTournamentLoaded])
 
   // Collect Completed Matches (Results)
   useEffect(() => {
-    if (currentDoublesTournament && dailySchedule.length > 0) {
+    if (currentTournamentScheduleLoaded && dailySchedule.length > 0) {
       const completedSinglesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
       setCompletedSinglesMatches(completedSinglesMatchesData)
       const completedDoublesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentDoublesTournament.id)))
       setCompletedDoublesMatches(completedDoublesMatchesData)
+      setCurrentTournamentCompletedMatchesLoaded(true)
       console.log(dailyResults)
       console.log(completedSinglesMatchesData)
       console.log('here completed')
     }
-  }, [currentDoublesTournament])
+  }, [currentTournamentScheduleLoaded])
   
   
   // Collects Live Singles & Doubles Matches
   useEffect(() => {
 
-    if (currentDoublesTournament && dailySchedule.length > 0) {
+    if (currentTournamentCompletedMatchesLoaded && dailySchedule.length > 0) {
+
       const liveSinglesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
       const liveDoublesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
+      
       if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData === undefined)) {
+        setCurrentTournamentLiveMatchesLoaded(true)
         return
       } else if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData !== undefined)) {
         setLiveDoublesMatches(liveDoublesMatchesData)
+        setCurrentTournamentLiveMatchesLoaded(true)
       } else if ((liveSinglesMatchesData !== undefined) && (liveDoublesMatchesData === undefined)) {
         setLiveSinglesMatches(liveSinglesMatchesData)
+        setCurrentTournamentLiveMatchesLoaded(true)
       } else if ((liveSinglesMatchesData) && (liveDoublesMatchesData)) {
         setLiveSinglesMatches(liveSinglesMatchesData)
         setLiveDoublesMatches(liveDoublesMatchesData)
+        setCurrentTournamentLiveMatchesLoaded(true)
       }
       console.log('here live')
       console.log(liveMatches)
       console.log(currentSinglesTournament.id)
       console.log(liveSinglesMatchesData)
     }
-  }, [currentDoublesTournament])
+  }, [currentTournamentCompletedMatchesLoaded])
 
   // Switch Functions
 
@@ -179,72 +200,98 @@ export default function TournamentDetail(props) {
   }
   
   return (
-    <div className="tournament-detail-container">
+
+    <>
       
-      <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
-
-      <div className="tournament-card-container">
-
-        <p className="tournament-card-name">{tournamentName}</p>
-
-        <div className="tournament-category-container">
-
-          <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
-
-          <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
+      { currentTournamentLiveMatchesLoaded ?
+      
+        <div className="tournament-detail-container">
         
-        </div>
+          <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
 
-      </div>
+          <div className="tournament-card-container">
 
+            <p className="tournament-card-name">{tournamentName}</p>
 
+            <div className="tournament-category-container">
 
-      <div className="discipline-switch-container">
+              <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
 
-        <p className="discipline-switch-container-copy">SINGLES</p>
-
-        <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
-
-        <p className="discipline-switch-container-copy">DOUBLES</p>
-
-      </div>
-
-
-        
-      <div className="tournament-views-container">
-
-        <button className="tournament-views-button" id="live-scores-button" onClick={(e) => handleChangeView("Live Scores")} > Live Matches</button>
-
-        <button className="tournament-views-button" id="completed-matches-button" onClick={(e) => handleChangeView("Completed Matches")}> Completed Matches</button>
-
-        <button className="tournament-views-button" id="schedule-button" onClick={(e) => handleChangeView("Schedule")} > Schedule</button>
-         
-      </div>
-
-
-
-      { view === "Live Scores" ?
-      
-        <Matches matchesData={ currentMode ? liveDoublesMatches : liveSinglesMatches } view={view} />
-
-      :
-      
-      <>
-        
-        { view === "Completed Matches" ?
-      
-          <Matches matchesData={ currentMode ? completedDoublesMatches : completedSinglesMatches } view={view} />
-            
-        :
+              <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
           
-          <OrderOfPlay currentTournamentSchedule={currentTournamentSchedule} />
-      
-        }
-      
-      </>
-    
-      }
+            </div>
 
-    </div>
+          </div>
+
+
+
+          <div className="discipline-switch-container">
+
+            <p className="discipline-switch-container-copy">SINGLES</p>
+
+            <Switch onChange={handleSwitch} checked={currentMode ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+
+            <p className="discipline-switch-container-copy">DOUBLES</p>
+
+          </div>
+
+
+          
+          <div className="tournament-views-container">
+
+            <button className="tournament-views-button" id="live-scores-button" onClick={(e) => handleChangeView("Live Scores")} > Live Matches</button>
+
+            <button className="tournament-views-button" id="completed-matches-button" onClick={(e) => handleChangeView("Completed Matches")}> Completed Matches</button>
+
+            <button className="tournament-views-button" id="schedule-button" onClick={(e) => handleChangeView("Schedule")} > Schedule</button>
+          
+          </div>
+
+
+
+          {view === "Live Scores" ?
+        
+            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} view={view} />
+
+            :
+        
+            <>
+          
+              {view === "Completed Matches" ?
+        
+                <Matches matchesData={currentMode ? completedDoublesMatches : completedSinglesMatches} view={view} />
+              
+                :
+            
+                <>
+              
+                  {currentTournamentSchedule.length === 0 ?
+              
+                    <p className="match-container-copy">Tournament schedule currently unavailable.</p>
+            
+                    :
+
+                    <OrderOfPlay currentTournamentSchedule={currentTournamentSchedule} />
+        
+                  }
+
+                </>
+              
+              }
+        
+            </>
+      
+          }
+
+        </div>
+        
+      :
+        
+        <>
+        </>
+      
+      }
+      
+    </>
   )
 }
