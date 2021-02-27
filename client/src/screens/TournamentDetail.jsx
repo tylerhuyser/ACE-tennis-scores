@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams, useHistory } from 'react-router-dom';
 import Switch from "react-switch";
 
+import Loader from '../components/Loader'
 import Matches from '../components/Matches'
 import OrderOfPlay from '../components/OrderOfPlay'
 
@@ -105,19 +106,27 @@ export default function TournamentDetail(props) {
   // Collects Corresponding Doubles Tournament Data
   useEffect(() => {
 
-    if (tournamentName) {
-      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.name.includes(tournamentName))))
+    if (tournamentName && tournamentGender) {
+      console.log(tournaments)
+      console.log(tournamentGender)
+      console.log(tournamentName)
+      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.parent_id === currentSinglesTournament.parent_id)))
+      console.log(currentDoublesTournamentData)
       setCurrentDoublesTournament(currentDoublesTournamentData)
       setCurrentDoublesTournamentLoaded(true)
     }
-  }, [tournamentName])
+  }, [tournamentName, tournamentGender])
 
 
   // Collects Tournament Schedule
   useEffect(() => {
-    if (currentDoublesTournamentLoaded ) {
+    if (currentDoublesTournamentLoaded) {
+      
+      console.log(currentDoublesTournament)
 
-      if (dailySchedule.length > 0) {
+      if (dailySchedule.length > 0 && currentDoublesTournament.length > 0) {
+        console.log(currentSinglesTournament.id)
+        console.log(currentDoublesTournament.id)
         const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
         if (currentTournamentScheduleData === undefined) {
           setCurrentTournamentScheduleLoaded(true)
@@ -128,7 +137,7 @@ export default function TournamentDetail(props) {
       }
 
     }
-  }, [currentDoublesTournamentLoaded])
+  }, [currentDoublesTournamentLoaded, currentDoublesTournament])
 
   // Collect Completed Matches (Results)
   useEffect(() => {
@@ -140,7 +149,7 @@ export default function TournamentDetail(props) {
       setCurrentTournamentCompletedMatchesLoaded(true)
       console.log(dailyResults)
       console.log(completedSinglesMatchesData)
-      console.log('here completed')
+      console.log('schedule completed')
     }
   }, [currentTournamentScheduleLoaded])
   
@@ -167,7 +176,7 @@ export default function TournamentDetail(props) {
         setLiveDoublesMatches(liveDoublesMatchesData)
         setCurrentTournamentLiveMatchesLoaded(true)
       }
-      console.log('here live')
+      console.log('live matches completed')
       console.log(liveMatches)
       console.log(currentSinglesTournament.id)
       console.log(liveSinglesMatchesData)
@@ -207,7 +216,7 @@ export default function TournamentDetail(props) {
       
         <div className="tournament-detail-container">
         
-          <i class="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
+          <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
 
           <div className="tournament-card-container">
 
@@ -287,8 +296,7 @@ export default function TournamentDetail(props) {
         
       :
         
-        <>
-        </>
+        <Loader />
       
       }
       
