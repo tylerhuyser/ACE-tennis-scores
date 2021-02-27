@@ -41,10 +41,12 @@ function App () {
   useEffect(() => {
 
     const totalTournaments = tournaments.length
+    const oneDay = 60 * 60 * 24 * 1000
 
     const tournamentData = localStorage.getItem('tournaments')
+    const createdAt = localStorage.getItem('createdAt')
 
-    if (totalTournaments === 0 && tournamentData === null) {
+    if (totalTournaments === 0 && tournamentData === null && (createdAt === undefined || ((today - createdAt) > (oneDay)))) {
 
       const gatherActiveTournaments = async () => {
         console.log('apirequest 1')
@@ -52,6 +54,7 @@ function App () {
         setTournaments(tournamentData.tournaments)
         console.log(tournamentData.tournaments)
         localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
+        localStorage.setItem('createdAt', today)
         setTournamentsLoaded(true)
       }
       gatherActiveTournaments()
