@@ -171,9 +171,9 @@ export default function PlayerDetail(props) {
             
             <div className="player-views-container">
 
-              <button className="player-views-button" id="completed-matches-button" onClick={(e) => handleChangeView("Player Results")}> Player Results</button>
+              <button className="player-views-button" id="player-results-button" onClick={(e) => handleChangeView("Player Results")}> Player Results</button>
 
-              <button className="player-views-button" id="schedule-button" onClick={(e) => handleChangeView("Player Schedule")} > Player Schedule</button>
+              <button className="player-views-button" id="player-schedule-button" onClick={(e) => handleChangeView("Player Schedule")} > Player Schedule</button>
 
             </div>
 
