@@ -4,7 +4,7 @@ import PlayerCard from './PlayerCard'
 
 export default function Players(props) {
 
-  const { rankingCategory, discipline, viewRace } = props
+  const { rankingCategory, discipline } = props
 
   const generatePlayers = (rankingCategory) => {
     if (rankingCategory && viewRace && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
@@ -15,6 +15,7 @@ export default function Players(props) {
         <PlayerCard
           playerData={player}
           key={player.double_team.id}
+          discipline={discipline}
         />
       ))
 
