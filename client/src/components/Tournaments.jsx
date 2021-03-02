@@ -1,12 +1,15 @@
 import React from 'react'
 
+import Loader from '../components/Loader'
 import TournamentCard from './TournamentCard'
+
+import './Tournaments.css'
 
 export default function Tournaments(props) {
   
   const { tournaments, currentDate } = props
 
-  const calendar = tournaments.filter((tournament) => {
+  const calendar = tournaments && tournaments?.filter((tournament) => {
 
     const endDate = new Date(tournament.current_season.end_date)
     
@@ -38,7 +41,19 @@ export default function Tournaments(props) {
   return (
     <div className="tournaments-container">
 
-      {calendar}
+      { !calendar ?
+
+        <Loader />
+
+        :
+      
+        <>
+
+          {calendar}
+          
+        </>
+      
+      }
 
     </div>
 

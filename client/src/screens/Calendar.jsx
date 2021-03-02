@@ -22,9 +22,17 @@ export default function Calendar(props) {
 
       <p className="calendar-container-title">Tournament Calendar</p>
 
-      <Switch onChange={handleSwitch} checked={viewCalendar ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+      <div className="calendar-switch-container">
+
+        <p className="calendar-switch-label">Ongoing</p>
+
+        <Switch onChange={handleSwitch} checked={viewCalendar ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+        
+        <p className="calendar-switch-label">Calendar</p>
+        
+      </div>
       
-      <Tournaments tournaments={viewCalendar? tournaments : calendarTournaments} currentDate={currentDate} />
+      <Tournaments tournaments={viewCalendar ? calendarTournaments : tournaments} currentDate={currentDate} />
 
     </div>
   )
