@@ -45,7 +45,7 @@ export default function TournamentDetail(props) {
   const params = useParams();
   const history = useHistory()
 
-  const { tournaments, dailySchedule, dailyResults, liveMatches, currentDate } = props;
+  const { tournaments, dailySchedule, dailyResults, liveMatches } = props;
 
 // UseEffects
   

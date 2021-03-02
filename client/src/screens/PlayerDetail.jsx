@@ -24,7 +24,6 @@ export default function PlayerDetail(props) {
   const [playerResults, setPlayerResults] = useState(null)
   const [playerSchedule, setPlayerSchedule] = useState(false)
 
-  const currentYear = new Date().getFullYear()
   const history = useHistory()
 
   useEffect(() => {

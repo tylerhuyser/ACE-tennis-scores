@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import Switch from "react-switch";
 
 import Tournaments from '../components/Tournaments'
-import TournamentCard from '../components/TournamentCard'
 
 import './Calendar.css'
 

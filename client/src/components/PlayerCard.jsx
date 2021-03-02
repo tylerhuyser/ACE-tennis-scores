@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import ReactCountryFlag from "react-country-flag"
 
-import Loader from '../components/Loader'
 import './PlayerCard.css'
 
 export default function PlayerCard(props) {
@@ -20,7 +19,8 @@ export default function PlayerCard(props) {
     playerDoublesRaceRankingPoints: "--"
   })
 
-  const { playerData, discipline } = props
+  const { playerData } = props
+
   const getCountryISO2 = require("country-iso-3-to-2");
 
   const history = useHistory()
