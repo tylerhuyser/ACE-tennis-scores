@@ -1,13 +1,15 @@
 import React from 'react'
+
+import Loader from '../components/Loader'
 import PlayerCard from './PlayerCard'
 
 
 export default function Players(props) {
 
-  const { rankingCategory, discipline } = props
+  const { rankingCategory, viewRace, discipline } = props
 
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && viewRace && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
+    if (rankingCategory && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
 
       console.log(rankingCategory)
 
@@ -29,6 +31,7 @@ export default function Players(props) {
         <PlayerCard
           playerData={player}
           key={player.player.id}
+          discipline={discipline}
         />
      ))
       
@@ -43,7 +46,19 @@ export default function Players(props) {
 
     <>
       
-      {players}
+      { (!players || players.length < 100) ?
+
+        <Loader />
+        
+      :
+      
+        <>
+      
+          {players}
+          
+        </>
+      
+      }
       
     </>
   )

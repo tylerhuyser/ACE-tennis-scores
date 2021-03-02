@@ -188,8 +188,20 @@ export default function PlayerDetail(props) {
                 :
                 
                 <div className="player-schedule-container">
+                
+                  {scheduleItems.length === 0 ?
+                  
+                    <p className="match-container-copy">Upcoming player schedule currently unavailable.</p>
+                  
+                  :
+                  
+                    <>
 
-                  { scheduleItems }
+                    {scheduleItems}
+                    
+                    </>
+              
+                  }
 
                 </div>
               
