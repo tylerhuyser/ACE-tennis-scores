@@ -10,6 +10,7 @@ export const getCurrentTournaments = async () => {
   try {
     console.log('inside api')
     const resp = await api.get(`/tournaments/ongoing.json${key}`)
+    console.log(resp)
     console.log(resp.data.contents)
     return resp.data
   }
