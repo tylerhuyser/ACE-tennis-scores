@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
+import Switch from "react-switch";
 
 import Tournaments from '../components/Tournaments'
 import TournamentCard from '../components/TournamentCard'
@@ -7,14 +8,23 @@ import './Calendar.css'
 
 export default function Calendar(props) {
   
+  const [viewCalendar, setViewCalendar] = useState(false)
+  const [calendarTournaments, setCalendarTournaments] = useState(null)
+
   const { tournaments, currentDate } = props
+
+  const handleSwitch = () => {
+    setViewCalendar(!viewCalendar)
+  }
 
   return (
     <div className="calendar-container">
 
       <p className="calendar-container-title">Tournament Calendar</p>
+
+      <Switch onChange={handleSwitch} checked={viewCalendar ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
       
-      <Tournaments tournaments={tournaments} currentDate={currentDate} />
+      <Tournaments tournaments={viewCalendar? tournaments : calendarTournaments} currentDate={currentDate} />
 
     </div>
   )
