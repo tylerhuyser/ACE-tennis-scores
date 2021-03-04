@@ -90,7 +90,7 @@ function App () {
       gatherDailySchedule(year, month, day)
     }
 
-  }, [tournaments])
+  }, [tournaments, tournamentsLoaded])
 
   useEffect(() => {
 
