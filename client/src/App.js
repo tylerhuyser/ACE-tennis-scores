@@ -102,11 +102,13 @@ function App () {
       console.log('apirequest 3')
       const gatherDailyResults = async (currentYear, currentMonth, currentDay) => {
         const dailyResultsData = await getDailyResults(currentYear, currentMonth, currentDay)
+        console.log(dailyResultsData)
         console.log(dailyResultsData.results)
         setDailyResults(dailyResultsData.results)
       }
 
-      gatherDailyResults(year, month, day)
+      const timeOut = setTimeout(() => gatherDailyResults(year, month, day), 1001)
+      return () => clearTimeout(timeOut)
     }
 
   }, [dailySchedule])
@@ -125,7 +127,7 @@ function App () {
           setLoaded(true)
         }
       }
-      const timeOut = setTimeout(() => gatherLiveMatches(), 1001)
+      const timeOut = setTimeout(() => gatherLiveMatches(), 2002)
       return () => clearTimeout(timeOut)
     }
     
