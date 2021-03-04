@@ -46,11 +46,12 @@ function App () {
     const tournamentData = localStorage.getItem('tournaments')
     const createdAt = localStorage.getItem('createdAt')
 
-    if (totalTournaments === 0 && tournamentData === null && (createdAt === undefined || ((today - createdAt) > (oneDay)))) {
+    if (totalTournaments === 0 || tournamentData === undefined || tournamentData === null || createdAt === undefined || ((today - createdAt) > (oneDay))) {
 
       const gatherActiveTournaments = async () => {
         console.log('apirequest 1')
         const tournamentData = await getCurrentTournaments()
+        console.log(tournamentData)
         setTournaments(tournamentData.tournaments)
         console.log(tournamentData.tournaments)
         localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
