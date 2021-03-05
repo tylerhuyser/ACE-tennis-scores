@@ -67,7 +67,7 @@ export default function MatchCard(props) {
 
     const interval = setInterval(() => {
 
-      if (matchInfo.matchStatus === "live") {
+      if (matchInfo.matchStatus.toLowerCase() === "live") {
 
         const currentMatchID = matchData.sport_event.id
 
@@ -305,7 +305,7 @@ export default function MatchCard(props) {
     if (currentMatch !== null) {
 
       const handleHomeScore = () => {
-        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
+        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.sport_event_status.game_state !== undefined) {
 
           if (match.sport_event_status.game_state.home_score === 50) {
 
@@ -329,7 +329,7 @@ export default function MatchCard(props) {
 
       const handleAwayScore = () => {
         
-        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.game_state !== undefined) {
+        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.sport_event_status.game_state !== undefined) {
 
           if (match.sport_event_status.game_state.away_score === 50) {
 
@@ -349,7 +349,7 @@ export default function MatchCard(props) {
 
       const generateSets = (formatValue) => {
         
-        if ((matchInfo.matchStatus === "live" || matchInfo.matchStatus === "ended" || matchInfo.matchStatus === "closed" || matchInfo.matchStatus === "interrupted") && match.sport_event_status.period_scores !== undefined) {
+        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.sport_event_status.period_scores !== undefined) {
 
           const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
 
@@ -371,12 +371,12 @@ export default function MatchCard(props) {
       }
 
       const handleServer = () => {
-        if (matchInfo.matchStatus === "live" && match.sport_event_status.game_state.serving !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" && match.sport_event_status.game_state.serving !== undefined) {
           setScoreInfo(prevState => ({
             ...prevState,
             server: match.sport_event_status.game_state.serving
           }))
-        } else if (matchInfo.matchStatus === "closed" && match.sport_event_status.winner_id !== undefined) {
+        } else if (matchInfo.matchStatus.toLowerCase() === "closed" && match.sport_event_status.winner_id !== undefined) {
           if (match.sport_event_status.winner_id === matchInfo.homeCompetitorID) {
             setScoreInfo(prevState => ({
               ...prevState,
