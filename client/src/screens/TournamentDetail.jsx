@@ -262,8 +262,14 @@ export default function TournamentDetail(props) {
       { currentTournamentLiveMatchesLoaded ?
       
         <div className="tournament-detail-container">
-        
-          <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} >    BACK</i>
+
+          <div className="back-button-container">
+
+            <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} ></i>
+
+            <p className="back-button-copy">BACK</p>
+
+          </div>
 
           <div className="tournament-card-container">
 

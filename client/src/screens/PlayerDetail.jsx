@@ -164,7 +164,13 @@ export default function PlayerDetail(props) {
           
           <div className="player-detail-container">
 
-            <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} >    BACK</i>
+            <div className="back-button-container">
+
+              <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} ></i>
+
+              <p className="back-button-copy">BACK</p>
+
+            </div>
 
             <PlayerCard playerData={playerData} key={playerData.player.id} />
             

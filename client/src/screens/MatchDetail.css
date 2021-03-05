@@ -86,20 +86,27 @@
   border-bottom: white 1px solid;
 }
 
-#match-detail-back-button {
-  color: white;
-  font-size: 20px;
-
-  width: 100%;
-  margin-left: 25px;
-  margin-bottom: 25px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 #placeholder-category {
   border-bottom: transparent 1px solid;
+}
+
+.back-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100%;
+  color: white;
+  font-size: 24px;
+  font-family: bogart-semibold;
+
+  margin-left: 2px;
+  margin-bottom: 25px;
+
+}
+
+.back-button-copy {
+  margin: 0px;
+  margin-left: 10px;
 }
