@@ -76,6 +76,8 @@ function App () {
     const month = currentMonth
     const year = currentYear
 
+    console.log(tournamentsLoaded)
+
     if (tournamentsLoaded) {
       console.log('apirequest 2')
       const gatherDailySchedule = async (currentYear, currentMonth, currentDay) => {

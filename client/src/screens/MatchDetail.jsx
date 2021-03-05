@@ -137,23 +137,23 @@ export default function MatchDetail(props) {
 
               <p className="statistic-category" id="competitor-statistics-container-title">{`${homeStats.name}`}</p>
 
-              <p className="statistic-category">{homeStats.statistics.first_serve_successful}{`/`}{homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults}{` (`}{(homeStats.statistics.first_serve_successful / (homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults) * 100).toFixed(1)}{`%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{homeStats.statistics.first_serve_successful}{`/`}{homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults}{` (`}{(homeStats.statistics.first_serve_successful / (homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults) * 100).toFixed(1)}{`%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.second_serve_successful}/${homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults} (${(homeStats.statistics.second_serve_successful / (homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults) * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.second_serve_successful}/${homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults} (${(homeStats.statistics.second_serve_successful / (homeStats.statistics.second_serve_successful + homeStats.statistics.double_faults) * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.aces}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.aces}`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.double_faults}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.double_faults}`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.first_serve_points_won}/${homeStats.statistics.first_serve_successful} (${(homeStats.statistics.first_serve_points_won / homeStats.statistics.first_serve_successful * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.first_serve_points_won}/${homeStats.statistics.first_serve_successful} (${(homeStats.statistics.first_serve_points_won / homeStats.statistics.first_serve_successful * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.second_serve_points_won}/${homeStats.statistics.second_serve_successful} (${(homeStats.statistics.second_serve_points_won / homeStats.statistics.second_serve_successful * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.second_serve_points_won}/${homeStats.statistics.second_serve_successful} (${(homeStats.statistics.second_serve_points_won / homeStats.statistics.second_serve_successful * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.receiver_points_won}/${(awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful)} (${((homeStats.statistics.receiver_points_won / (awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful) * 100)).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.receiver_points_won}/${(awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful)} (${((homeStats.statistics.receiver_points_won / (awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful) * 100)).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.breakpoints_won}/${homeStats.statistics.total_breakpoints} (${(homeStats.statistics.breakpoints_won / homeStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.breakpoints_won}/${homeStats.statistics.total_breakpoints} (${(homeStats.statistics.breakpoints_won / homeStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${homeStats.statistics.points_won}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.points_won}`}</p>
 
             </div>
 
@@ -161,23 +161,23 @@ export default function MatchDetail(props) {
 
               <p className="statistic-category" id="competitor-statistics-container-title">{`${awayStats.name}`}</p>
 
-              <p className="statistic-category">{awayStats.statistics.first_serve_successful}{`/`}{awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults}{` (`}{(awayStats.statistics.first_serve_successful / (awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults) * 100).toFixed(1)}{`%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{awayStats.statistics.first_serve_successful}{`/`}{awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults}{` (`}{(awayStats.statistics.first_serve_successful / (awayStats.statistics.first_serve_successful + awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults) * 100).toFixed(1)}{`%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.second_serve_successful}/${awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults} (${(awayStats.statistics.second_serve_successful / (awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults) * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.second_serve_successful}/${awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults} (${(awayStats.statistics.second_serve_successful / (awayStats.statistics.second_serve_successful + awayStats.statistics.double_faults) * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.aces}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.aces}`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.double_faults}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.double_faults}`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.first_serve_points_won}/${awayStats.statistics.first_serve_successful} (${(awayStats.statistics.first_serve_points_won / awayStats.statistics.first_serve_successful * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.first_serve_points_won}/${awayStats.statistics.first_serve_successful} (${(awayStats.statistics.first_serve_points_won / awayStats.statistics.first_serve_successful * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.second_serve_points_won}/${awayStats.statistics.second_serve_successful} (${(awayStats.statistics.second_serve_points_won / awayStats.statistics.second_serve_successful * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.second_serve_points_won}/${awayStats.statistics.second_serve_successful} (${(awayStats.statistics.second_serve_points_won / awayStats.statistics.second_serve_successful * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.receiver_points_won}/${(homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful)} (${((awayStats.statistics.receiver_points_won / (homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful) * 100)).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.receiver_points_won}/${(homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful)} (${((awayStats.statistics.receiver_points_won / (homeStats.statistics.first_serve_successful + homeStats.statistics.second_serve_successful) * 100)).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.breakpoints_won}/${awayStats.statistics.total_breakpoints} (${(awayStats.statistics.breakpoints_won / awayStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.breakpoints_won}/${awayStats.statistics.total_breakpoints} (${(awayStats.statistics.breakpoints_won / awayStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category">{`${awayStats.statistics.points_won}`}</p>
+              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.points_won}`}</p>
           
             </div>
 

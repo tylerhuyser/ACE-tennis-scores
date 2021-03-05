@@ -371,22 +371,26 @@ export default function MatchCard(props) {
       }
 
       const handleServer = () => {
-        if (matchInfo.matchStatus.toLowerCase() === "live" && match.sport_event_status.game_state.serving !== undefined) {
-          setScoreInfo(prevState => ({
-            ...prevState,
-            server: match.sport_event_status.game_state.serving
-          }))
-        } else if (matchInfo.matchStatus.toLowerCase() === "closed" && match.sport_event_status.winner_id !== undefined) {
-          if (match.sport_event_status.winner_id === matchInfo.homeCompetitorID) {
+        if (matchInfo.matchStatus.toLowerCase() === "live") {
+          if (match.sport_event_status.game_state.serving) {
             setScoreInfo(prevState => ({
               ...prevState,
-              server: "homeWinner"
+              server: match.sport_event_status.game_state.serving
             }))
-          } else {
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: "awayWinner"
-            }))
+          }
+        } else if (matchInfo.matchStatus.toLowerCase() === "closed") {
+          if (match.sport_event_status.winner_id) {
+            if (match.sport_event_status.winner_id === matchInfo.homeCompetitorID) {
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "homeWinner"
+              }))
+            } else {
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "awayWinner"
+              }))
+            }
           }
         }
       }
@@ -457,7 +461,7 @@ export default function MatchCard(props) {
           {
             scoreInfo.server === "homeWinner" ?
             
-            <i class="fas fa-check service-icon"></i>
+            <i className="fas fa-check service-icon"></i>
               
           :
           
