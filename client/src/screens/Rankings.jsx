@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Switch from "react-switch";
 
 import Loader from '../components/Loader'
+import IconLogo from '../components/IconLogo'
 import Players from '../components/Players'
 
 import './Rankings.css'
@@ -31,8 +32,9 @@ export default function Rankings(props) {
   const [maleDoublesRaceRankings, setMaleDoublesRaceRankings] = useState(null)
   const [femaleDoublesRaceRankings, setFemaleDoublesRaceRankings] = useState(null)
 
-
   const [ rankingCategory, setRankingCategory ] = useState(false)
+
+  const [playerCount, setPlayerCount] = useState(0)
 
   useEffect(() => {
     if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
@@ -100,21 +102,26 @@ export default function Rankings(props) {
 
   const handleEventSwitch = () => {
     if (event === "WTA") {
+      setPlayerCount(0)
       setEvent("ATP")
     } else if (event === "ATP") {
+      setPlayerCount(0)
       setEvent("WTA")
     }
   }
 
   const handleDisciplineSwitch = () => {
     if (discipline === "Singles") {
+      setPlayerCount(0)
       setDiscipline("Doubles")
     } else if (discipline === "Doubles") {
+      setPlayerCount(0)
       setDiscipline("Singles")
     }
   }
 
   const handleRaceSwitch = () => {
+    setPlayerCount(0)
     setViewRace(!viewRace)
   }
   
@@ -167,9 +174,8 @@ export default function Rankings(props) {
 
             </div>
 
-            <Players rankingCategory={rankingCategory} event={event} discipline={discipline} viewRace={viewRace} />
-
-
+              <Players rankingCategory={rankingCategory} event={event} discipline={discipline} playerCount={playerCount} setPlayerCount={setPlayerCount} />
+            
           </div>
           
         </>
