@@ -28,17 +28,19 @@ export default function Players(props) {
 
       console.log(rankingCategory)
 
-      const playerCards = rankingCategory?.player_rankings.map((player) => (
+      const playerCards = rankingCategory?.player_rankings.map((player, index) => {
+
+        setPlayerCount(index)
+      
+        return (
           <PlayerCard
             playerData={player}
             key={player.player.id}
             discipline={discipline}
-            playerCount={playerCount}
-            setPlayerCount={setPlayerCount}
+
           />
-      ))
+      )})
       
-      setPlayerCount(1)
       return playerCards
 
     } else {
@@ -51,25 +53,13 @@ export default function Players(props) {
 
   const players = generatePlayers(rankingCategory)
 
-  // const queuePlayersOrLoader = (playerCount, players) => {
-  //   if (playerCount < 1) {
-  //     return  <div className="loader-icon heartbeat" id="rankings-loader">
-  //               <IconLogo />
-  //             </div>
-  //   } else {
-  //     return players
-  //   }
-  // }
-
-  // const playerHTML = queuePlayersOrLoader(playerCount, players)
-
   console.log(players)
 
   return (
 
     <>
       
-      { playerCount < 1 ?
+      { playerCount < 100 ?
 
         <div className="loader-icon heartbeat" id="rankings-loader">
 

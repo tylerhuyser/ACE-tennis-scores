@@ -19,7 +19,7 @@ export default function PlayerCard(props) {
     playerDoublesRaceRankingPoints: "--"
   })
 
-  const { playerData, playerCount, setPlayerCount } = props
+  const { playerData } = props
 
   const getCountryISO2 = require("country-iso-3-to-2");
 
@@ -74,11 +74,8 @@ export default function PlayerCard(props) {
   }, [])
 
   useEffect(() => {
-    console.log('detail check')
     if (detailLevel !== "none") {
       setLoaded(true)
-      console.log(playerCount)
-      setPlayerCount(playerCount+1)
     }
   }, [detailLevel])
 
