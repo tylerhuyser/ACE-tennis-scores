@@ -9,7 +9,7 @@ import './MatchDetail.css'
 import {
   getMatchDetails
 } from "../utils/matches"
-
+ 
 export default function MatchDetail(props) {
   
   const [matchDetailsLoaded, setMatchDetailsLoaded] = useState(false)
