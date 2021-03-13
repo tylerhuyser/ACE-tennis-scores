@@ -479,7 +479,7 @@ export default function MatchCard(props) {
 
       const competitor = matchData.sport_event.competitors[index]
       const competitorName = competitor.name
-      const competitorSeed = '(' + competitor.seed + ')'
+      const competitorSeed = '[' + competitor.seed + ']'
       const competitorCountryCode = competitor.country_code
       const alpha2Country = getCountryISO2(competitorCountryCode)
 
