@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+import PlayerCard from '../components/PlayerCard'
+
 import "./MatchCard.css";
 
 import {
@@ -59,7 +61,7 @@ export default function MatchCard(props) {
     if (currentMatch === null) {
       console.log('setMatchData')
       setMatch(currentMatchData)
-    } 
+    }
     
   }, [])
 
@@ -72,15 +74,15 @@ export default function MatchCard(props) {
         const currentMatchID = matchData.sport_event.id
 
         console.log('live data')
-         console.log(matchData)
-         const fetchMatch = async (matchID) => {
-           const data = await getMatch(matchID)
-           console.log("interval for fetchMatch within MatchCard")
-           setMatch(data)
-         }
-         fetchMatch(currentMatchID)
-       } else {
-         clearInterval(interval)
+        console.log(matchData)
+        const fetchMatch = async (matchID) => {
+          const data = await getMatch(matchID)
+          console.log("interval for fetchMatch within MatchCard")
+          setMatch(data)
+        }
+        fetchMatch(currentMatchID)
+      } else {
+        clearInterval(interval)
       }
     }, 60000);
    
@@ -420,6 +422,75 @@ export default function MatchCard(props) {
     localStorage.setItem("currentMatch", JSON.stringify(match))
     history.push(`/match/${matchID}`);
   };
+  
+  const homePlayer = matchData.sport_event.competitors.map((competitor, index) => {
+
+    let competitorData = []
+
+    if (competitor.players && competitor.players.length === 2 && index === 0) {
+      competitorData = competitor.players.map((player) => (
+        <PlayerCard 
+          playerData={player}
+          key={player.id}
+        />
+      ))
+    } else if (index === 0) {
+      competitorData = 
+        
+      <PlayerCard 
+        playerData={competitor}
+        key={competitor.id}
+    />
+    }
+
+    return (
+      
+      <div className="competitor-name" id="home-competitor-container" >
+        {competitorData}
+      </div>
+
+    )})
+
+  const awayPlayer = matchData.sport_event.competitors.map((competitor, index) => {
+
+    let competitorData = []
+
+    if (competitor.players && competitor.players.length === 2 && index === 1) {
+      competitorData = competitor.players.map((player) => (
+        <PlayerCard 
+          playerData={player}
+          key={player.id}
+        />
+      ))
+    }
+    // else if (index === 1) {
+
+    //   console.log(competitor)
+
+    //   competitorData = 
+        
+    //   <PlayerCard 
+    //     playerData={competitor}
+    //     key={competitor.id}
+    // />
+    // }
+
+    return (
+      
+      <div className="competitor-name" id="away-competitor-container" >
+        {competitorData ?
+          <PlayerCard
+            playerData={competitor}
+            key={competitor.id}
+          />
+  
+          :
+  
+          { competitorData }
+        }
+      </div>
+
+    )})
 
   return (
     <div
@@ -448,7 +519,7 @@ export default function MatchCard(props) {
 
         <div className="competitor-container" id="home">
 
-          <p className="competitor-name">{`${matchInfo.homeCompetitor}`}</p>
+          {homePlayer}
 
           {scoreInfo.server === "home" ? 
           
@@ -503,7 +574,7 @@ export default function MatchCard(props) {
 
         <div className="competitor-container" id="away">
 
-          <p className="competitor-name">{`${matchInfo.awayCompetitor}`}</p>
+          {awayPlayer}
 
           {scoreInfo.server === "away" ?
 

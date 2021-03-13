@@ -21,10 +21,19 @@ export default function PlayerCard(props) {
 
   const { playerData } = props
 
-  const getCountryISO2 = require("country-iso-3-to-2");
-
   const history = useHistory()
-  const alpha2Country = getCountryISO2(playerData.player.country_code)
+
+  const [countryCode, setCountryCode ] = useState("EUN")
+  const getCountryISO2 = require("country-iso-3-to-2");
+  const alpha2Country = getCountryISO2(countryCode)
+
+  useEffect(() => {
+    if (playerData.rankings || playerData.rank) {
+      setCountryCode(playerData.player.country_code)
+    } else {
+      setCountryCode(playerData.country_code)
+    }
+  }, [playerData])
 
   useEffect(() => {
     const gatherPlayerRankings = (playerData) => {
