@@ -57,13 +57,17 @@ export default function MatchCard(props) {
   const getCountryISO2 = require("country-iso-3-to-2");
 
   useEffect(() => {
+    setCurrentMatchData(matchData)
+  }, [matchData])
+
+  useEffect(() => {
     
     if (match === null || (currentMatchData.sport_event.id !== match.sport_event.id)) {
       console.log('setMatchData')
       setMatch(matchData)
     }
     
-  }, [currentMatchData])
+  }, [matchData, currentMatchData])
 
   useEffect(() => {
 
@@ -88,7 +92,7 @@ export default function MatchCard(props) {
    
     return () => clearInterval(interval);
 
-  }, [scoreInfo])
+  }, [match, scoreInfo])
 
   useEffect(() => {
 
@@ -297,6 +301,27 @@ export default function MatchCard(props) {
         matchData.sport_event_status.status
       );
 
+      const parseMatchCompetitors = (match) => {
+        setMatchInfo(prevState => ({
+          ...prevState,
+          homeCompetitorID: match.competitors[0].id
+        }));
+        setMatchInfo(prevState => ({
+          ...prevState,
+          homeCompetitor: match.competitors[0].name
+        }));
+        setMatchInfo(prevState => ({
+          ...prevState,
+          awayCompetitorID: match.competitors[1].id
+        }));
+        setMatchInfo(prevState => ({
+          ...prevState,
+          awayCompetitor: match.competitors[1].name
+        }));
+      }
+
+      parseMatchCompetitors(matchData.sport_event)
+
     }
   }, [match])
 
@@ -351,7 +376,7 @@ export default function MatchCard(props) {
 
       const generateSets = (formatValue) => {
         
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.sport_event_status.period_scores !== undefined) {
+        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete") && match.sport_event_status.period_scores !== undefined) {
 
           const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
 
@@ -380,7 +405,7 @@ export default function MatchCard(props) {
               server: match.sport_event_status.game_state.serving
             }))
           }
-        } else if (matchInfo.matchStatus.toLowerCase() === "closed") {
+        } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "complete") {
           if (match.sport_event_status.winner_id) {
             if (match.sport_event_status.winner_id === matchInfo.homeCompetitorID) {
               setScoreInfo(prevState => ({
