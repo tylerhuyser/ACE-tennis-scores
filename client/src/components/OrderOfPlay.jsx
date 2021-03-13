@@ -73,7 +73,7 @@ export default function OrderOfPlay(props) {
               aria-label="United States"
             />
           
-          <p className="competitor-name">{doublesTeamInfo.doublesTeamA.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.name}{' '}{(doublesTeamInfo.doublesTeamA.seed !== null || doublesTeamInfo.doublesTeamA.seed !== undefined) ? doublesTeamInfo.doublesTeamA.seed : ''}{` (`}{doublesTeamInfo.doublesTeamA.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.countryCode}{')'}</p>
+          <p className="competitor-name">{doublesTeamInfo.doublesTeamA.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.name}{' '}{(competitorA.seed !== undefined) ? doublesTeamInfo.doublesTeamA.seed : ''}{` (`}{doublesTeamInfo.doublesTeamA.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.countryCode}{')'}</p>
 
           <p className='player-separator'>vs.</p>
 
@@ -99,7 +99,7 @@ export default function OrderOfPlay(props) {
               aria-label="United States"
             />
           
-          <p className="competitor-name">{doublesTeamInfo.doublesTeamB.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.name}{' '}{(doublesTeamInfo.doublesTeamB.seed !== null || doublesTeamInfo.doublesTeamB.seed !== undefined) ? doublesTeamInfo.doublesTeamB.seed : ''}{` (`}{doublesTeamInfo.doublesTeamB.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.countryCode}{')'}</p>
+          <p className="competitor-name">{doublesTeamInfo.doublesTeamB.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.name}{' '}{(competitorB.seed !== undefined) ? doublesTeamInfo.doublesTeamB.seed : ''}{` (`}{doublesTeamInfo.doublesTeamB.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.countryCode}{')'}</p>
 
         </div>
 
@@ -134,7 +134,7 @@ export default function OrderOfPlay(props) {
               aria-label="United States"
           />
 
-          <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== null || competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
+          <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
 
           <p className='player-separator'>vs.</p>
 
@@ -148,7 +148,7 @@ export default function OrderOfPlay(props) {
               aria-label="United States"
           />
 
-          <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== null || competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountryCode}{`)`}</p>
+          <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountryCode}{`)`}</p>
 
         </div>
 
