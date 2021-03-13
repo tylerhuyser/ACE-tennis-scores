@@ -23,24 +23,15 @@ export default function PlayerCard(props) {
 
   const history = useHistory()
 
-  const [countryCode, setCountryCode ] = useState("EUN")
   const getCountryISO2 = require("country-iso-3-to-2");
-  const alpha2Country = getCountryISO2(countryCode)
-
-  useEffect(() => {
-    if (playerData.rankings || playerData.rank) {
-      setCountryCode(playerData.player.country_code)
-    } else {
-      setCountryCode(playerData.country_code)
-    }
-  }, [playerData])
+  const alpha2Country = getCountryISO2(playerData.player.country_code)
 
   useEffect(() => {
     const gatherPlayerRankings = (playerData) => {
 
       if (playerData.rank) {
 
-        setDetailLevel("low")
+        setDetailLevel("medium")
 
       } else if (playerData.rankings) {
 
@@ -107,41 +98,17 @@ export default function PlayerCard(props) {
         
       :
 
-        <>
-        
-          { (detailLevel === "low") ?
-        
-            <div className="player-container" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
-
-              <p className="player-ranking">{playerData.rank}</p>
-              <p className="player-name">{playerData.player.name}</p>
-
-              <div className="player-nationality-container">
-
-                <ReactCountryFlag
-                  className="emojiFlag"
-                  countryCode={alpha2Country}
-                  style={{
-                    fontSize: '2em',
-                    lineHeight: '2em',
-                  }}
-                  aria-label="United States"
-                />
-                <p className="player-country">{playerData.player.country_code}</p>
-
-              </div>
-
-              <p className="player-ranking-points">{playerData.points}</p>
-
-            </div>
-          
-          :
-
             <>
-            
-              <div className="player-container" id="high-detail" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
-              
-              <div className="player-nationality-container">
+        
+            { (detailLevel === "medium") ?
+          
+              <div className="player-container" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
+
+                <p className="player-ranking">{playerData.rank}</p>
+                <p className="player-name">{playerData.player.name}</p>
+
+                <div className="player-nationality-container">
+
                   <ReactCountryFlag
                     className="emojiFlag"
                     countryCode={alpha2Country}
@@ -152,91 +119,115 @@ export default function PlayerCard(props) {
                     aria-label="United States"
                   />
                   <p className="player-country">{playerData.player.country_code}</p>
+
                 </div>
-                
-                <p className="player-name">{playerData.player.name}</p>
-              
+
+                <p className="player-ranking-points">{playerData.points}</p>
+
               </div>
+            
+            :
 
-              <div className="playerDetail-rankings-container">
+              <>
+              
+                <div className="player-container" id="high-detail" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
+                
+                <div className="player-nationality-container">
+                    <ReactCountryFlag
+                      className="emojiFlag"
+                      countryCode={alpha2Country}
+                      style={{
+                        fontSize: '2em',
+                        lineHeight: '2em',
+                      }}
+                      aria-label="United States"
+                    />
+                    <p className="player-country">{playerData.player.country_code}</p>
+                  </div>
+                  
+                  <p className="player-name">{playerData.player.name}</p>
+                
+                </div>
 
-                <p className="playerDetail-rankings-container-title">Ranking Details</p>
+                <div className="playerDetail-rankings-container">
 
-                <div className="detailed-player-rankings-container">
+                  <p className="playerDetail-rankings-container-title">Ranking Details</p>
 
-                  <div className="player-rankings-container" id="singles">
+                  <div className="detailed-player-rankings-container">
 
-                    <p className="player-rankings-container-subtitle">Singles</p>
+                    <div className="player-rankings-container" id="singles">
 
-                    <div className="ranking-category-container">
+                      <p className="player-rankings-container-subtitle">Singles</p>
 
-                      <div className="ranking-discipline-container" id="singles">
+                      <div className="ranking-category-container">
 
-                        <p className="player-rankings-container-header">Current</p>
+                        <div className="ranking-discipline-container" id="singles">
 
-                        <p className="player-ranking-detail">{playerRankings.playerSinglesRanking}</p>
+                          <p className="player-rankings-container-header">Current</p>
 
-                        <p className="player-ranking-points-detail">{`(`}{playerRankings.playerSinglesRankingPoints} points{`)`}</p>
+                          <p className="player-ranking-detail">{playerRankings.playerSinglesRanking}</p>
 
-                      </div>
-
-                      <div className="ranking-discipline-container" id="singles-race">
-
-                        <p className="player-rankings-container-header">Race</p>
-
-                        <p className="player-ranking-detail">{playerRankings.playerSinglesRaceRanking}</p>
-
-                        <p className="player-ranking-points-detail">{`(`}{playerRankings.playerSinglesRaceRankingPoints} points{`)`}</p>
+                          <p className="player-ranking-points-detail">{`(`}{playerRankings.playerSinglesRankingPoints} points{`)`}</p>
 
                         </div>
-                      
+
+                        <div className="ranking-discipline-container" id="singles-race">
+
+                          <p className="player-rankings-container-header">Race</p>
+
+                          <p className="player-ranking-detail">{playerRankings.playerSinglesRaceRanking}</p>
+
+                          <p className="player-ranking-points-detail">{`(`}{playerRankings.playerSinglesRaceRankingPoints} points{`)`}</p>
+
+                          </div>
+                        
+                      </div>
+
                     </div>
 
-                  </div>
+                    <div className="player-rankings-container" id="doubles">
 
-                  <div className="player-rankings-container" id="doubles">
+                      <p className="player-rankings-container-subtitle">Doubles</p>
 
-                    <p className="player-rankings-container-subtitle">Doubles</p>
+                      <div className="ranking-category-container">
 
-                    <div className="ranking-category-container">
+                        <div className="ranking-discipline-container" id="doubles">
 
-                      <div className="ranking-discipline-container" id="doubles">
+                          <p className="player-rankings-container-header">Current</p>
 
-                        <p className="player-rankings-container-header">Current</p>
+                          <p className="player-ranking-detail">{playerRankings.playerDoublesRanking}</p>
+                          
+                          <p className="player-ranking-points-detail">{`(`}{playerRankings.playerDoublesRankingPoints} points{`)`}</p>
 
-                        <p className="player-ranking-detail">{playerRankings.playerDoublesRanking}</p>
+                        </div>
+
+                        <div className="ranking-discipline-container" id="doubles">
+
+                          <p className="player-rankings-container-header">Race</p>
+
+                          <p className="player-ranking-detail">{playerRankings.playerDoublesRanking}</p>
+
+                          <p className="player-ranking-points-detail">{`(`}{playerRankings.playerDoublesRankingPoints} points{`)`}</p>
+
+                        </div>
                         
-                        <p className="player-ranking-points-detail">{`(`}{playerRankings.playerDoublesRankingPoints} points{`)`}</p>
-
                       </div>
 
-                      <div className="ranking-discipline-container" id="doubles">
-
-                        <p className="player-rankings-container-header">Race</p>
-
-                        <p className="player-ranking-detail">{playerRankings.playerDoublesRanking}</p>
-
-                        <p className="player-ranking-points-detail">{`(`}{playerRankings.playerDoublesRankingPoints} points{`)`}</p>
-
-                      </div>
-                      
                     </div>
 
                   </div>
 
                 </div>
+                
+              </>
+          
+            }
 
-              </div>
-              
-            </>
-        
+          </>
+          
           }
 
         </>
-
-      }
-    
-    </>
       
   )
 

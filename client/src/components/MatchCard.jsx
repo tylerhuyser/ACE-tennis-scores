@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
-import PlayerCard from '../components/PlayerCard'
+import ReactCountryFlag from "react-country-flag"
 
 import "./MatchCard.css";
 
@@ -14,6 +13,8 @@ export default function MatchCard(props) {
   const history = useHistory();
 
   console.log(matchData)
+
+  const [currentMatchData, setCurrentMatchData] = useState(matchData)
 
   const [match, setMatch] = useState(null)
 
@@ -53,17 +54,16 @@ export default function MatchCard(props) {
 
   })
 
-  useEffect(() => {
+  const getCountryISO2 = require("country-iso-3-to-2");
 
-    const currentMatch = match
-    const currentMatchData = matchData
+  useEffect(() => {
     
-    if (currentMatch === null) {
+    if (match === null || (currentMatchData.sport_event.id !== match.sport_event.id)) {
       console.log('setMatchData')
-      setMatch(currentMatchData)
+      setMatch(matchData)
     }
     
-  }, [])
+  }, [currentMatchData])
 
   useEffect(() => {
 
@@ -422,75 +422,92 @@ export default function MatchCard(props) {
     localStorage.setItem("currentMatch", JSON.stringify(match))
     history.push(`/match/${matchID}`);
   };
-  
-  const homePlayer = matchData.sport_event.competitors.map((competitor, index) => {
 
-    let competitorData = []
+  const generateCompetitor = (index, type) => {
+    if (matchData.sport_event.sport_event_type === "doubles") {
 
-    if (competitor.players && competitor.players.length === 2 && index === 0) {
-      competitorData = competitor.players.map((player) => (
-        <PlayerCard 
-          playerData={player}
-          key={player.id}
-        />
-      ))
-    } else if (index === 0) {
-      competitorData = 
-        
-      <PlayerCard 
-        playerData={competitor}
-        key={competitor.id}
-    />
+      const competitor = matchData.sport_event.competitors[index]
+
+      const doublesTeamInfo = {
+        partnerA: {
+          name: competitor.players[0].name.split(',')[0],
+          countryCode: competitor.players[0].country_code
+        },
+        partnerB: {
+          name: competitor.players[1].name.split(',')[0],
+          countryCode: competitor.players[1].country_code
+        },
+        seed: competitor.seed
+      }
+
+      const partnerAAlpha2Country = getCountryISO2(doublesTeamInfo.partnerA.countryCode)
+      const partnerBAlpha2Country = getCountryISO2(doublesTeamInfo.partnerB.countryCode)
+
+      return (
+
+        <div className="competitor-name-container" id={type}>
+
+            <ReactCountryFlag
+              className="emojiFlag"
+              countryCode={partnerAAlpha2Country}
+              style={{
+                fontSize: '1em',
+                lineHeight: '1em',
+            }}
+              aria-label="United States"
+            />
+            
+            <p className="player-country-seperator">/</p>
+
+            <ReactCountryFlag
+              className="emojiFlag"
+              countryCode={partnerBAlpha2Country}
+              style={{
+                fontSize: '1em',
+                lineHeight: '1em',
+            }}
+              aria-label="United States"
+            />
+
+          <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? doublesTeamInfo.seed : ''}</p>
+
+        </div>
+
+      )
+
+    } else {
+
+      const competitor = matchData.sport_event.competitors[index]
+      const competitorName = competitor.name
+      const competitorSeed = '(' + competitor.seed + ')'
+      const competitorCountryCode = competitor.country_code
+      const alpha2Country = getCountryISO2(competitorCountryCode)
+
+      return (
+
+        <div className="competitor-name-container" id={type}>
+
+            <ReactCountryFlag
+              className="emojiFlag"
+              countryCode={alpha2Country}
+              style={{
+                fontSize: '1em',
+                lineHeight: '1em',
+              }}
+              aria-label="United States"
+            />
+
+          <p className="competitor-name">{competitorName}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? competitorSeed : ''}</p>
+
+        </div>
+
+      )
     }
-
-    return (
-      
-      <div className="competitor-name" id="home-competitor-container" >
-        {competitorData}
-      </div>
-
-    )})
-
-  const awayPlayer = matchData.sport_event.competitors.map((competitor, index) => {
-
-    let competitorData = []
-
-    if (competitor.players && competitor.players.length === 2 && index === 1) {
-      competitorData = competitor.players.map((player) => (
-        <PlayerCard 
-          playerData={player}
-          key={player.id}
-        />
-      ))
-    }
-    // else if (index === 1) {
-
-    //   console.log(competitor)
-
-    //   competitorData = 
-        
-    //   <PlayerCard 
-    //     playerData={competitor}
-    //     key={competitor.id}
-    // />
-    // }
-
-    return (
-      
-      <div className="competitor-name" id="away-competitor-container" >
-        {competitorData ?
-          <PlayerCard
-            playerData={competitor}
-            key={competitor.id}
-          />
+  }
   
-          :
-  
-          { competitorData }
-        }
-      </div>
+  const homePlayer = generateCompetitor(0, "home")
 
-    )})
+  const awayPlayer = generateCompetitor(1, "away")
 
   return (
     <div
@@ -558,6 +575,8 @@ export default function MatchCard(props) {
         </div>
 
         <div className="set-labels-container">
+
+        <p className="set-label" id="service-score">SERVICE</p>
 
           <p className="set-label" id="set-one">1</p>
 
