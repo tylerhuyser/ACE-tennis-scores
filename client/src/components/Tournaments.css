@@ -11,3 +11,7 @@
   align-items: flex-start;
   justify-content: center;
 }
+
+.calendar-loader-container {
+  margin-top: 100px;
+}

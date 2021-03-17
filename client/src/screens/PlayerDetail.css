@@ -57,3 +57,11 @@ width: 100%;
 .player-schedule-container {
   width: 100%;
 }
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+  
+  .player-detail-container {
+    padding: 50px;
+  }
+
+}

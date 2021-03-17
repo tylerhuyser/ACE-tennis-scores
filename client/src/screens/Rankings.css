@@ -4,6 +4,8 @@
   padding: 25px;
   margin-bottom: 125px;
 
+  font-family: bogart-semibold;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -54,6 +56,18 @@
   box-sizing: border-box;
 }
 
+.player-ranking {
+  font-family: bogart-semibold;
+}
+
 #rankings-loader {
   margin-top: 50px;
+}
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+  
+  .rankings-container {
+    padding: 50px;
+  }
+
 }

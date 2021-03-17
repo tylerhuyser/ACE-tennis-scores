@@ -110,3 +110,11 @@
   margin: 0px;
   margin-left: 10px;
 }
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+  
+  .match-detail-container {
+    padding: 50px;
+  }
+
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Loader from '../components/Loader'
+import IconLogo from '../components/IconLogo'
 import TournamentCard from './TournamentCard'
 
 import './Tournaments.css'
@@ -39,23 +39,27 @@ export default function Tournaments(props) {
     })
 
   return (
-    <div className="tournaments-container">
+    <>
 
       { !calendar ?
+        
+        <div className="calendar-loader-container">
 
-        <Loader />
+          <IconLogo />
+          
+        </div>
 
         :
       
-        <>
+        <div className="tournaments-container">
 
           {calendar}
           
-        </>
+        </div>
       
       }
 
-    </div>
+    </>
 
   )
 }

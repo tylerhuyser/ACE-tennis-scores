@@ -45,3 +45,15 @@
 .calendar-switch-label {
   margin: 25px;
 }
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+  
+  .calendar-container {
+    padding: 50px;
+  }
+
+  .calendar-container-title {
+    width: 100%;
+  }
+
+}
