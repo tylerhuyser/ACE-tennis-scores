@@ -27,3 +27,7 @@
   font-style: italic;
   text-align: center;
 }
+
+@media screen and (min-device-width: 680px) (max-device-width: 1280px){
+
+}
