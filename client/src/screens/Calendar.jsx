@@ -17,6 +17,7 @@ export default function Calendar(props) {
   const { tournaments, currentDate } = props
 
   useEffect(() => {
+
     if (viewCalendar) {
 
       const getDate = (str) => {
@@ -61,7 +62,7 @@ export default function Calendar(props) {
         
       </div>
       
-      <Tournaments tournaments={viewCalendar ? calendarTournaments : tournaments} currentDate={currentDate} />
+      <Tournaments tournaments={viewCalendar ? calendarTournaments : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />
 
     </div>
   )
