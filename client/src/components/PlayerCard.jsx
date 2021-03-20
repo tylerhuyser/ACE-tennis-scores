@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import ReactCountryFlag from "react-country-flag"
 
+import MobileBanner from '../components/adSense/MobileBanner'
+
 import './PlayerCard.css'
 
 export default function PlayerCard(props) {
@@ -169,9 +171,10 @@ export default function PlayerCard(props) {
                   
                   <p className="player-name">{playerData.player.name}</p>
                 
-                </div>
+               </div>
+              
+                <MobileBanner />
       
-
                 <div className="playerDetail-rankings-container">
 
                   <p className="playerDetail-rankings-container-title">Ranking Details</p>

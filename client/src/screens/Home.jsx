@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TournamentCard from '../components/TournamentCard'
+import MobileBanner from '../components/adSense/MobileBanner.jsx'
 
 import './Home.css'
 
@@ -43,6 +44,8 @@ export default function Home (props) {
     <div className="home-container">
 
       <p className="home-copy">Current Tournaments</p>
+
+      <MobileBanner />
 
       { currentTournaments.length === 0 ?
 

@@ -23,6 +23,7 @@
   border: solid white 1px;
   border-radius: 8px;
   box-shadow: inset 0px -1px 5px #0a192f;
+  margin-bottom: 50px;
 }
 
 .player-ranking {
@@ -67,6 +68,7 @@
 
   width: 100%;
   padding: 15px 10px;
+  margin-bottom: 50px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */

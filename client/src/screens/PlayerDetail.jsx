@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import Loader from '../components/Loader'
+import MobileBanner from '../components/adSense/MobileBanner'
 import TournamentCard from '../components/TournamentCard'
 import ResultsContainer from '../components/ResultsContainer'
 import PlayerCard from '../components/PlayerCard'
@@ -173,6 +174,8 @@ export default function PlayerDetail(props) {
             </div>
 
             <PlayerCard playerData={playerData} key={playerData.player.id} playerCountry={playerData.player.country_code} viewRace={false} />
+
+            <MobileBanner />
             
             <div className="player-views-container">
 

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Switch from "react-switch";
 
+import MobileBanner from '../components/adSense/MobileBanner'
 import Tournaments from '../components/Tournaments'
 
 import './Calendar.css'
@@ -61,6 +62,8 @@ export default function Calendar(props) {
         <p className="calendar-switch-label">Calendar</p>
         
       </div>
+
+      <MobileBanner />
       
       <Tournaments tournaments={viewCalendar ? calendarTournaments : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />
 

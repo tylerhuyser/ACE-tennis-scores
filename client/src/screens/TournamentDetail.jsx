@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Switch from "react-switch";
 
 import Loader from '../components/Loader'
+import MobileBanner from '../components/adSense/MobileBanner'
 import Matches from '../components/Matches'
 import OrderOfPlay from '../components/OrderOfPlay'
 
@@ -309,7 +310,7 @@ export default function TournamentDetail(props) {
           
           </div>
 
-
+          <MobileBanner />
 
           {view === "Live Scores" ?
         

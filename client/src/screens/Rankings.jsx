@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Switch from "react-switch";
 
+import MobileBanner from '../components/adSense/MobileBanner'
 import Loader from '../components/Loader'
-import IconLogo from '../components/IconLogo'
 import Players from '../components/Players'
 
 import './Rankings.css'
@@ -173,6 +173,8 @@ export default function Rankings(props) {
               </div>
 
             </div>
+
+            <MobileBanner />
 
               <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} playerCount={playerCount} setPlayerCount={setPlayerCount} />
             

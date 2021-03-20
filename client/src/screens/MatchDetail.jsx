@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import MatchCard from '../components/MatchCard'
 import Loader from '../components/Loader'
+import MobileBanner from '../components/adSense/MobileBanner'
 
 import './MatchDetail.css'
 
@@ -119,6 +120,8 @@ export default function MatchDetail(props) {
           </div>
 
           <MatchCard matchData={matchData} key={matchData.sport_event.id} />
+
+          <MobileBanner />
 
           <p className="match-statistics-title">MATCH STATISTICS</p>
 
