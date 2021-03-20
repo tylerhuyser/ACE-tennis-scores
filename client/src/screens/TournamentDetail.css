@@ -92,4 +92,20 @@
     padding: 50px; 
   }
 
+  .discipline-switch-container {
+    width: 75%;
+  }
+
+  .discipline-switch-container-copy {
+    font-size: 30px;
+  }
+
+  .tournament-views-button {
+    font-size: 20px;
+  }
+
+  .match-container-copy {
+    font-size: 30px;
+  }
+
 } 

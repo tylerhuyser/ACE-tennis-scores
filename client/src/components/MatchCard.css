@@ -302,3 +302,63 @@
             animation-timing-function: ease-out;
   }
 }
+
+.emojiFlag {
+  font-size: 1em;
+  line-height: 1em;
+  margin-right: 2px;
+}
+
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+
+  .match-card-container {
+    height: 400px;
+  }
+
+  .match-card-header-container {
+    font-size: 24px;
+  }
+
+  .match-court {
+    font-size: 20px;
+  }
+
+  .match-container {
+    height: 65%;
+  }
+
+  .match-round, .match-status {
+    font-size: 20px;
+  }
+
+  .match-info-container {
+    height: 15%;
+  }
+
+  .set-labels-container {
+    height: 10%;
+  }
+
+  .set-score, .service-score, .service-icon, .name-container, .competitor-name, .emojiFlag {
+    font-size: 20px;
+  }
+
+  .set-label {
+    font-size: 12px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
+  }
+
+  .match-card-header-container, .match-stats-container {
+    height: 17.5%
+  } 
+
+
+  .match-stats-container {
+    font-size: 24px;
+  }
+
+}

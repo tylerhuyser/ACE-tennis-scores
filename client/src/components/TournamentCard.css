@@ -72,8 +72,20 @@
 
 @media (min-device-width: 680px) and (max-device-width: 1280px){
   
+  .tournament-card-container {
+    height: 150px;
+  }
+
+  .tournament-card-name {
+    font-size: 24px;
+  }
+
   .tournament-date {
-    font-size: 16px;
+    font-size: 20px;
+  }
+
+  .tournament-category-container {
+    width: 50%;
   }
 
 }

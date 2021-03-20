@@ -37,3 +37,10 @@
 .player-separator {
   margin: 0px 10px;
 }
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+
+  .upcoming-match-container {
+    font-size: 24px;
+  }
+}

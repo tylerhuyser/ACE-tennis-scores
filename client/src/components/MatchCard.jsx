@@ -487,10 +487,6 @@ export default function MatchCard(props) {
             <ReactCountryFlag
               className="emojiFlag"
               countryCode={partnerBAlpha2Country}
-              style={{
-                fontSize: '1em',
-                lineHeight: '1em',
-            }}
               aria-label="United States"
             />
 
@@ -508,6 +504,8 @@ export default function MatchCard(props) {
       const competitorCountryCode = competitor.country_code
       const alpha2Country = getCountryISO2(competitorCountryCode)
 
+      console.log(competitor.seed)
+
       return (
 
         <div className="competitor-name-container" id={type}>
@@ -515,14 +513,10 @@ export default function MatchCard(props) {
             <ReactCountryFlag
               className="emojiFlag"
               countryCode={alpha2Country}
-              style={{
-                fontSize: '1em',
-                lineHeight: '1em',
-              }}
               aria-label="United States"
             />
 
-          <p className="competitor-name">{competitorName}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? competitorSeed : ''}</p>
+          <p className="competitor-name">{competitorName}{' '}{(competitor.seed !== null && competitor.seed !== undefined) ? competitorSeed : ''}</p>
 
         </div>
 
@@ -631,7 +625,7 @@ export default function MatchCard(props) {
             {
               scoreInfo.server === "awayWinner" ?
               
-              <i class="fas fa-check service-icon"></i>
+              <i className="fas fa-check service-icon"></i>
                 
             :
             

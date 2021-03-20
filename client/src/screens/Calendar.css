@@ -55,6 +55,11 @@
 
   .calendar-container-title {
     width: 100%;
+    font-size: 48px;
+  }
+
+  .calendar-switch-container {
+    font-size: 30px;
   }
 
 }
