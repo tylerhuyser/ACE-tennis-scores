@@ -7,7 +7,7 @@ import PlayerCard from './PlayerCard'
 
 export default function Players(props) {
 
-  const { rankingCategory, discipline, playerCount, setPlayerCount } = props
+  const { rankingCategory, discipline, viewRace, playerCount, setPlayerCount } = props
 
   const generatePlayers = (rankingCategory) => {
     if (rankingCategory && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
@@ -17,8 +17,10 @@ export default function Players(props) {
       const playerCards = rankingCategory?.double_team_rankings.map((player) => (
         <PlayerCard
           playerData={player}
+          playerCountry={null}
           key={player.double_team.id}
           discipline={discipline}
+          viewRace={viewRace}
         />
       ))
 
@@ -35,6 +37,7 @@ export default function Players(props) {
         return (
           <PlayerCard
             playerData={player}
+            playerCountry={player.player.country_code}
             key={player.player.id}
             discipline={discipline}
 

@@ -174,7 +174,7 @@ export default function Rankings(props) {
 
             </div>
 
-              <Players rankingCategory={rankingCategory} event={event} discipline={discipline} playerCount={playerCount} setPlayerCount={setPlayerCount} />
+              <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} playerCount={playerCount} setPlayerCount={setPlayerCount} />
             
           </div>
           

@@ -19,12 +19,12 @@ export default function PlayerCard(props) {
     playerDoublesRaceRankingPoints: "--"
   })
 
-  const { playerData } = props
+  const { playerData, playerCountry, discipline, viewRace } = props
 
   const history = useHistory()
 
   const getCountryISO2 = require("country-iso-3-to-2");
-  const alpha2Country = getCountryISO2(playerData.player.country_code)
+  const alpha2Country = getCountryISO2(playerCountry)
 
   useEffect(() => {
     const gatherPlayerRankings = (playerData) => {
@@ -81,8 +81,12 @@ export default function PlayerCard(props) {
 
   const handlePlayerDetails = (id) => {
 
-    localStorage.setItem('currentPlayer', JSON.stringify(playerData))
-    history.push(`/player/${playerData.player.id}`)
+    if (playerData.player) {
+
+      localStorage.setItem('currentPlayer', JSON.stringify(playerData))
+      history.push(`/player/${playerData.player.id}`)
+
+    }
   }
 
   console.log(playerData)
@@ -102,25 +106,34 @@ export default function PlayerCard(props) {
         
             { (detailLevel === "medium") ?
           
-              <div className="player-container" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
+              <div className="player-container" key={playerData.player ? playerData.player.id : playerData.double_team.id}>
 
                 <p className="player-ranking">{playerData.rank}</p>
-                <p className="player-name">{playerData.player.name}</p>
+                <p className="player-name">{playerData.player ? playerData.player.name : playerData.double_team.name}</p>
+              
+                {discipline === "Doubles" && viewRace ?
+                
+                  <>
+                  </>
+                
+                :
 
-                <div className="player-nationality-container">
+                  <div className="player-nationality-container">
 
-                  <ReactCountryFlag
-                    className="emojiFlag"
-                    countryCode={alpha2Country}
-                    style={{
-                      fontSize: '2em',
-                      lineHeight: '2em',
-                    }}
-                    aria-label="United States"
-                  />
-                  <p className="player-country">{playerData.player.country_code}</p>
+                    <ReactCountryFlag
+                      className="emojiFlag"
+                      countryCode={alpha2Country}
+                      style={{
+                        fontSize: '2em',
+                        lineHeight: '2em',
+                      }}
+                      aria-label="United States"
+                    />
+                    <p className="player-country">{playerData.player.country_code}</p>
 
-                </div>
+                  </div>
+                  
+                }
 
                 <p className="player-ranking-points">{playerData.points}</p>
 
@@ -130,9 +143,16 @@ export default function PlayerCard(props) {
 
               <>
               
-                <div className="player-container" id="high-detail" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
+              <div className="player-container" id="high-detail" key={playerData.player.id} onClick={(e) => handlePlayerDetails(e)}>
                 
-                <div className="player-nationality-container">
+                {discipline === "Doubles" && viewRace ?
+                  
+                  <>
+                  </>
+                
+                :
+                
+                  <div className="player-nationality-container">
                     <ReactCountryFlag
                       className="emojiFlag"
                       countryCode={alpha2Country}
@@ -144,10 +164,13 @@ export default function PlayerCard(props) {
                     />
                     <p className="player-country">{playerData.player.country_code}</p>
                   </div>
+
+                }
                   
                   <p className="player-name">{playerData.player.name}</p>
                 
                 </div>
+      
 
                 <div className="playerDetail-rankings-container">
 

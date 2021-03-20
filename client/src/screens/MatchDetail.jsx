@@ -84,10 +84,19 @@ export default function MatchDetail(props) {
 
   const handleReturnToTournament = () => {
     const currentTournament = localStorage.getItem('currentSinglesTournament')
-    const tournamentID = JSON.parse(currentTournament).id
-    localStorage.removeItem("currentMatch")
-    localStorage.removeItem('matchDetails')
-    history.push(`/tournament/${tournamentID}`)
+    const currentPlayer = localStorage.getItem('currentPlayer')
+
+    if (currentTournament) {
+      const tournamentID = JSON.parse(currentTournament).id
+      localStorage.removeItem("currentMatch")
+      localStorage.removeItem('matchDetails')
+      history.push(`/tournament/${tournamentID}`)
+    } else if (currentPlayer) {
+      const playerID = JSON.parse(currentPlayer).id
+      localStorage.removeItem("currentMatch")
+      localStorage.removeItem('matchDetails')
+      history.push(`/player/${playerID}`)
+    }
   }
 
   return (

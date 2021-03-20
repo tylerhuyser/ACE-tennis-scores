@@ -8,8 +8,6 @@ export default function CalendarCard(props) {
   
   const { month } = props;
 
-  console.log(month)
-
   const tournaments = month && month?.data.map((tournament, index) => {
           
     const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
@@ -28,6 +26,7 @@ export default function CalendarCard(props) {
     )
   })
 
+
   return (
     <>
       
@@ -36,7 +35,7 @@ export default function CalendarCard(props) {
         <>
       
           <div className="month-card">
-            <p className="month-name">{month.name}</p>
+            <p className="month-name">{month.name.toUpperCase()}</p>
           </div>
 
           {tournaments}
