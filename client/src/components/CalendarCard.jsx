@@ -1,7 +1,8 @@
 import React from 'react'
 
-import IconLogo from '../components/IconLogo'
 import TournamentCard from './TournamentCard'
+
+import './CalendarCard.css'
 
 export default function CalendarCard(props) {
   
