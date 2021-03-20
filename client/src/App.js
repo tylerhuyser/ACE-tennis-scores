@@ -24,8 +24,6 @@ function App () {
   const [ dailySchedule, setDailySchedule ] = useState([])
   const [ dailyResults, setDailyResults ] = useState([])
   const [ liveMatches, setLiveMatches ] = useState([])
-
-  const [ searchQuery, setSearchQuery ] = useState("")
  
 // Switches
   const [ tournamentsLoaded, setTournamentsLoaded ] = useState(false)
@@ -89,7 +87,8 @@ function App () {
           setDailySchedule(dailyScheduleData.sport_events)
         }
       }
-      gatherDailySchedule(year, month, day)
+      const timeOut = setTimeout(() => gatherDailySchedule(year, month, day), 1001)
+      return () => clearTimeout(timeOut)
     }
 
   }, [tournaments, tournamentsLoaded])

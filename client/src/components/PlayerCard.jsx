@@ -106,7 +106,7 @@ export default function PlayerCard(props) {
         
             { (detailLevel === "medium") ?
           
-              <div className="player-container" key={playerData.player ? playerData.player.id : playerData.double_team.id}>
+              <div className="player-container" key={playerData.player ? playerData.player.id : playerData.double_team.id} onClick={(e) => handlePlayerDetails(e)}>
 
                 <p className="player-ranking">{playerData.rank}</p>
                 <p className="player-name">{playerData.player ? playerData.player.name : playerData.double_team.name}</p>

@@ -172,7 +172,7 @@ export default function PlayerDetail(props) {
 
             </div>
 
-            <PlayerCard playerData={playerData} key={playerData.player.id} />
+            <PlayerCard playerData={playerData} key={playerData.player.id} playerCountry={playerData.player.country_code} viewRace={false} />
             
             <div className="player-views-container">
 

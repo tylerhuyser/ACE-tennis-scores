@@ -144,7 +144,7 @@ export default function MatchDetail(props) {
 
               <p className="statistic-category">Break Points</p>
 
-              <p className="statistic-category">Total Points Won</p>
+              <p className="statistic-category total-points">Total Points Won</p>
 
             </div>
 
@@ -168,7 +168,7 @@ export default function MatchDetail(props) {
 
               <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.breakpoints_won}/${homeStats.statistics.total_breakpoints} (${(homeStats.statistics.breakpoints_won / homeStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category" id="competitor-statistic">{`${homeStats.statistics.points_won}`}</p>
+              <p className="statistic-category total-points" id="competitor-statistic">{`${homeStats.statistics.points_won}`}</p>
 
             </div>
 
@@ -192,7 +192,7 @@ export default function MatchDetail(props) {
 
               <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.breakpoints_won}/${awayStats.statistics.total_breakpoints} (${(awayStats.statistics.breakpoints_won / awayStats.statistics.total_breakpoints * 100).toFixed(1)}%)`}</p>
 
-              <p className="statistic-category" id="competitor-statistic">{`${awayStats.statistics.points_won}`}</p>
+              <p className="statistic-category total-points" id="competitor-statistic">{`${awayStats.statistics.points_won}`}</p>
           
             </div>
 

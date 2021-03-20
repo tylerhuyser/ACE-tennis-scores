@@ -24,39 +24,35 @@
   justify-content: center;
   align-items: flex-start;
 
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
+  border: 3px solid white;
+  border-radius: 8px;
 
 }
 
 .match-statistic-categories-container, .competitor-statistics-container {
 
-  width: 32.5%;
-  margin: 0px 5px;
+  width: 30%;
+  padding: 0px 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
-
 }
 
 .statistic-category {
 
-  height: 25px;
+  height: 50px;
   width: 100%;
+  margin: 0px;
+  padding-top: 15px;
 
   color: white;
   font-size: 12px;
 
   padding-bottom: 15px;
   border-bottom: white 1px dashed;
-
 }
 
 .match-statistic-categories-container {
@@ -64,10 +60,11 @@
 
   font-size: 16px;
   font-weight: 500;
+  
 }
 
 .match-statistics-title {
-    color: white;
+  color: white;
   font-weight: 500;
   font-family: bogart-semibold;
   text-align: center;
@@ -79,15 +76,45 @@
 }
 
 #competitor-statistics-container-title {
+
+  background-color: white;
+  height: 50px;
+  padding: 7px 10px;
+  margin: 0px;
+
+  color: #0a192f;
   font-weight: 500;
   font-size: 12px;
   text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
 
   border-bottom: white 1px solid;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 1;
 }
 
 #placeholder-category {
+
+  height: 50px;
+
   border-bottom: transparent 1px solid;
+
+  padding: 7px 10px;
+  background-color: white;
+  color: #0a192f;
+  margin: 0px;
+  text-align: center;
+  vertical-align: middle;
+
+  flex-shrink: 1;
+}
+
+.total-points {
+  border-bottom: none;
 }
 
 .back-button-container {
