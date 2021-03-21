@@ -476,8 +476,8 @@ export default function MatchCard(props) {
               className="emojiFlag"
               countryCode={partnerAAlpha2Country}
               style={{
-                fontSize: '1em',
-                lineHeight: '1em',
+                fontSize: '150%',
+                lineHeight: '150%',
             }}
               aria-label="United States"
             />
@@ -487,6 +487,10 @@ export default function MatchCard(props) {
             <ReactCountryFlag
               className="emojiFlag"
               countryCode={partnerBAlpha2Country}
+              style={{
+                fontSize: '150%',
+                lineHeight: '150%',
+            }}
               aria-label="United States"
             />
 
@@ -514,6 +518,10 @@ export default function MatchCard(props) {
               className="emojiFlag"
               countryCode={alpha2Country}
               aria-label="United States"
+              style={{
+                fontSize: '150%',
+                lineHeight: '150%',
+            }}
             />
 
           <p className="competitor-name">{competitorName}{' '}{(competitor.seed !== null && competitor.seed !== undefined) ? competitorSeed : ''}</p>

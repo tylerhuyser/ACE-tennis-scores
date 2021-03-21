@@ -304,8 +304,6 @@
 }
 
 .emojiFlag {
-  font-size: 1em;
-  line-height: 1em;
   margin-right: 2px;
 }
 
@@ -349,6 +347,7 @@
   }
 
   .emojiFlag {
+
     margin-right: 10px;
   }
 

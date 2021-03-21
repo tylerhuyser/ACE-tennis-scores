@@ -55,9 +55,9 @@ export default function OrderOfPlay(props) {
               className="emojiFlag"
               countryCode={competitorAPartnerAAlpha2Country}
               style={{
-                fontSize: '2em',
-                lineHeight: '2em',
-            }}
+                fontSize: '200%',
+                lineHeight: '200%',
+              }}
               aria-label="United States"
             />
             
@@ -67,9 +67,9 @@ export default function OrderOfPlay(props) {
               className="emojiFlag"
               countryCode={competitorAPartnerBAlpha2Country}
               style={{
-                fontSize: '2em',
-                lineHeight: '2em',
-            }}
+                fontSize: '200%',
+                lineHeight: '200%',
+              }}
               aria-label="United States"
             />
           
@@ -81,9 +81,9 @@ export default function OrderOfPlay(props) {
               className="emojiFlag"
               countryCode={competitorBPartnerAAlpha2Country}
               style={{
-                fontSize: '2em',
-                lineHeight: '2em',
-            }}
+                fontSize: '200%',
+                lineHeight: '200%',
+              }}
               aria-label="United States"
             />
             
@@ -93,9 +93,9 @@ export default function OrderOfPlay(props) {
               className="emojiFlag"
               countryCode={competitorBPartnerBAlpha2Country}
               style={{
-                fontSize: '2em',
-                lineHeight: '2em',
-            }}
+                fontSize: '200%',
+                lineHeight: '200%',
+              }}
               aria-label="United States"
             />
           
@@ -127,11 +127,11 @@ export default function OrderOfPlay(props) {
           <ReactCountryFlag
               className="emojiFlag"
               countryCode={competitorAAlpha2Country}
-              style={{
-                fontSize: '2em',
-                lineHeight: '2em',
-              }}
               aria-label="United States"
+              style={{
+                fontSize: '200%',
+                lineHeight: '200%',
+            }}
           />
 
           <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
@@ -142,8 +142,8 @@ export default function OrderOfPlay(props) {
               className="emojiFlag"
               countryCode={competitorBAlpha2Country}
               style={{
-                fontSize: '2em',
-                lineHeight: '2em',
+                fontSize: '200%',
+                lineHeight: '200%',
               }}
               aria-label="United States"
           />

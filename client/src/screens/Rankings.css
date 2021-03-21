@@ -70,4 +70,12 @@
     padding: 50px;
   }
 
+  .rankings-container-title {
+    font-size: 48px;
+  }
+
+  .switch-container {
+    font-size: 30px;
+  }
+
 }

@@ -38,9 +38,19 @@
   margin: 0px 10px;
 }
 
+.emojiFlag {
+
+  margin-right: 2px;
+
+}
+
 @media (min-device-width: 680px) and (max-device-width: 1280px){
 
   .upcoming-match-container {
     font-size: 24px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
   }
 }

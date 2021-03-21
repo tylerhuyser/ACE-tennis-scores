@@ -125,11 +125,11 @@ export default function PlayerCard(props) {
                     <ReactCountryFlag
                       className="emojiFlag"
                       countryCode={alpha2Country}
-                      style={{
-                        fontSize: '2em',
-                        lineHeight: '2em',
-                      }}
                       aria-label="United States"
+                      style={{
+                        fontSize: '200%',
+                        lineHeight: '200%',
+                      }}
                     />
                     <p className="player-country">{playerData.player.country_code}</p>
 
@@ -158,11 +158,11 @@ export default function PlayerCard(props) {
                     <ReactCountryFlag
                       className="emojiFlag"
                       countryCode={alpha2Country}
-                      style={{
-                        fontSize: '2em',
-                        lineHeight: '2em',
-                      }}
                       aria-label="United States"
+                      style={{
+                        fontSize: '200%',
+                        lineHeight: '200%',
+                      }}
                     />
                     <p className="player-country">{playerData.player.country_code}</p>
                   </div>

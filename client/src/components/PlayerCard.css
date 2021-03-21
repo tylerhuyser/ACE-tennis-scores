@@ -176,3 +176,49 @@
 .player-ranking-points-detail {
   font-size: 8px;
 }
+
+.emojiFlag {
+  margin-right: 2px;
+}
+
+
+@media (min-device-width: 680px) and (max-device-width: 1280px){
+
+  .player-container {
+    font-size: 24px;
+  }  
+
+  .player-name {
+    font-size: 24px;
+  } 
+  
+  .playerDetail-rankings-container {
+    font-size: 24px;
+    margin-bottom: 50px;
+  }
+
+  .playerDetail-rankings-container-title {
+    font-size: 48px;
+  }
+
+  .player-rankings-container-subtitle, .player-rankings-container-header {
+    font-size: 30px;
+  }
+
+  .player-ranking-points-detail {
+    font-size: 16px;
+  }
+
+  .ranking-discipline-container {
+    height: 300px;
+  }
+
+  .player-views-button {
+    font-size: 20px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
+  }
+
+}
