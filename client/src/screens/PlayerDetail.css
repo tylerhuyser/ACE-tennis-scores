@@ -58,7 +58,7 @@ width: 100%;
   width: 100%;
 }
 
-@media (min-device-width: 680px) and (max-device-width: 1280px){
+@media (min-width: 680px) and (max-width: 1280px){
   
   .player-detail-container {
     padding: 50px;

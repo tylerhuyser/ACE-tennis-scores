@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom'
 
 import IconLogo from '../IconLogo'
 
@@ -19,23 +20,23 @@ export default function Header(props) {
 
       <div className="desktop-nav">
 
-        <div className="desktop-logo-container">
+        <Link to="/" className="desktop-logo-container">
 
           <IconLogo />
           
-        </div>
-
-          <div className="desktop-logo-symbol-container">
-
-            <p className="desktop-nav-link">ACE Tennis Scores</p>
-
-          </div>
+        </Link>
 
         <div className="desktop-nav-links-container">
 
+          <Link to="/" className="desktop-nav-link">Home</Link>
+
+          <Link to="/calendar" className="desktop-nav-link">Calendar</Link>
+
+          <Link to="/rankings" className="desktop-nav-link">Rankings</Link>
+
           <p className="desktop-nav-link">About</p>
 
-          <p className="desktop-nav-link">Blog</p>
+          <a className="desktop-nav-link" target="_blank" href="https://www.gameset.blog">Blog</a>
         </div>
 
       </div>

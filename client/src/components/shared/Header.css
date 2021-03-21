@@ -28,17 +28,25 @@
   height: 75px;
 }
 
+.desktop-logo-container {
+  width: 20%;
+  flex-shrink: 1;
+}
+
 .desktop-nav-links-container {
   
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+
+  width: 50%;
+  flex-grow: 1;
 }
 
 .desktop-nav-link {
 
-  font: helvetica;
+  font-family: bogart-semibold;
   font-size: 25px;
   color: white;
   margin: 0px 25px;
@@ -180,7 +188,7 @@
 
 }
 
-@media (min-device-width: 680px) and (max-device-width: 1280px){
+@media (min-width: 680px) and (max-width: 1280px){
 
   .desktop-nav {
     display: none;
@@ -254,3 +262,4 @@
   }
 
 }
+

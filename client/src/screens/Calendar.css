@@ -47,7 +47,7 @@
   margin: 25px;
 }
 
-@media (min-device-width: 680px) and (max-device-width: 1280px){
+@media (min-width: 680px) and (max-width: 1280px){
   
   .calendar-container {
     padding: 50px;
