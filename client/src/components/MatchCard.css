@@ -168,7 +168,14 @@
 .service-score {
   background-color: #f39c12;
   color: white;
+  height: 100%;
   border: 1px solid white;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box;
@@ -309,6 +316,60 @@
 
 
 @media (min-width: 680px) and (max-width: 1280px){
+
+  .match-card-container {
+    height: 400px;
+  }
+
+  .match-card-header-container {
+    font-size: 24px;
+  }
+
+  .match-court {
+    font-size: 20px;
+  }
+
+  .match-container {
+    height: 65%;
+  }
+
+  .match-round, .match-status {
+    font-size: 20px;
+  }
+
+  .match-info-container {
+    height: 15%;
+  }
+
+  .set-labels-container {
+    height: 10%;
+  }
+
+  .set-score, .service-score, .service-icon, .name-container, .competitor-name, .emojiFlag {
+    font-size: 20px;
+  }
+
+  .set-label {
+    font-size: 12px;
+  }
+
+  .emojiFlag {
+
+    margin-right: 10px;
+  }
+
+  .match-card-header-container, .match-stats-container {
+    height: 17.5%
+  } 
+
+
+  .match-stats-container {
+    font-size: 24px;
+  }
+
+}
+
+@media (min-width: 1280px){
 
   .match-card-container {
     height: 400px;

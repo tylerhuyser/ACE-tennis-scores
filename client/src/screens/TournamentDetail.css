@@ -118,3 +118,14 @@
   }
 
 } 
+
+@media (min-width: 1280px){
+  .tournament-detail-container {
+    width: 50%;
+  }
+
+  .tournament-views-button {
+    font-size: 24px;
+  }
+
+}

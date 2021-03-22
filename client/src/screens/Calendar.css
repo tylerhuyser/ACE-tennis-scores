@@ -63,3 +63,19 @@
   }
 
 }
+
+@media (min-width: 1280px){
+  .calendar-container {
+    width: 50%;
+  }
+
+  .calendar-container-title {
+    width: 100%;
+    font-size: 48px;
+  }
+
+  .calendar-switch-container {
+    font-size: 30px;
+  }
+
+}

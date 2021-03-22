@@ -54,3 +54,16 @@
     margin-right: 10px;
   }
 }
+
+
+@media (min-width: 1280px){
+
+  .upcoming-match-container {
+    font-size: 24px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
+  }
+
+}

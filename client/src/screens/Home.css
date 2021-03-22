@@ -32,6 +32,19 @@
   
   .home-container {
     padding: 50px;
+    width: 100%;
+  }
+
+  .home-copy {
+    font-size: 48px;
+  }
+
+}
+
+@media (min-width: 1280px){
+  .home-container {
+    padding: 50px;
+    width: 50%;
   }
 
   .home-copy {

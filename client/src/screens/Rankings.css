@@ -68,6 +68,7 @@
   
   .rankings-container {
     padding: 50px;
+    width: 100%;
   }
 
   .rankings-container-title {
@@ -76,6 +77,30 @@
 
   .switch-container {
     font-size: 30px;
+  }
+
+  .rankings-toggle-view-container {
+    width: 60%;
+  }
+
+}
+
+@media (min-width: 1280px){
+  .rankings-container {
+    padding: 50px;
+    width: 50%;
+  }
+
+  .rankings-container-title {
+    font-size: 48px;
+  }
+
+  .switch-container {
+    font-size: 30px;
+  }
+
+  .rankings-toggle-view-container {
+    width: 100%;
   }
 
 }

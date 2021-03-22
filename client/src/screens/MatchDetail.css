@@ -143,6 +143,24 @@
   
   .match-detail-container {
     padding: 50px;
+    width: 100%;
+  }
+
+  .back-button-copy {
+    font-size: 30px;
+    margin-left: 20px;
+  }
+
+  #match-detail-back-button {
+    font-size: 30px;
+  }
+
+}
+
+@media (min-width: 1280px){
+  .match-detail-container {
+    padding: 50px;
+    width: 50%;
   }
 
   .back-button-copy {

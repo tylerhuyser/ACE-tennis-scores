@@ -89,3 +89,15 @@
   }
 
 }
+
+
+@media (min-width: 1280px){
+  .tournament-card-name {
+    font-size: 30px;
+  }
+
+  .tournament-date {
+    font-size: 20px;
+  }
+
+}
