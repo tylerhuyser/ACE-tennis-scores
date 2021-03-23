@@ -108,7 +108,7 @@ function App () {
         setDailyResults(dailyResultsData.results)
       }
 
-      const timeOut = setTimeout(() => gatherDailyResults(year, month, day), 1001)
+      const timeOut = setTimeout(() => gatherDailyResults(year, month, day), 2002)
       return () => clearTimeout(timeOut)
     }
 
@@ -128,7 +128,7 @@ function App () {
           setLoaded(true)
         }
       }
-      const timeOut = setTimeout(() => gatherLiveMatches(), 2002)
+      const timeOut = setTimeout(() => gatherLiveMatches(), 3003)
       return () => clearTimeout(timeOut)
     }
     
