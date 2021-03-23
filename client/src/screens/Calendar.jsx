@@ -14,8 +14,10 @@ export default function Calendar(props) {
   
   const [viewCalendar, setViewCalendar] = useState(false)
   const [calendarTournaments, setCalendarTournaments] = useState(null)
+  const [calendarTournamentsITF, setCalendarTournamentsITF] = useState(null)
+  const [calendarTournamentData, setCalendarTournamentData] = useState(null)
 
-  const { tournaments, currentDate } = props
+  const { tournaments, currentDate, viewITF, setViewITF } = props
 
   useEffect(() => {
 
@@ -30,23 +32,48 @@ export default function Calendar(props) {
       const gatherCalendar = async () => {
         const calendarData = await getTournaments()
         console.log(calendarData)
-        const calendar = calendarData.tournaments.filter(tournament => {
-          return (
-            ((tournament.current_season.year === "2021") && (tournament.type === "singles"))
-          )
-        }).sort((a, b) => {
+        const calendar = calendarData.tournaments.sort((a, b) => {
           a = getDate(a.current_season.end_date); b = getDate(b.current_season.end_date); return a.localeCompare(b)
       })
         console.log(calendar)
-        setCalendarTournaments(calendar)
+        setCalendarTournaments(calendar.filter(tournament => {
+          return (
+            ((tournament.current_season.year === "2021") && (tournament.type === "singles") && (!tournament.name.toLowerCase().includes("itf")))
+          )
+        }))
+        setCalendarTournamentData(calendar.filter(tournament => {
+          return (
+            ((tournament.current_season.year === "2021") && (tournament.type === "singles") && (!tournament.name.toLowerCase().includes("itf")))
+          )
+        }))
+        setCalendarTournamentsITF(calendar)
       }
       gatherCalendar()
     }
   }, [viewCalendar])
 
+  useEffect(() => {
+    if (calendarTournamentData !== undefined || calendarTournamentData !== null) {
+      if (viewITF) {
+        setCalendarTournamentData(calendarTournamentsITF)
+      } else {
+        setCalendarTournamentData(calendarTournaments)
+      }
+    }
+  }, [viewITF])
+
   const handleSwitch = () => {
     setViewCalendar(!viewCalendar)
   }
+
+  const handleChange = (e) => {
+    // e.preventDefault()
+    setViewITF(!viewITF)
+  }
+
+  console.log(calendarTournaments)
+  console.log(calendarTournamentsITF)
+  console.log(calendarTournamentData)
 
   return (
     <div className="calendar-container">
@@ -63,9 +90,26 @@ export default function Calendar(props) {
         
       </div>
 
+      <div className="checkbox-container">
+
+        <label class="checkbox-label">
+          <input type="checkbox"
+            className="checkbox-input"
+            id="calendar-checkbox"
+            name="viewITF"
+            value={viewITF}
+            onChange={(e) => handleChange(e)}
+          />
+            <span class="checkbox-custom rectangular"></span>
+        </label>
+        
+        <p className="checkbox-label-copy"> Include ITF?</p>
+  
+      </div>
+
       <MobileBanner />
       
-      <Tournaments tournaments={viewCalendar ? calendarTournaments : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />
+      <Tournaments tournaments={viewCalendar ? calendarTournamentData : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />
 
     </div>
   )

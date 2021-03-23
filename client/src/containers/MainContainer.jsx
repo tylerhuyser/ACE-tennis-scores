@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -11,6 +11,9 @@ import MatchDetail from "../screens/MatchDetail";
 import PlayerDetail from "../screens/PlayerDetail";
 
 export default function MainContainer(props) {
+
+  const [viewITF, setViewITF] = useState(false)
+
   const {
     tournaments,
     dailySchedule,
@@ -27,7 +30,7 @@ export default function MainContainer(props) {
         </Route>
 
         <Route path="/calendar">
-          <Calendar tournaments={tournaments} currentDate={currentDate} />
+          <Calendar tournaments={tournaments} currentDate={currentDate} viewITF={viewITF} setViewITF={setViewITF} />
         </Route>
 
         <Route path="/rankings">
