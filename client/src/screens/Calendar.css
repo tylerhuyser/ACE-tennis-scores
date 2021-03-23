@@ -58,6 +58,10 @@
   justify-content: center;
 }
 
+.calendar-month-separator {
+  margin: 0px 5px;
+}
+
 
 .checkbox-container {
   display: flex;

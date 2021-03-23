@@ -67,18 +67,32 @@ export default function Calendar(props) {
 
     if (filter != "") {
 
-      const calendar = calendarTournamentData
+      if (viewITF) {
+
+        const calendar = calendarTournamentsITF
     
+        setCalendarTournamentData(calendar.filter((tournament) => {
 
-      setCalendarTournamentData(calendar.filter((tournament) => {
+          const tournamentMonth = tournament.current_season.start_date.split("-")[1]
 
-        const tournamentMonth = tournament.current_season.start_date.split("-")[1]
+          return (
+            (tournamentMonth === filter)
+          )
+        }))
+      } else {
 
-        return (
-          (tournamentMonth === filter)
-        )
-      }))
+        const calendar = calendarTournaments
 
+        setCalendarTournamentData(calendar.filter((tournament) => {
+
+          const tournamentMonth = tournament.current_season.start_date.split("-")[1]
+
+          return (
+            (tournamentMonth === filter)
+          )
+        }))
+
+      }
     }
   }, [filter])
 
