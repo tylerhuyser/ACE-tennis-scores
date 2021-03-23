@@ -24,7 +24,7 @@
   color: white;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
@@ -32,6 +32,34 @@
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box;
+}
+
+.upcoming-match-time {
+  width: 100%;
+  padding: 10px 5px;
+
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+  text-align: center;
+
+  background-color: #F39C12;
+  border-bottom: 3px solid white;
+
+}
+
+.upcoming-match-competitors-container {
+  display: flex;
+  flex-direction: row;
+  flex-direction: flex-start;
+  align-items: center;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+
+  padding: 10px 5px;
 }
 
 .player-separator {
@@ -53,6 +81,10 @@
   .emojiFlag {
     margin-right: 10px;
   }
+
+  .upcoming-match-time {
+    font-size: 24px;
+  }
 }
 
 
@@ -64,6 +96,10 @@
 
   .emojiFlag {
     margin-right: 10px;
+  }
+
+  .upcoming-match-time {
+    font-size: 24px;
   }
 
 }

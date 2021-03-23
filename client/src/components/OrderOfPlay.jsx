@@ -120,36 +120,47 @@ export default function OrderOfPlay(props) {
       const competitorBCountryCode = competitorB.country_code
       const competitorBAlpha2Country = getCountryISO2(competitorBCountryCode)
 
+      const matchTime = new Date(match.scheduled).toLocaleTimeString()
+      const matchTimeString = matchTime.slice(0,-6) + matchTime.substring(matchTime.length - 3)
+      console.log(matchTime)
+      console.log(matchTimeString)
+
       return (
 
         <div className="upcoming-match-container" key={match.id}>
 
-          <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorAAlpha2Country}
-              aria-label="United States"
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
-            }}
-          />
+          <p className="upcoming-match-time">START TIME: NOT BEFORE {matchTimeString} (LOCAL)</p>
+          
+          <div className="upcoming-match-competitors-container">
 
-          <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
-
-          <p className='player-separator'>vs.</p>
-
-          <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorBAlpha2Country}
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
+            <ReactCountryFlag
+                className="emojiFlag"
+                countryCode={competitorAAlpha2Country}
+                aria-label="United States"
+                style={{
+                  fontSize: '200%',
+                  lineHeight: '200%',
               }}
-              aria-label="United States"
-          />
+            />
 
-          <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountryCode}{`)`}</p>
+            <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
 
+            <p className='player-separator'>vs.</p>
+
+            <ReactCountryFlag
+                className="emojiFlag"
+                countryCode={competitorBAlpha2Country}
+                style={{
+                  fontSize: '200%',
+                  lineHeight: '200%',
+                }}
+                aria-label="United States"
+            />
+
+            <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountryCode}{`)`}</p>
+
+          </div>
+          
         </div>
 
       )
