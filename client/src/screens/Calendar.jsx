@@ -55,9 +55,9 @@ export default function Calendar(props) {
 
   useEffect(() => {
     if (calendarTournamentData !== undefined || calendarTournamentData !== null) {
-      if (viewITF) {
+      if (viewCalendar && viewITF) {
         setCalendarTournamentData(calendarTournamentsITF)
-      } else {
+      } else if (viewCalendar) {
         setCalendarTournamentData(calendarTournaments)
       }
     }
