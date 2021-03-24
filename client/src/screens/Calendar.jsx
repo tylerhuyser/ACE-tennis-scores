@@ -195,19 +195,19 @@ export default function Calendar(props) {
 
       <div className="calendar-navigation-container-mobile">
         <select className="calendar-navigations-select-input" defaultValue={'default'} name="mobile-navigation" onChange={(e) => handleNavigation(e.target.value)}>
-          <option defaultValue="default">--Select a Month --</option>
-          <option value="01" className="calendar-navigations-select-optin">JAN</option>
-          <option value="02" className="calendar-navigations-select-optin">FEB</option>
-          <option value="03" className="calendar-navigations-select-optin">MAR</option>
-          <option value="04" className="calendar-navigations-select-optin">APR</option>
-          <option value="05" className="calendar-navigations-select-optin">MAY</option>
-          <option value="06" className="calendar-navigations-select-optin">JUN</option>
-          <option value="07" className="calendar-navigations-select-optin">JUL</option>
-          <option value="08" className="calendar-navigations-select-optin">AUG</option>
-          <option value="09" className="calendar-navigations-select-optin">SEP</option>
-          <option value="10" className="calendar-navigations-select-optin">OCT</option>
-          <option value="11" className="calendar-navigations-select-optin">NOV</option>
-          <option value="12" className="calendar-navigations-select-optin">DEC</option>
+          <option defaultValue="default">-- Select a Month --</option>
+          <option value="01" className="calendar-navigations-select-option">JAN</option>
+          <option value="02" className="calendar-navigations-select-option">FEB</option>
+          <option value="03" className="calendar-navigations-select-option">MAR</option>
+          <option value="04" className="calendar-navigations-select-option">APR</option>
+          <option value="05" className="calendar-navigations-select-option">MAY</option>
+          <option value="06" className="calendar-navigations-select-option">JUN</option>
+          <option value="07" className="calendar-navigations-select-option">JUL</option>
+          <option value="08" className="calendar-navigations-select-option">AUG</option>
+          <option value="09" className="calendar-navigations-select-option">SEP</option>
+          <option value="10" className="calendar-navigations-select-option">OCT</option>
+          <option value="11" className="calendar-navigations-select-option">NOV</option>
+          <option value="12" className="calendar-navigations-select-option">DEC</option>
         </select>
       </div>
       

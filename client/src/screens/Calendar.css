@@ -51,7 +51,55 @@ display: none;
 }
 
 .calendar-navigation-container-mobile {
+  position: relative;
+  background-color: transparent;
+}
 
+.calendar-navigation-container-mobile:after {
+  font-family: FontAwesome;
+  content: "\f107";
+  font-size: 24px;
+  size: 2px;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  color: #f39c12;
+  pointer-events: none;
+}
+
+.calendar-navigations-select-option {
+  background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.calendar-navigations-select-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+
+  text-indent: 10px;
+  color: #f39c12;
+  font-weight: 500;
+  border: thin solid #f39c12;
+  border-width: thin;
+  border-radius: 90px;
+  width: 170px;
+  height: 40px;
+  background-color: white;
+  height: 30px;
+  background: #ffffff;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 
