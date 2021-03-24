@@ -65,7 +65,7 @@ export default function Calendar(props) {
 
   useEffect(() => {
 
-    if (filter != "") {
+    if (filter != "" && viewCalendar) {
 
       if (viewITF) {
 
