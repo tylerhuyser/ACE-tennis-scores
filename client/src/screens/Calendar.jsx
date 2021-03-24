@@ -143,7 +143,7 @@ export default function Calendar(props) {
 
       <MobileBanner />
 
-      <div class="calendar-navigation-container">
+      <div class="calendar-navigation-container-desktop">
 
         <p className="calendar-month-copy" onClick={(e) => handleNavigation("01")}>JAN</p>
 
@@ -191,6 +191,24 @@ export default function Calendar(props) {
 
         <p className="calendar-month-copy" onClick={(e) => handleNavigation("12")}>DEC</p>
 
+      </div>
+
+      <div className="calendar-navigation-container-mobile">
+        <select className="calendar-navigations-select-input" defaultValue={'default'} name="mobile-navigation" onChange={(e) => handleNavigation(e.target.value)}>
+          <option defaultValue="default">--Select a Month --</option>
+          <option value="01" className="calendar-navigations-select-optin">JAN</option>
+          <option value="02" className="calendar-navigations-select-optin">FEB</option>
+          <option value="03" className="calendar-navigations-select-optin">MAR</option>
+          <option value="04" className="calendar-navigations-select-optin">APR</option>
+          <option value="05" className="calendar-navigations-select-optin">MAY</option>
+          <option value="06" className="calendar-navigations-select-optin">JUN</option>
+          <option value="07" className="calendar-navigations-select-optin">JUL</option>
+          <option value="08" className="calendar-navigations-select-optin">AUG</option>
+          <option value="09" className="calendar-navigations-select-optin">SEP</option>
+          <option value="10" className="calendar-navigations-select-optin">OCT</option>
+          <option value="11" className="calendar-navigations-select-optin">NOV</option>
+          <option value="12" className="calendar-navigations-select-optin">DEC</option>
+        </select>
       </div>
       
       <Tournaments tournaments={viewCalendar ? calendarTournamentData : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />

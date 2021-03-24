@@ -46,20 +46,12 @@
   margin: 25px;
 }
 
-.calendar-navigation-container {
-  font-size: 12px;
-  color: white;
-  font-weight: 500;
-  font-family: bogart-semibold;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.calendar-navigation-container-desktop {
+display: none;
 }
 
-.calendar-month-separator {
-  margin: 0px 5px;
+.calendar-navigation-container-mobile {
+
 }
 
 
@@ -243,6 +235,14 @@ input[type="checkbox"]:checked {
     font-size: 30px;
   }
 
+  .calendar-navigation-container-desktop {
+    display: none;
+  }
+  
+  .calendar-month-separator {
+    margin: 0px 5px;
+  }
+
 }
 
 @media (min-width: 1280px){
@@ -261,6 +261,29 @@ input[type="checkbox"]:checked {
 
   .calendar-navigation-container, .itf-checkbox-container {
     font-size: 30px;
+  }
+
+  .calendar-navigation-container-desktop {
+    font-size: 20px;
+    color: white;
+    font-weight: 500;
+    font-family: bogart-semibold;
+  
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  
+  .calendar-month-separator {
+    margin: 0px 5px;
+  }
+
+  .calendar-navigation-container-mobile {
+    display: none;
   }
 
 }

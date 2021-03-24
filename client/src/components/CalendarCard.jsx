@@ -1,6 +1,7 @@
 import React from 'react'
 
 import TournamentCard from './TournamentCard'
+import MobileBanner from './adSense/MobileBanner'
 
 import './CalendarCard.css'
 
@@ -39,6 +40,8 @@ export default function CalendarCard(props) {
           </div>
 
           {tournaments}
+
+          <MobileBanner />
 
         </>
 
