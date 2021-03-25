@@ -57,7 +57,12 @@ export default function TournamentCard(props) {
       <p className="tournament-card-name">{tournamentName}</p>
 
       <div className="tournament-category-container">
-        <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
+
+        {startDate === "" ?
+          <div className="tournament-date"></div>
+        : 
+          <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
+        }
         <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
       </div>
 

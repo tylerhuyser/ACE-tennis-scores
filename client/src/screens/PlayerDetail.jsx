@@ -71,7 +71,7 @@ export default function PlayerDetail(props) {
 
       const gatherPlayerResults = async (currentPlayerID) => {
         const playerResultsInfo = await getPlayerResults(currentPlayerID)
-        localStorage.setItem('playerResults', JSON.stringify(playerResults))
+        localStorage.setItem('playerResults', JSON.stringify(playerResultsInfo))
         setPlayerResults(playerResultsInfo)
       }
 
@@ -115,17 +115,14 @@ export default function PlayerDetail(props) {
 
   const scheduleItems = playerSchedule && playerSchedule?.schedule.map((tournament, index) => {
 
-    const startDate = new Date(tournament.season.start_date)
-    const endDate = new Date(tournament.season.end_date)
-
     return (
 
     <TournamentCard
-      tournament={tournament}
+      tournament={tournament.tournament}
       index={index}
-      key={tournament.id}
-      startDate={startDate}
-      endDate={endDate}
+      key={tournament.tournament.id}
+      startDate={""}
+      endDate={""}
     />
       
   )})
@@ -165,9 +162,9 @@ export default function PlayerDetail(props) {
           
           <div className="player-detail-container">
 
-            <div className="back-button-container">
+            <div className="back-button-container" onClick={(e) => handleReturnToTournament(e)} >
 
-              <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} ></i>
+              <i className="fas fa-arrow-left" id="match-detail-back-button" ></i>
 
               <p className="back-button-copy">BACK</p>
 

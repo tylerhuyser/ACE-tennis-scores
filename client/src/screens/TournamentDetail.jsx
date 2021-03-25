@@ -264,9 +264,9 @@ export default function TournamentDetail(props) {
       
         <div className="tournament-detail-container">
 
-          <div className="back-button-container">
+          <div className="back-button-container" onClick={(e) => handleReturnToCalendar(e)} >
 
-            <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToCalendar(e)} ></i>
+            <i className="fas fa-arrow-left" id="match-detail-back-button" ></i>
 
             <p className="back-button-copy">BACK</p>
 

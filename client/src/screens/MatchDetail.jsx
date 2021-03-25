@@ -111,9 +111,9 @@ export default function MatchDetail(props) {
         
         <div className="match-detail-container">
 
-          <div className="back-button-container">
+          <div className="back-button-container" onClick={(e) => handleReturnToTournament(e)}>
 
-            <i className="fas fa-arrow-left" id="match-detail-back-button" onClick={(e) => handleReturnToTournament(e)} ></i>
+            <i className="fas fa-arrow-left" id="match-detail-back-button" ></i>
 
             <p className="back-button-copy">BACK</p>
 
