@@ -17,7 +17,7 @@ import { key } from './api-config'
     const resp = await api.get(`/players/${id}/schedule.json${key}`)
     return resp.data
   }
-
+ 
   export const getPlayerRivalry = async (home_id, away_id) => {
     const resp = await api.get(`/players/${home_id}/versus/${away_id}/matches.json${key}`)
     return resp.data
