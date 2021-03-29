@@ -15,7 +15,7 @@ export const doublesTeamRankings = async () => {
   const resp = await api.get(`/double_teams/rankings.json${key}`)
   return resp.data
 }
- 
+
 export const doublesTeamRaceRankings = async () => {
   const resp = await api.get(`/double_teams/race_rankings.json${key}`)
   return resp.data
