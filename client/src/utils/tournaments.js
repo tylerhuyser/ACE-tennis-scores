@@ -35,4 +35,4 @@ export const getTournamentSchedule = async (id) => {
 export const getTournamentResults = async (id) => {
   const resp = await api.get(`/tournaments/${id}/results.json${key}`)
   return resp.data
-}
+} 
