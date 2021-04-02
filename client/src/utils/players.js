@@ -11,7 +11,7 @@ import { key } from './api-config'
   export const getPlayerResults = async (id) => {
     const resp = await api.get(`/players/${id}/results.json${key}`)
     return resp.data
-  }
+  } 
 
   export const getPlayerSchedule = async (id) => {
     const resp = await api.get(`/players/${id}/schedule.json${key}`)
