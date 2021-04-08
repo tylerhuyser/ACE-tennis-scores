@@ -43,4 +43,4 @@ import { key } from './api-config'
   export const getDoublesTeamRivalry = async (home_id, away_id) => {
     const resp = await api.get(`/double_teams/${home_id}/versus/${away_id}/matches.json`)
     return resp.data
-  }
+  } 
