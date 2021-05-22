@@ -20,21 +20,13 @@ async function octoparseAPIConfig () {
     
     const token = await axios(tokenConfig)
     
-    // console.log(token)
-    
-    // console.log(token.data)
-    
     const tokenID = token.data.access_token
-    
-    // console.log(tokenID)
     
     return tokenID
     
   } catch (err) {
     
     console.log('octoparse API Authorization Credentials error')
-    // console.log(err);
-    // console.log(err.message)
     
   }
 };
@@ -44,18 +36,15 @@ async function getATPSinglesRankings () {
   try {
     
       const axios = require('axios');
-      const baseURL = "https://dataapi.octoparse.com/";
       const tokenID = await octoparseAPIConfig()
       
       console.log(tokenID)
       
       const token = 'Bearer ' + tokenID
       
-      // console.log(token)
-      
       var config = {
         method: 'get',
-        url: 'https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=02441161-df68-cdbd-40dd-a444e7ea54be&size=500',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -63,23 +52,103 @@ async function getATPSinglesRankings () {
     
       const resp = await axios(config)
       
-      console.log(resp)
+      console.log(`ATP Singles Rankings: ${resp.data}`);
       
-      console.log(resp.data);
-      
-      // console.log(JSON.stringify(resp.data));
-      
-      // const currentTournamentsData = context.functions.execute("setCurrentTournaments", resp.data.tournaments);
-      
-      // return { 'currentTournaments': currentTournamentsData}
+      return(JSON.stringify(resp.data));
     
     } catch (err) {
       
-      console.log('octoparse API GET error')
+      console.log('octoparse ATP Singles Rankings GET error')
       console.log(err);
       console.log(err.message)
       
     }
 };
+
+async function getATPRankings(token) {
   
-getATPSinglesRankings()
+  try {
+
+    const ATPSINGLESRANKINGS = await getATPSinglesRankings(token)
+    const ATPSINGLESRACERANKINGS = await getATPSinglesRaceRankings(token)
+    const ATPDOUBLESRANKINGS = await getATPDoublesRankings(token)
+    const ATPDOUBLESRACERANKINGS = await getATPDoublesRaceRankings(token)
+
+    const rankings = {
+      ATPRankings: {
+        ATPSINGLESRANKINGS,
+        ATPSINGLESRACERANKINGS,
+        ATPDOUBLESRANKINGS,
+        ATPDOUBLESRACERANKINGS
+      }
+    }
+
+    return rankings
+
+  } catch (err) {
+
+    console.log('getATPRankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function getWTARankings(token) {
+  
+  try {
+
+    const ATPSINGLESRANKINGS = await getWTASinglesRankings(token)
+    const ATPSINGLESRACERANKINGS = await getWTASinglesRaceRankings(token)
+    const ATPDOUBLESRANKINGS = await getWTADoublesRankings(token)
+    const ATPDOUBLESRACERANKINGS = await getWTADoublesRaceRankings(token)
+
+    const rankings = {
+      WTARankings: {
+        WTASINGLESRANKINGS,
+        WTASINGLESRACERANKINGS,
+        WTADOUBLESRANKINGS,
+        WTADOUBLESRACERANKINGS
+      }
+    }
+
+    return rankings
+
+  } catch (err) {
+
+    console.log('getWTARankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+  
+async function getRankings() {
+
+  try {
+
+    const axios = require('axios');
+    const tokenID = await octoparseAPIConfig()
+    const token = 'Bearer ' + tokenID
+
+    const ATPRANKINGS = await getATPRankings(token)
+    const WTARANKINGS = await getWTARankings(token)
+
+    const rankingsData = {
+      rankings: {
+        ATPRANKINGS,
+        WTARANKINGS
+      }
+    }
+
+
+  } catch (err) {
+
+    console.log('getRankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+getRankings()
