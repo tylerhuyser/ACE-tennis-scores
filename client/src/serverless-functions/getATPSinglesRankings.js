@@ -31,16 +31,12 @@ async function octoparseAPIConfig () {
   }
 };
 
-async function getATPSinglesRankings () {
+async function getATPSinglesRankings (token) {
   
   try {
-    
+
+      const token = props.token
       const axios = require('axios');
-      const tokenID = await octoparseAPIConfig()
-      
-      console.log(tokenID)
-      
-      const token = 'Bearer ' + tokenID
       
       var config = {
         method: 'get',
@@ -53,8 +49,10 @@ async function getATPSinglesRankings () {
       const resp = await axios(config)
       
       console.log(`ATP Singles Rankings: ${resp.data}`);
+    
+      const rankings = {ATP_SINGLES_RANKINGS: JSON.stringify(resp.data)}
       
-      return(JSON.stringify(resp.data));
+      return(rankings);
     
     } catch (err) {
       
@@ -65,9 +63,235 @@ async function getATPSinglesRankings () {
     }
 };
 
+async function getATPSinglesRaceRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`ATP Singles Race Rankings: ${resp.data}`);
+    
+      const rankings = {ATP_SINGLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse ATP Singles Race Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getATPDoublesRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`ATP Doubles Rankings: ${resp.data}`);
+    
+      const rankings = {ATP_DOUBLES_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse ATP Doubles Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getATPDoublesRaceRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`ATP Doubles Race Rankings: ${resp.data}`);
+    
+      const rankings = {ATP_DOUBLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse ATP Doubles Race Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getWTASinglesRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`WTA Singles Rankings: ${resp.data}`);
+    
+      const rankings = {WTA_SINGLES_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse WTA Singles Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getWTASinglesRaceRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`WTA Singles Race Rankings: ${resp.data}`);
+    
+      const rankings = {WTA_SINGLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse WTA Singles Race Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getWTADoublesRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`WTA Doubles Rankings: ${resp.data}`);
+    
+      const rankings = {WTA_DOUBLES_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse WTA Doubles Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
+async function getWTADoublesRaceRankings (token) {
+  
+  try {
+
+      const token = props.token
+      const axios = require('axios');
+      
+      var config = {
+        method: 'get',
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}&size=500`,
+        headers: { 
+          'Authorization': token
+        }
+      };
+    
+      const resp = await axios(config)
+      
+      console.log(`WTA Doubles Race Rankings: ${resp.data}`);
+    
+      const rankings = {WTA_DOUBLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      
+      return(rankings);
+    
+    } catch (err) {
+      
+      console.log('octoparse WTA Doubles Race Rankings GET error')
+      console.log(err);
+      console.log(err.message)
+      
+    }
+};
+
 async function getATPRankings(token) {
   
   try {
+
+    const token = props.token
 
     const ATPSINGLESRANKINGS = await getATPSinglesRankings(token)
     const ATPSINGLESRACERANKINGS = await getATPSinglesRaceRankings(token)
@@ -97,6 +321,8 @@ async function getATPRankings(token) {
 async function getWTARankings(token) {
   
   try {
+
+    const token = props.token
 
     const ATPSINGLESRANKINGS = await getWTASinglesRankings(token)
     const ATPSINGLESRACERANKINGS = await getWTASinglesRaceRankings(token)
@@ -141,6 +367,7 @@ async function getRankings() {
       }
     }
 
+    console.log(rankingsData)
 
   } catch (err) {
 
