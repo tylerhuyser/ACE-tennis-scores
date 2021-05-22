@@ -35,7 +35,6 @@ async function getATPSinglesRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -67,7 +66,6 @@ async function getATPSinglesRaceRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -99,7 +97,6 @@ async function getATPDoublesRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -131,7 +128,6 @@ async function getATPDoublesRaceRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -163,7 +159,6 @@ async function getWTASinglesRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -195,7 +190,6 @@ async function getWTASinglesRaceRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -227,7 +221,6 @@ async function getWTADoublesRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -259,7 +252,6 @@ async function getWTADoublesRaceRankings (token) {
   
   try {
 
-      const token = props.token
       const axios = require('axios');
       
       var config = {
@@ -291,8 +283,6 @@ async function getATPRankings(token) {
   
   try {
 
-    const token = props.token
-
     const ATPSINGLESRANKINGS = await getATPSinglesRankings(token)
     const ATPSINGLESRACERANKINGS = await getATPSinglesRaceRankings(token)
     const ATPDOUBLESRANKINGS = await getATPDoublesRankings(token)
@@ -322,12 +312,10 @@ async function getWTARankings(token) {
   
   try {
 
-    const token = props.token
-
-    const ATPSINGLESRANKINGS = await getWTASinglesRankings(token)
-    const ATPSINGLESRACERANKINGS = await getWTASinglesRaceRankings(token)
-    const ATPDOUBLESRANKINGS = await getWTADoublesRankings(token)
-    const ATPDOUBLESRACERANKINGS = await getWTADoublesRaceRankings(token)
+    const WTASINGLESRANKINGS = await getWTASinglesRankings(token)
+    const WTASINGLESRACERANKINGS = await getWTASinglesRaceRankings(token)
+    const WTADOUBLESRANKINGS = await getWTADoublesRankings(token)
+    const WTADOUBLESRACERANKINGS = await getWTADoublesRaceRankings(token)
 
     const rankings = {
       WTARankings: {
