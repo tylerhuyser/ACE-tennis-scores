@@ -341,10 +341,17 @@ async function getRankings() {
 
   try {
 
+    // Dependency
+
     const axios = require('axios');
+
+    // HEROKU AUTHORIZATIONN EQUATION GOES HERE
+
+    // OCTOPARSE AUTHORIZATION EQUATION
     const tokenID = await octoparseAPIConfig()
     const token = 'Bearer ' + tokenID
 
+    // OCTOPARSE GET RANKINGS DATA
     const ATPRANKINGS = await getATPRankings(token)
     const WTARANKINGS = await getWTARankings(token)
 
@@ -352,10 +359,15 @@ async function getRankings() {
       rankings: {
         ATPRANKINGS,
         WTARANKINGS
-      }
+      },
+      date: new Date()
     }
 
     console.log(rankingsData)
+
+    // HEROKU DELETE PREVIOUS RANKINGS DATA
+
+    // HEROKU POST NEW RANKINGS DATA
 
   } catch (err) {
 
