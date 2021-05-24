@@ -337,8 +337,45 @@ async function getWTARankings(token) {
   }
 }
 
-async function preserverPreviousRankingsData() {
-  
+async function loginHerokuPostgres() {
+
+  const axios = require('axios');
+
+  const baseURL = process.env.HEROKU_URL
+  const username = process.env.POSTGRES_USERNAME
+  const password = process.env.POSTGRES_PASSWORD
+
+  const api = axios.create({
+    baseURL: baseURL
+  })
+
+  const resp = await api.post('/auth/login', {
+    authentication: {
+      username: username, 
+      password: password
+    }
+  })
+  return resp.data.token
+}
+
+async function verifyHerokuPostgres(token) {
+
+  const axios = require('axios');
+  const baseURL = process.env.HEROKU_URL
+
+  const api = axios.create({
+    baseURL: baseURL
+  })
+
+  const resp = await api.get('/auth/verify', {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+
+  return resp.data
+
 }
   
 async function getRankings() {
@@ -363,13 +400,44 @@ async function getRankings() {
       rankings: {
         ATPRANKINGS,
         WTARANKINGS
-      },
-      date: new Date()
+      }
     }
 
     console.log(rankingsData)
 
+    // HEROKU AUTHENTICATION
+
+    const authToken = await loginHerokuPostgres()
+
+    var getConfig = {
+      method: 'get',
+      url: `${process.env.HEROKU_URL}api/rankings/1`,
+      headers: { 
+        'Authorization': authToken
+      }
+    }
+
+    var postConfig = {
+      method: 'post',
+      url: `${process.env.HEROKU_URL}api/rankings`,
+      headers: { 
+        'Authorization': authToken
+      },
+      data: {
+        data: rankingsData.stringify(),
+        date: new Date()
+      }
+    };
+
+    const oldData = await axios(getConfig)
+
+    console.log(oldData)
+
     // HEROKU DELETE PREVIOUS RANKINGS DATA
+
+    const newData = await axios(config)
+
+    console.log(newData)
 
     const HEROKU_API_KEY = process.env.HEROKU_API_KEY
 

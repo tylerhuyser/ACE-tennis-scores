@@ -8,6 +8,7 @@ node_modules
 
 # Ignore bundler config.
 /.bundle
+/db/seeds.rb
 
 # Ignore all logfiles and tempfiles.
 /log/*
