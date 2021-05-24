@@ -406,7 +406,6 @@ async function getRankings() {
     console.log(rankingsData)
 
     // HEROKU AUTHENTICATION
-
     const authToken = await loginHerokuPostgres()
 
     var getConfig = {
@@ -416,6 +415,12 @@ async function getRankings() {
         'Authorization': authToken
       }
     }
+
+    const oldData = await axios(getConfig)
+
+    console.log(oldData)
+
+    // Heroku Post
 
     var postConfig = {
       method: 'post',
@@ -429,13 +434,9 @@ async function getRankings() {
       }
     };
 
-    const oldData = await axios(getConfig)
-
-    console.log(oldData)
-
     // HEROKU DELETE PREVIOUS RANKINGS DATA
 
-    const newData = await axios(config)
+    const newData = await axios(postConfig)
 
     console.log(newData)
 
