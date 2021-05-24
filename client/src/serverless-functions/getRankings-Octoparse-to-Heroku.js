@@ -339,42 +339,60 @@ async function getWTARankings(token) {
 
 async function loginHerokuPostgres() {
 
-  const axios = require('axios');
+  try {
 
-  const baseURL = process.env.HEROKU_URL
-  const username = process.env.POSTGRES_USERNAME
-  const password = process.env.POSTGRES_PASSWORD
+    const axios = require('axios');
 
-  const api = axios.create({
-    baseURL: baseURL
-  })
+    const baseURL = process.env.HEROKU_URL
+    const username = process.env.POSTGRES_USERNAME
+    const password = process.env.POSTGRES_PASSWORD
 
-  const resp = await api.post('/auth/login', {
-    authentication: {
-      username: username, 
-      password: password
-    }
-  })
-  return resp.data.token
+    const api = axios.create({
+      baseURL: baseURL
+    })
+
+    const resp = await api.post('api/auth/login', {
+      authentication: {
+        username: username,
+        password: password
+      }
+    })
+    return resp.data.token
+    
+  } catch (err) {
+
+    console.log('Authentication Error')
+    console.log(err)
+
+  }
 }
 
 async function verifyHerokuPostgres(token) {
 
-  const axios = require('axios');
-  const baseURL = process.env.HEROKU_URL
+  try {
 
-  const api = axios.create({
-    baseURL: baseURL
-  })
+    const axios = require('axios');
+    const baseURL = process.env.HEROKU_URL
 
-  const resp = await api.get('/auth/verify', {
+    const api = axios.create({
+      baseURL: baseURL
+    })
+
+    const resp = await api.get('auth/verify', {
       headers: {
         "Authorization": `Bearer ${token}`
       }
     }
-  )
+    )
 
-  return resp.data
+    return resp.data
+    
+  } catch (err) {
+
+    console.log('Verification Error')
+    console.log(err)
+
+  }
 
 }
   
@@ -406,27 +424,45 @@ async function getRankings() {
     console.log(rankingsData)
 
     // HEROKU AUTHENTICATION
+
+    console.log("authentication")
+
     const authToken = await loginHerokuPostgres()
 
-    var getConfig = {
+    // Herouku Backup Old Data
+
+    var getOldConfig = {
       method: 'get',
-      url: `${process.env.HEROKU_URL}api/rankings/1`,
+      url: `${process.env.HEROKU_URL}api/rankings`,
       headers: { 
-        'Authorization': authToken
+        'Authorization': `Bearer ${authToken}`
       }
     }
 
-    const oldData = await axios(getConfig)
+    const oldData = await axios(getOldConfig)
 
     console.log(oldData)
 
+    var postOldConfig = {
+      method: 'get',
+      url: `${process.env.HEROKU_URL}api/previous-rankings`,
+      headers: { 
+        'Authorization': `Bearer ${authToken}`
+      },
+      data: oldData.data
+    }
+
+    const previousRankings = await axios(postOldConfig)
+
+    console.log(previousRankings.data)
+
     // Heroku Post
 
-    var postConfig = {
+    var postNewConfig = {
       method: 'post',
       url: `${process.env.HEROKU_URL}api/rankings`,
       headers: { 
-        'Authorization': authToken
+        'Authorization': `authToken ${authToken}`
       },
       data: {
         data: rankingsData.stringify(),
@@ -434,15 +470,11 @@ async function getRankings() {
       }
     };
 
-    // HEROKU DELETE PREVIOUS RANKINGS DATA
-
-    const newData = await axios(postConfig)
+    const newData = await axios(postNewConfig)
 
     console.log(newData)
 
-    const HEROKU_API_KEY = process.env.HEROKU_API_KEY
-
-    // HEROKU POST NEW RANKINGS DATA
+    console.log(newData.data)
 
   } catch (err) {
 

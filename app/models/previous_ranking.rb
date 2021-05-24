@@ -1,0 +1,2 @@
+class PreviousRanking < ApplicationRecord
+end
