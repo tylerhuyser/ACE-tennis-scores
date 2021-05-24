@@ -336,6 +336,10 @@ async function getWTARankings(token) {
 
   }
 }
+
+async function preserverPreviousRankingsData() {
+  
+}
   
 async function getRankings() {
 
@@ -366,6 +370,8 @@ async function getRankings() {
     console.log(rankingsData)
 
     // HEROKU DELETE PREVIOUS RANKINGS DATA
+
+    const HEROKU_API_KEY = process.env.HEROKU_API_KEY
 
     // HEROKU POST NEW RANKINGS DATA
 
