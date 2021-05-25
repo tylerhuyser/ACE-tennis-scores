@@ -434,7 +434,7 @@ async function destroyOldRankings(token, authToken, oldData) {
 
     var config = {
       method: 'delete',
-      url: `http://localhost:3000/rankings/${oldData.data[0].id}`,
+      url: `${process.env.HEROKU_URL}rankings/${oldData.data[0].id}`,
       headers: {
         'Authorization': `Bearer ${authToken}`
       },
@@ -469,7 +469,7 @@ async function postNewRankings(token, authToken, rankingsData, oldData) {
 
     var config = {
       method: 'post',
-      url: `http://localhost:3000/rankings`,
+      url: `${process.env.HEROKU_URL}rankings`,
       headers: {
         'Authorization': `Bearer ${authToken}`
       },
@@ -509,7 +509,7 @@ async function backupOldRankings(token, authToken, rankingsData, oldData) {
 
     var config = {
       method: 'post',
-      url: `http://localhost:3000/previous-rankings`,
+      url: `${process.env.HEROKU_URL}previous-rankings`,
       headers: { 
         'Authorization': `Bearer ${authToken}`
       },
@@ -548,7 +548,7 @@ async function getOldRankings(token, authToken, rankingsData) {
 
     var config = {
       method: 'get',
-      url: `http://localhost:3000/rankings`,
+      url: `${process.env.HEROKU_URL}rankings`,
       headers: {
         'Authorization': `Bearer ${authToken}`
       }
@@ -584,7 +584,7 @@ async function loginHerokuPostgres(token, rankingsData) {
     const password = process.env.POSTGRES_PASSWORD
 
     const api = axios.create({
-      baseURL: `http://localhost:3000/`
+      baseURL: `${process.env.HEROKU_URL}`
     })
 
     const resp = await api.post('auth/login', {
@@ -637,33 +637,7 @@ async function getRankings() {
     }
 
     await loginHerokuPostgres(token, rankingsData)
-
-    // // HEROKU AUTHENTICATION
-
-    // const authToken = await loginHerokuPostgres()
-
-    // // HEROKU GET OLD RANKINGS DATA
-
-    // const oldData = await getOldRankings(authToken)
-
-    // // HEROKU POST OLD RANKING DATA TO PREVIOUS-RANKINGS ENDPOINT
-
-    // await backupOldRankings(authToken, oldData)
-
-    // // HEROKU POST NEW RANKINGS DATA TO RANKINGS ENDPOINT
-
-    // const newData = await postNewRankings(authToken, rankingsData)
-
-    // // HEROKU DESTROY OLD RANKING DATA
-
-    // if (newData.status === 200) {
-
-    //   await destroyOldRankings(authToken, oldData)
-
-    //   console.log('new data complete')
       
-    // }
-
   } catch (err) {
 
     console.log('getRankings Error')
