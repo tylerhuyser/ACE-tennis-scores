@@ -337,7 +337,152 @@ async function getWTARankings(token) {
   }
 }
 
-async function loginHerokuPostgres() {
+async function destroyOldRankings(authToken, oldData) {
+
+  try {
+  
+    const axios = require('axios');
+
+    var config = {
+      method: 'delete',
+      url: `http://localhost:3000/rankings/${oldData.data[0].id}`,
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      },
+    }
+
+    const resp = await axios(config)
+
+    console.log(resp.status)
+
+    if (resp.status === 204) {
+
+      console.log("PostgreSQL destroy old Rankings Success")
+
+    }
+
+  } catch (err) {
+
+    console.log('destroyOldRankings Error')
+    console.log(err);
+
+  }
+
+}
+
+async function postNewRankings(authToken, rankingsData, oldData) {
+  
+  try {
+
+    const axios = require('axios');
+
+    var config = {
+      method: 'post',
+      url: `http://localhost:3000/rankings`,
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      },
+      data: {
+        data: JSON.stringify(rankingsData),
+        date: new Date()
+      }
+    };
+
+    const resp = await axios(config)
+
+    console.log('successful NEW RANKINGS POST')
+
+    if (resp.status === 201) {
+
+      console.log("PostgreSQL postNewRankings Success")
+
+      await destroyOldRankings(authToken, oldData)
+
+    }
+    
+  } catch (err) {
+
+    console.log('postNewRankings Error')
+    console.log(err);
+
+  }
+}
+
+async function backupOldRankings(authToken, rankingsData, oldData) {
+
+  try {
+
+    console.log('begin backup old rankings')
+
+    const axios = require('axios');
+
+    var config = {
+      method: 'post',
+      url: `http://localhost:3000/previous-rankings`,
+      headers: { 
+        'Authorization': `Bearer ${authToken}`
+      },
+      data: oldData.data[0]
+    }
+
+    const resp = await axios(config)
+
+    console.log('backup success')
+
+    console.log(resp.status)
+
+    if (resp.status === 201) {
+
+      console.log("PostgreSQL backupOldRankings Success")
+      await postNewRankings(authToken, rankingsData, oldData)
+
+    }
+    
+  } catch (err) {
+
+    console.log('backupOldRankings Error')
+    console.log(err);
+
+  }
+
+}
+
+async function getOldRankings(authToken, rankingsData) {
+
+  try {
+
+    console.log(authToken)
+
+    const axios = require('axios');
+
+    var config = {
+      method: 'get',
+      url: `http://localhost:3000/rankings`,
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    }
+
+    const oldData = await axios(config)
+
+    if (oldData.status === 200) {
+
+      console.log("PostgreSQL getOldRankings Success")
+
+      await backupOldRankings(authToken, rankingsData, oldData)
+
+    }
+    
+  } catch (err) {
+
+    console.log('getOldRankings Error')
+    console.log(err);
+
+  }
+
+}
+
+async function loginHerokuPostgres(rankingsData) {
 
   try {
 
@@ -348,7 +493,7 @@ async function loginHerokuPostgres() {
     const password = process.env.POSTGRES_PASSWORD
 
     const api = axios.create({
-      baseURL: baeURL
+      baseURL: `http://localhost:3000/`
     })
 
     const resp = await api.post('auth/login', {
@@ -358,7 +503,17 @@ async function loginHerokuPostgres() {
       }
     })
 
-    return resp.data.token
+    const authToken = resp.data.token
+
+    console.log(authToken)
+
+    if (resp.status === 200) {
+
+      console.log("PostgreSQL Authorization Success")
+
+      await getOldRankings(authToken, rankingsData)
+      
+    }
     
   } catch (err) {
 
@@ -373,7 +528,6 @@ async function getRankings() {
   try {
 
     // Dependency
-
     const axios = require('axios');
 
     // OCTOPARSE AUTHORIZATION EQUATION
@@ -391,61 +545,33 @@ async function getRankings() {
       }
     }
 
-    // HEROKU AUTHENTICATION
+    await loginHerokuPostgres(rankingsData)
 
-    const authToken = await loginHerokuPostgres()
+    // // HEROKU AUTHENTICATION
 
-    // HEROKU GET OLD RANKINGS DATA
+    // const authToken = await loginHerokuPostgres()
 
-    var getOldConfig = {
-      method: 'get',
-      url: `http://localhost:3000/rankings`,
-      headers: { 
-        'Authorization': `Bearer ${authToken}`
-      }
-    }
+    // // HEROKU GET OLD RANKINGS DATA
 
-    const oldData = await axios(getOldConfig)
+    // const oldData = await getOldRankings(authToken)
 
-    // HEROKU POST OLD RANKING DATA TO PREVIOUS-RANKINGS ENDPOINT
+    // // HEROKU POST OLD RANKING DATA TO PREVIOUS-RANKINGS ENDPOINT
 
-    var postOldConfig = {
-      method: 'post',
-      url: `http://localhost:3000/previous-rankings`,
-      headers: { 
-        'Authorization': `Bearer ${authToken}`
-      },
-      data: oldData.data[0]
-    }
+    // await backupOldRankings(authToken, oldData)
 
-    await axios(postOldConfig)
+    // // HEROKU POST NEW RANKINGS DATA TO RANKINGS ENDPOINT
 
-    // HEROKU DESTROY OLD RANKING DATA
+    // const newData = await postNewRankings(authToken, rankingsData)
 
-    var postOldDestroyConfig = {
-      method: 'delete',
-      url: `http://localhost:3000/rankings/${oldData.data[0].id}`,
-      headers: { 
-        'Authorization': `Bearer ${authToken}`
-      },
-      data: oldData.data[0]
-    }
+    // // HEROKU DESTROY OLD RANKING DATA
 
-    // HEROKU POST NEW RANKINGS DATA TO RANKINGS ENDPOINT
+    // if (newData.status === 200) {
 
-    var postNewConfig = {
-      method: 'post',
-      url: `http://localhost:3000/rankings`,
-      headers: { 
-        'Authorization': `Bearer ${authToken}`
-      },
-      data: {
-        data: JSON.stringify(rankingsData),
-        date: new Date()
-      }
-    };
+    //   await destroyOldRankings(authToken, oldData)
 
-    const newData = await axios(postNewConfig)
+    //   console.log('new data complete')
+      
+    // }
 
   } catch (err) {
 
