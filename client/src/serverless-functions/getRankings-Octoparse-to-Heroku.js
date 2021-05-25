@@ -39,7 +39,7 @@ async function getATPSinglesRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -70,7 +70,7 @@ async function getATPSinglesRaceRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -101,7 +101,7 @@ async function getATPDoublesRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -132,7 +132,7 @@ async function getATPDoublesRaceRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -163,7 +163,7 @@ async function getWTASinglesRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -194,7 +194,7 @@ async function getWTASinglesRaceRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -225,7 +225,7 @@ async function getWTADoublesRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -256,7 +256,7 @@ async function getWTADoublesRaceRankings (token) {
       
       var config = {
         method: 'get',
-        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}&size=500`,
+        url: `https://dataapi.octoparse.com/api/notexportdata/gettop?taskId=${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}&size=500`,
         headers: { 
           'Authorization': token
         }
@@ -348,15 +348,16 @@ async function loginHerokuPostgres() {
     const password = process.env.POSTGRES_PASSWORD
 
     const api = axios.create({
-      baseURL: baseURL
+      baseURL: baeURL
     })
 
-    const resp = await api.post('api/auth/login', {
-      authentication: {
-        username: username,
-        password: password
+    const resp = await api.post('auth/login', {
+      "authentication": {
+        "username": username,
+        "password": password
       }
     })
+
     return resp.data.token
     
   } catch (err) {
@@ -366,35 +367,6 @@ async function loginHerokuPostgres() {
 
   }
 }
-
-async function verifyHerokuPostgres(token) {
-
-  try {
-
-    const axios = require('axios');
-    const baseURL = process.env.HEROKU_URL
-
-    const api = axios.create({
-      baseURL: baseURL
-    })
-
-    const resp = await api.get('auth/verify', {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    }
-    )
-
-    return resp.data
-    
-  } catch (err) {
-
-    console.log('Verification Error')
-    console.log(err)
-
-  }
-
-}
   
 async function getRankings() {
 
@@ -403,8 +375,6 @@ async function getRankings() {
     // Dependency
 
     const axios = require('axios');
-
-    // HEROKU AUTHORIZATIONN EQUATION GOES HERE
 
     // OCTOPARSE AUTHORIZATION EQUATION
     const tokenID = await octoparseAPIConfig()
@@ -421,19 +391,15 @@ async function getRankings() {
       }
     }
 
-    console.log(rankingsData)
-
     // HEROKU AUTHENTICATION
-
-    console.log("authentication")
 
     const authToken = await loginHerokuPostgres()
 
-    // Herouku Backup Old Data
+    // HEROKU GET OLD RANKINGS DATA
 
     var getOldConfig = {
       method: 'get',
-      url: `${process.env.HEROKU_URL}api/rankings`,
+      url: `http://localhost:3000/rankings`,
       headers: { 
         'Authorization': `Bearer ${authToken}`
       }
@@ -441,40 +407,45 @@ async function getRankings() {
 
     const oldData = await axios(getOldConfig)
 
-    console.log(oldData)
+    // HEROKU POST OLD RANKING DATA TO PREVIOUS-RANKINGS ENDPOINT
 
     var postOldConfig = {
-      method: 'get',
-      url: `${process.env.HEROKU_URL}api/previous-rankings`,
+      method: 'post',
+      url: `http://localhost:3000/previous-rankings`,
       headers: { 
         'Authorization': `Bearer ${authToken}`
       },
-      data: oldData.data
+      data: oldData.data[0]
     }
 
-    const previousRankings = await axios(postOldConfig)
+    await axios(postOldConfig)
 
-    console.log(previousRankings.data)
+    // HEROKU DESTROY OLD RANKING DATA
 
-    // Heroku Post
+    var postOldDestroyConfig = {
+      method: 'delete',
+      url: `http://localhost:3000/rankings/${oldData.data[0].id}`,
+      headers: { 
+        'Authorization': `Bearer ${authToken}`
+      },
+      data: oldData.data[0]
+    }
+
+    // HEROKU POST NEW RANKINGS DATA TO RANKINGS ENDPOINT
 
     var postNewConfig = {
       method: 'post',
-      url: `${process.env.HEROKU_URL}api/rankings`,
+      url: `http://localhost:3000/rankings`,
       headers: { 
-        'Authorization': `authToken ${authToken}`
+        'Authorization': `Bearer ${authToken}`
       },
       data: {
-        data: rankingsData.stringify(),
+        data: JSON.stringify(rankingsData),
         date: new Date()
       }
     };
 
     const newData = await axios(postNewConfig)
-
-    console.log(newData)
-
-    console.log(newData.data)
 
   } catch (err) {
 
