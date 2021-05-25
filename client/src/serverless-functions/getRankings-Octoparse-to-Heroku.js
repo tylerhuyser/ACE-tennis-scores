@@ -647,4 +647,4 @@ async function getRankings() {
   }
 }
 
-getRankings()
+getRankings() 
