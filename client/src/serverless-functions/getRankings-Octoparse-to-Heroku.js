@@ -26,7 +26,7 @@ async function octoparseAPIConfig () {
     
   } catch (err) {
     
-    console.log('octoparse API Authorization Credentials error')
+    console.log('Octoparse API Authorization Credentials error')
     
   }
 };
@@ -55,7 +55,7 @@ async function getATPSinglesRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse ATP Singles Rankings GET error')
+      console.log('Octoparse ATP Singles Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -86,7 +86,7 @@ async function getATPSinglesRaceRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse ATP Singles Race Rankings GET error')
+      console.log('Octoparse ATP Singles Race Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -117,7 +117,7 @@ async function getATPDoublesRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse ATP Doubles Rankings GET error')
+      console.log('Octoparse ATP Doubles Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -148,7 +148,7 @@ async function getATPDoublesRaceRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse ATP Doubles Race Rankings GET error')
+      console.log('Octoparse ATP Doubles Race Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -179,7 +179,7 @@ async function getWTASinglesRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse WTA Singles Rankings GET error')
+      console.log('Octoparse WTA Singles Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -210,7 +210,7 @@ async function getWTASinglesRaceRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse WTA Singles Race Rankings GET error')
+      console.log('Octoparse WTA Singles Race Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -241,7 +241,7 @@ async function getWTADoublesRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse WTA Doubles Rankings GET error')
+      console.log('Octoparse WTA Doubles Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -272,7 +272,7 @@ async function getWTADoublesRaceRankings (token) {
     
     } catch (err) {
       
-      console.log('octoparse WTA Doubles Race Rankings GET error')
+      console.log('Octoparse WTA Doubles Race Rankings GET error')
       console.log(err);
       console.log(err.message)
       
@@ -446,7 +446,7 @@ async function destroyOldRankings(token, authToken, oldData) {
 
     if (resp.status === 204) {
 
-      console.log("PostgreSQL destroy old Rankings Success")
+      console.log("PostgreSQL destroyOldRankings Success")
 
       await exportOctoparseData(token)
 
@@ -573,7 +573,7 @@ async function getOldRankings(token, authToken, rankingsData) {
 
 }
 
-async function loginHerokuPostgres(token, rankingsData) {
+async function loginHerokuPostgreSQL(token, rankingsData) {
 
   try {
 
@@ -584,7 +584,7 @@ async function loginHerokuPostgres(token, rankingsData) {
     const password = process.env.POSTGRES_PASSWORD
 
     const api = axios.create({
-      baseURL: `${process.env.HEROKU_URL}`
+      baseURL: baseURL
     })
 
     const resp = await api.post('auth/login', {
@@ -608,7 +608,7 @@ async function loginHerokuPostgres(token, rankingsData) {
     
   } catch (err) {
 
-    console.log('Authentication Error')
+    console.log('Heroku PostgresSQL Authentication Error')
     console.log(err)
 
   }
@@ -636,7 +636,7 @@ async function getRankings() {
       }
     }
 
-    await loginHerokuPostgres(token, rankingsData)
+    await loginHerokuPostgreSQL(token, rankingsData)
       
   } catch (err) {
 
