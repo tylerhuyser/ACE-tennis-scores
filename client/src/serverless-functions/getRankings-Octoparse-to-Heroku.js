@@ -337,7 +337,96 @@ async function getWTARankings(token) {
   }
 }
 
-async function destroyOldRankings(authToken, oldData) {
+async function exportATPRankings(token) {
+
+  try {
+
+    const axios = require('axios');
+
+    var config = {
+      method: 'post',
+      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
+      headers: { 
+        'Authorization': token
+      }
+    };
+
+    const ATPSINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, config)
+
+    console.log(ATPSINGLESRANKINGS)
+    
+    const ATPSINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, config)
+
+    console.log(ATPSINGLESRACERANKINGS)
+    
+    const ATPDOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, config)
+
+    console.log(ATPDOUBLESRANKINGS)
+    
+    const ATPDOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, config)
+
+    console.log(ATPDOUBLESRACERANKINGS)
+
+
+  } catch (err) {
+
+    console.log('Octoparse Export ATPRankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportWTARankings(token) {
+
+  try {
+
+    const axios = require('axios');
+
+    var config = {
+      method: 'post',
+      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
+      headers: { 
+        'Authorization': token
+      }
+    };
+
+    const WTASINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, config)
+
+    console.log(WTASINGLESRANKINGS)
+    
+    const WTASINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, config)
+
+    console.log(WTASINGLESRACERANKINGS)
+    
+    const WTADOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, config)
+
+    console.log(WTADOUBLESRANKINGS)
+    
+    const WTADOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, config)
+
+    console.log(WTADOUBLESRACERANKINGS)
+
+
+  } catch (err) {
+
+    console.log('exportWTARankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportOctoparseData(token) {
+  
+  await exportATPRankings(token)
+  await exportWTARankings(token)
+
+  console.log('Octoparse Data Export Complete')
+
+}
+
+async function destroyOldRankings(token, authToken, oldData) {
 
   try {
   
@@ -359,6 +448,8 @@ async function destroyOldRankings(authToken, oldData) {
 
       console.log("PostgreSQL destroy old Rankings Success")
 
+      await exportOctoparseData(token)
+
     }
 
   } catch (err) {
@@ -370,7 +461,7 @@ async function destroyOldRankings(authToken, oldData) {
 
 }
 
-async function postNewRankings(authToken, rankingsData, oldData) {
+async function postNewRankings(token, authToken, rankingsData, oldData) {
   
   try {
 
@@ -396,7 +487,7 @@ async function postNewRankings(authToken, rankingsData, oldData) {
 
       console.log("PostgreSQL postNewRankings Success")
 
-      await destroyOldRankings(authToken, oldData)
+      await destroyOldRankings(token, authToken, oldData)
 
     }
     
@@ -408,7 +499,7 @@ async function postNewRankings(authToken, rankingsData, oldData) {
   }
 }
 
-async function backupOldRankings(authToken, rankingsData, oldData) {
+async function backupOldRankings(token, authToken, rankingsData, oldData) {
 
   try {
 
@@ -434,7 +525,7 @@ async function backupOldRankings(authToken, rankingsData, oldData) {
     if (resp.status === 201) {
 
       console.log("PostgreSQL backupOldRankings Success")
-      await postNewRankings(authToken, rankingsData, oldData)
+      await postNewRankings(token, authToken, rankingsData, oldData)
 
     }
     
@@ -447,7 +538,7 @@ async function backupOldRankings(authToken, rankingsData, oldData) {
 
 }
 
-async function getOldRankings(authToken, rankingsData) {
+async function getOldRankings(token, authToken, rankingsData) {
 
   try {
 
@@ -469,7 +560,7 @@ async function getOldRankings(authToken, rankingsData) {
 
       console.log("PostgreSQL getOldRankings Success")
 
-      await backupOldRankings(authToken, rankingsData, oldData)
+      await backupOldRankings(token, authToken, rankingsData, oldData)
 
     }
     
@@ -482,7 +573,7 @@ async function getOldRankings(authToken, rankingsData) {
 
 }
 
-async function loginHerokuPostgres(rankingsData) {
+async function loginHerokuPostgres(token, rankingsData) {
 
   try {
 
@@ -511,7 +602,7 @@ async function loginHerokuPostgres(rankingsData) {
 
       console.log("PostgreSQL Authorization Success")
 
-      await getOldRankings(authToken, rankingsData)
+      await getOldRankings(token, authToken, rankingsData)
       
     }
     
@@ -545,7 +636,7 @@ async function getRankings() {
       }
     }
 
-    await loginHerokuPostgres(rankingsData)
+    await loginHerokuPostgres(token, rankingsData)
 
     // // HEROKU AUTHENTICATION
 
