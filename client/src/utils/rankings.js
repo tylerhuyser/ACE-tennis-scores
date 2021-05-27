@@ -1,5 +1,7 @@
 import api from './api-config'
 import { key } from './api-config'
+
+import axios from 'axios';
 require('dotenv').config()
 
 export const playerRankings = async () => {
