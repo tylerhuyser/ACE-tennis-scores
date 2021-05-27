@@ -1,5 +1,6 @@
 import api from './api-config'
 import { key } from './api-config'
+require('dotenv').config()
 
 export const playerRankings = async () => {
   const resp = await api.get(`/players/rankings.json${key}`)
@@ -19,4 +20,29 @@ export const doublesTeamRankings = async () => {
 export const doublesTeamRaceRankings = async () => {
   const resp = await api.get(`/double_teams/race_rankings.json${key}`)
   return resp.data
+}
+
+const config = {
+
+}
+
+export const herokuRankings = async () => {
+
+  const token = await axios.get(`${process.env.HEROKU_URL}auth/login`, {
+    "authentication": {
+      "username": `${process.env.POSTGRES_USERNAME}`,
+      "password": `${process.env.POSTGRES_PASSWORD}`
+    }
+  })
+
+  const config = {
+    method: 'get',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
+
+  const resp = await axios(`${process.env.HEROKU_URL}rankings`, config)
+  return resp.data
+  
 }
