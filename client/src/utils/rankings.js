@@ -24,10 +24,6 @@ export const doublesTeamRaceRankings = async () => {
   return resp.data
 }
 
-const config = {
-
-}
-
 export const herokuRankings = async () => {
 
   const token = await axios.get(`${process.env.HEROKU_URL}auth/login`, {
