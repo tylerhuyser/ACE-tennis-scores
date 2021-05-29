@@ -8,10 +8,7 @@ import Players from '../components/Players'
 import './Rankings.css'
 
 import {
-  playerRankings,
-  playerRaceRankings,
-  doublesTeamRankings,
-  doublesTeamRaceRankings
+  herokuRankings
 } from '../utils/rankings'
 
 export default function Rankings(props) {
@@ -58,46 +55,23 @@ export default function Rankings(props) {
 
   
   useEffect(() => {
-    const gatherSinglesRankings = async () => {
-      const combinedSinglesRankings = await playerRankings()
+    const gatherRankings = async () => {
+      const combinedRankingsData = await herokuRankings()
       console.log(combinedSinglesRankings)
-      setMaleSinglesRankings(combinedSinglesRankings.rankings[1])
-      setFemaleSinglesRankings(combinedSinglesRankings.rankings[0])
-    }
-
-    gatherSinglesRankings()
-
-  }, [])
-
-  useEffect(() => {
-    const gatherDoublesRankings = async () => {
-      const combinedDoublesRankings = await doublesTeamRankings()
-      setMaleDoublesRankings(combinedDoublesRankings.rankings[1])
-      setFemaleDoublesRankings(combinedDoublesRankings.rankings[0])
-    }
-    const timeOut = setTimeout(() => gatherDoublesRankings(), 1001)
-    return () => clearTimeout(timeOut)
-  }, [])
-
-  useEffect(() => {
-    const gatherSinglesRaceRankings = async () => {
-      const combinedSinglesRaceRankings = await playerRaceRankings()
-      setMaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[1])
-      setFemaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[0])
-    }
-    const timeOut = setTimeout(() => gatherSinglesRaceRankings(), 2002)
-    return () => clearTimeout(timeOut)
-  }, [])
-
-  useEffect(() => {
-    const gatherDoublesRaceRankings = async () => {
-      const combinedDoublesRaceRankings = await doublesTeamRaceRankings()
-      setMaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[1])
-      setFemaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[0])
+      const combinedRankings = JSON.parse(combinedRankingsData)
+      setMaleSinglesRankings(combinedRankings.rankings[0])
+      setFemaleSinglesRankings(combinedRankings.rankings[4])
+      setMaleSinglesRaceRankings(combinedRankings.rankings[1])
+      setFemaleSinglesRaceRankings(combinedRankings.rankings[5])
+      setMaleDoublesRankings(combinedRankings.rankings[2])
+      setFemaleDoublesRankings(combinedRankings.rankings[6])
+      setMaleDoublesRaceRankings(combinedRankings.rankings[3])
+      setFemaleDoublesRaceRankings(combinedRankings.rankings[7])
       setLoaded(true)
     }
-    const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3003)
-    return () => clearTimeout(timeOut)
+
+    gatherRankings()
+
   }, [])
 
   const handleEventSwitch = () => {
