@@ -57,7 +57,7 @@ export default function Rankings(props) {
   useEffect(() => {
     const gatherRankings = async () => {
       const combinedRankingsData = await herokuRankings()
-      console.log(combinedSinglesRankings)
+      console.log(combinedRankingsData)
       const combinedRankings = JSON.parse(combinedRankingsData)
       setMaleSinglesRankings(combinedRankings.rankings[0])
       setFemaleSinglesRankings(combinedRankings.rankings[4])

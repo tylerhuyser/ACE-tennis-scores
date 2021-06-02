@@ -1,5 +1,6 @@
 import api from './api-config'
 import { key } from './api-config'
+import axios from 'axios'
 require('dotenv').config()
 
 export const playerRankings = async () => {
@@ -20,10 +21,6 @@ export const doublesTeamRankings = async () => {
 export const doublesTeamRaceRankings = async () => {
   const resp = await api.get(`/double_teams/race_rankings.json${key}`)
   return resp.data
-}
-
-const config = {
-
 }
 
 export const herokuRankings = async () => {
