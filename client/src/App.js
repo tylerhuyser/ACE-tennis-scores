@@ -9,6 +9,10 @@ import {
 } from './utils/tournaments'
 
 import {
+  getTournamentsRapidAPI
+} from './utils/tournaments'
+
+import {
   getLiveMatches
 } from './utils/live'
 
@@ -48,7 +52,7 @@ function App () {
 
       const gatherActiveTournaments = async () => {
         console.log('apirequest 1')
-        const tournamentData = await getCurrentTournaments()
+        const tournamentData = await getTournamentsRapidAPI()
         console.log(tournamentData)
         setTournaments(tournamentData.tournaments)
         console.log(tournamentData.tournaments)
