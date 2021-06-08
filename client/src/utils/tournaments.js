@@ -3,9 +3,6 @@ import { key } from './api-config'
 
 import rapidAPI from './rapidAPI-config'
 
-import axios from 'axios'
-require('dotenv').config()
-
 export const getTournaments = async () => {
   const resp = await api.get(`/tournaments.json${key}`)
   return resp.data
