@@ -24,7 +24,7 @@ import {
 function App () {
 
 // API Data
-  const [ tournaments, setTournaments ] = useState([])
+  const [tournaments, setTournaments] = useState([])
   const [ dailySchedule, setDailySchedule ] = useState([])
   const [ dailyResults, setDailyResults ] = useState([])
   const [ liveMatches, setLiveMatches ] = useState([])
@@ -50,17 +50,17 @@ function App () {
 
     if (totalTournaments === 0 || tournamentData === undefined || tournamentData === null || createdAt === undefined || ((today - createdAt) > (oneDay))) {
 
-      const gatherActiveTournaments = async () => {
+      const gatherTournaments = async (currentYear) => {
         console.log('apirequest 1')
-        const tournamentData = await getTournamentsRapidAPI()
+        const tournamentData = await getTournamentsRapidAPI(currentYear)
         console.log(tournamentData)
-        setTournaments(tournamentData.tournaments)
-        console.log(tournamentData.tournaments)
-        localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
+        setTournaments(tournamentData)
+        console.log(tournamentData)
+        localStorage.setItem('tournaments', JSON.stringify(tournamentData))
         localStorage.setItem('createdAt', today)
         setTournamentsLoaded(true)
       }
-      gatherActiveTournaments()
+      gatherTournaments(currentYear)
 
     } else {
 

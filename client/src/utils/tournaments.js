@@ -3,6 +3,9 @@ import { key } from './api-config'
 
 import rapidAPI from './rapidAPI-config'
 
+import axios from 'axios'
+require('dotenv').config()
+
 export const getTournaments = async () => {
   const resp = await api.get(`/tournaments.json${key}`)
   return resp.data
@@ -39,17 +42,10 @@ export const getTournamentResults = async (id) => {
   return resp.data
 }
 
-const currentDate = new Date()
-const currentSeason = currentDate.getFullYear()
-
-export const getTournamentsRapidAPI = async () => {
-  try {
-    const atpTournaments = await rapidAPI.get(`/tournaments/ATP/${currentSeason}`)
-    const wtaTournaments = await rapidAPI.get(`/tournaments/WTA/${currentSeason}`)
-    console.log(atpTournaments)
-    const tournaments = atpTournaments.data.concat(wtaTournaments.data)
-    return tournaments
-  } catch (error) {
-    console.log(error)
-  }
+export const getTournamentsRapidAPI = async (year) => {
+  const atpResponse = await rapidAPI.get(`/tournaments/ATP/${year}`)
+  const wtaResponse = await rapidAPI.get(`/tournaments/WTA/${year}`)
+  const allTournaments = atpResponse.data.results.concat(wtaResponse.data.results)
+  console.log(allTournaments)
+  return allTournaments
 }

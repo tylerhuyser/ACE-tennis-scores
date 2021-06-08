@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const key = `${process.env.POSTGRES_PASSWORD}`
+const key = `${process.env.REACT_APP_RAPIDAPI_API_KEY}`
 
-console.log(key)
-
-const baseUrl = process.env.NODE_ENV === 'production' ? `https://tennis-live-data.p.rapidapi.com` : 'https://tennis-live-data.p.rapidapi.com'
+const baseUrl = process.env.NODE_ENV === 'production' ? `https://tennis-live-data.p.rapidapi.com` : `https://tennis-live-data.p.rapidapi.com`
 
 const rapidAPI = axios.create({
   baseURL: baseUrl,
