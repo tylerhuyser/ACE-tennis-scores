@@ -10,6 +10,8 @@ export default function Home (props) {
 
   const { tournaments, currentDate } = props
 
+  console.log(tournaments)
+
   const currentTournaments = tournaments.filter((tournament) => {
     
     const startDate = new Date(tournament.start_date)
@@ -18,10 +20,9 @@ export default function Home (props) {
   
     return (
         
-      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ( (tournament.type.toLowerCase() !== "doubles") && (tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger")) && ((tournamentCategory.includes("atp") || (tournamentCategory.includes('wta'))))))
+      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ((tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger"))))
       
       )
-  
     }
   ).map((tournament, index) => {
 
@@ -39,6 +40,8 @@ export default function Home (props) {
     />
       
   )})
+
+  console.log(currentTournaments)
 
   return (
     <div className="home-container">

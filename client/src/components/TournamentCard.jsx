@@ -14,35 +14,26 @@ export default function TournamentCard(props) {
   useEffect(() => {
 
     const currentTournament = tournament
+    setTournamentName(currentTournament.name)
     
     const parseTournamentInfo = (tournament) => {
-
-      const splitTournamentName = currentTournament.name.split(",")
-      const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
-      const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
     
-      if (tournamentName.includes("doubles")) {
+      if (currentTournament.name.includes("doubles")) {
         return
-      } else if (tournament.name.includes("WTA")) {
-        setTournamentName(isolatedTournamentName.join(" "))
+      } else if (currentTournament.code.includes("WTA")) {
         setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-      } else if (tournament.name.toLowerCase().includes("challenger")) {
-        const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
-        setTournamentName(isolatedChallengerTournamentName)
+      } else if (currentTournament.name.toLowerCase().includes("challenger")) {
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-      } else if (tournament.name.includes("ATP")) {
-        setTournamentName(isolatedTournamentName.join(" "))
+      } else if (currentTournament.code.includes("ATP")) {
         setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-      } else if (tournament.name.includes("ITF")) {
-        const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
-        setTournamentName(isolatedITFTournamentName.join(" "))
+      } else if (currentTournament.name.includes("ITF")) {
         setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
       } else {
-        setTournamentName(isolatedTournamentNameAndTier.slice(0, 2).join(" "))
         setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
       }
     }
     parseTournamentInfo(currentTournament)
+
   }, [])
 
   const handleTournament = (tournament, tournamentID) => {
