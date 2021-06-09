@@ -20,7 +20,7 @@ export default function Home (props) {
   
     return (
         
-      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ((tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger"))))
+      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ((tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger")) && (!tournament.name.includes("Cancelled"))))
       
       )
     }

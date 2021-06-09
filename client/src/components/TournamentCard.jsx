@@ -14,9 +14,18 @@ export default function TournamentCard(props) {
   useEffect(() => {
 
     const currentTournament = tournament
-    setTournamentName(currentTournament.name)
+
+    const parseTournamentName = (currentTournament) => {
+      if (currentTournament.name) {
+        setTournamentName(currentTournament.name)
+      } else if (currentTournament.city) {
+        setTournamentName(currentTournament.city)
+      }
+    }
+
+    parseTournamentName(currentTournament)
     
-    const parseTournamentInfo = (tournament) => {
+    const parseTournamentIcon = (currentTournament) => {
     
       if (currentTournament.name.includes("doubles")) {
         return
@@ -32,7 +41,8 @@ export default function TournamentCard(props) {
         setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
       }
     }
-    parseTournamentInfo(currentTournament)
+
+    parseTournamentIcon(currentTournament)
 
   }, [])
 

@@ -46,7 +46,7 @@ function App () {
         console.log('gathering tournaments -- UseEffect # 1 + API Call #1 from RapidAPI in App.js')
         const tournamentData = await getTournamentsRapidAPI(currentYear)
         console.log(tournamentData)
-        setTournaments(tournamentData)
+        setTournaments(tournamentData.sort((a,b) => (a.start_date > b.start_date) ? 1 : -1 ))
         localStorage.setItem('tournaments', JSON.stringify(tournamentData))
         localStorage.setItem('createdAt', today)
         setTournamentsLoaded(true)
