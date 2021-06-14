@@ -1,5 +1,6 @@
 import api from './api-config'
 import { key } from './api-config'
+
 import axios from 'axios'
 require('dotenv').config()
 
@@ -25,21 +26,24 @@ export const doublesTeamRaceRankings = async () => {
 
 export const herokuRankings = async () => {
 
-  const token = await axios.get(`${process.env.HEROKU_URL}auth/login`, {
+  const tokenData = await axios.post(`https://api.allorigins.win/raw?url=${process.env.REACT_APP_HEROKU_URL}auth/login`, {
     "authentication": {
-      "username": `${process.env.POSTGRES_USERNAME}`,
-      "password": `${process.env.POSTGRES_PASSWORD}`
+      "username": `${process.env.REACT_APP_POSTGRES_USERNAME}`,
+      "password": `${process.env.REACT_APP_POSTGRES_PASSWORD}`
     }
   })
+
+  console.log(tokenData)
+  console.log(tokenData.data.token)
 
   const config = {
     method: 'get',
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${tokenData.data.token}`
     }
   }
 
-  const resp = await axios(`${process.env.HEROKU_URL}rankings`, config)
+  const resp = await axios(`https://api.allorigins.win/raw?url=${process.env.REACT_APP_HEROKU_URL}rankings`, config)
   return resp.data
   
 }
