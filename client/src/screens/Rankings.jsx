@@ -58,15 +58,29 @@ export default function Rankings(props) {
     const gatherRankings = async () => {
       const combinedRankingsData = await herokuRankings()
       console.log(combinedRankingsData)
-      const combinedRankings = JSON.parse(combinedRankingsData)
-      setMaleSinglesRankings(combinedRankings.rankings[0])
-      setFemaleSinglesRankings(combinedRankings.rankings[4])
-      setMaleSinglesRaceRankings(combinedRankings.rankings[1])
-      setFemaleSinglesRaceRankings(combinedRankings.rankings[5])
-      setMaleDoublesRankings(combinedRankings.rankings[2])
-      setFemaleDoublesRankings(combinedRankings.rankings[6])
-      setMaleDoublesRaceRankings(combinedRankings.rankings[3])
-      setFemaleDoublesRaceRankings(combinedRankings.rankings[7])
+
+      const combinedRankings = JSON.parse(combinedRankingsData[0].data)
+      console.log(combinedRankings)
+
+      const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
+      const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
+
+      console.log(ATPRANKINGS)
+      console.log(WTARANKINGS)
+
+      const maleSinglesRankingsData = ATPRANKINGS.ATPRankings.ATPSINGLESRANKINGS.ATP_SINGLES_RANKINGS
+
+      console.log(JSON.parse(maleSinglesRankingsData).data.dataList)
+
+      setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPSINGLESRANKINGS.ATP_SINGLES_RANKINGS).data.dataList)
+      setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTARankings.WTASINGLESRANKINGS.WTA_SINGLES_RANKINGS).data.dataList)
+      setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPSINGLESRACERANKINGS.ATP_SINGLES_RACE_RANKINGS).data.dataList)
+      setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTARankings.WTASINGLESRACERANKINGS.WTA_SINGLES_RACE_RANKINGS).data.dataList)
+      setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPDOUBLESRANKINGS.ATP_DOUBLES_RANKINGS).data.dataList)
+      setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTARankings.WTADOUBLESRANKINGS.WTA_DOUBLES_RANKINGS).data.dataList)
+      setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPDOUBLESRACERANKINGS.ATP_DOUBLES_RACE_RANKINGS).data.dataList)
+      setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTARankings.WTADOUBLESRACERANKINGS.WTA_DOUBLES_RACE_RANKINGS).data.dataList)
+      
       setLoaded(true)
     }
 

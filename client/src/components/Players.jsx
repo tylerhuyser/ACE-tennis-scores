@@ -10,11 +10,11 @@ export default function Players(props) {
   const { rankingCategory, discipline, viewRace, playerCount, setPlayerCount } = props
 
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && discipline === "Doubles" && rankingCategory.double_team_rankings !== undefined) {
+    if (rankingCategory && discipline === "Doubles") {
 
       console.log(rankingCategory)
 
-      const playerCards = rankingCategory?.double_team_rankings.map((player) => (
+      const playerCards = rankingCategory?.map((player) => (
         <PlayerCard
           playerData={player}
           playerCountry={null}
@@ -30,16 +30,17 @@ export default function Players(props) {
 
       console.log(rankingCategory)
 
-      const playerCards = rankingCategory?.player_rankings.map((player, index) => {
+      const playerCards = rankingCategory?.map((player, index) => {
 
         setPlayerCount(index)
       
         return (
           <PlayerCard
             playerData={player}
-            playerCountry={player.player.country_code}
-            key={player.player.id}
+            playerCountry={player.country}
+            key={player.id}
             discipline={discipline}
+            componentUsage="rankings"
 
           />
       )})

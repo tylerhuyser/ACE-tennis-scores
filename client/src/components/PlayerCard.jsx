@@ -21,7 +21,7 @@ export default function PlayerCard(props) {
     playerDoublesRaceRankingPoints: "--"
   })
 
-  const { playerData, playerCountry, discipline, viewRace } = props
+  const { playerData, playerCountry, discipline, viewRace, componentUsage } = props
 
   const history = useHistory()
 
@@ -31,11 +31,11 @@ export default function PlayerCard(props) {
   useEffect(() => {
     const gatherPlayerRankings = (playerData) => {
 
-      if (playerData.rank) {
+      if (componentUsage === "rankings") {
 
         setDetailLevel("medium")
 
-      } else if (playerData.rankings) {
+      } else if (componentUsage === "playerDetail") {
 
         const setPlayerRankingsData = (playerData) => {
           for (let i = 0; i < playerData.rankings.length; i++) {
@@ -108,10 +108,10 @@ export default function PlayerCard(props) {
         
             { (detailLevel === "medium") ?
           
-              <div className="player-container" key={playerData.player ? playerData.player.id : playerData.double_team.id} onClick={(e) => handlePlayerDetails(e)}>
+              <div className="player-container" key={playerData.id} onClick={(e) => handlePlayerDetails(e)}>
 
-                <p className="player-ranking">{playerData.rank}</p>
-                <p className="player-name">{playerData.player ? playerData.player.name : playerData.double_team.name}</p>
+                <p className="player-ranking">{playerData.ranking}</p>
+                <p className="player-name">{playerData.player_name ? playerData.player_name : playerData.double_team.name}</p>
               
                 {discipline === "Doubles" && viewRace ?
                 
@@ -131,7 +131,7 @@ export default function PlayerCard(props) {
                         lineHeight: '200%',
                       }}
                     />
-                    <p className="player-country">{playerData.player.country_code}</p>
+                    <p className="player-country">{playerData.country}</p>
 
                   </div>
                   
@@ -164,12 +164,12 @@ export default function PlayerCard(props) {
                         lineHeight: '200%',
                       }}
                     />
-                    <p className="player-country">{playerData.player.country_code}</p>
+                    <p className="player-country">{playerData.country.toUppercase()}</p>
                   </div>
 
                 }
                   
-                  <p className="player-name">{playerData.player.name}</p>
+                  <p className="player-name">{playerData.name}</p>
                 
                </div>
               
