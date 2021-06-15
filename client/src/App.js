@@ -131,9 +131,19 @@ function App () {
 
       console.log('gathering liveMatches -- UseEffect #4 + FILTERING DailySchedule in App.js')
 
-      setLiveMatches(dailySchedule.filter(match => match.status === "inprogress"))
+      const liveMatchData = dailySchedule.filter(match => match.status === "inprogress")
 
-      console.log(liveMatches)
+      if (liveMatchData.length !== 0) {
+
+        setLiveMatches(dailySchedule.filter(match => match.status === "inprogress"))
+
+        console.log(liveMatches)
+
+      } else if (liveMatchData.length === 0) {
+
+        setLiveMatches("Currently No Live Matches")
+        
+      }
 
     } else if (dailySchedule && dailySchedule.length !== 0 && dailySchedule === "No Matches Today") {
       
