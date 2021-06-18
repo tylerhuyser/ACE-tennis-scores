@@ -35,21 +35,21 @@ export default function Rankings(props) {
 
   useEffect(() => {
     if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(femaleSinglesRankings)
+      setRankingCategory(femaleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(femaleSinglesRaceRankings)
+      setRankingCategory(femaleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(femaleDoublesRankings)
+      setRankingCategory(femaleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(femaleDoublesRaceRankings)
+      setRankingCategory(femaleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(maleSinglesRankings)
+      setRankingCategory(maleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(maleSinglesRaceRankings)
+      setRankingCategory(maleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(maleDoublesRankings)
+      setRankingCategory(maleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(maleDoublesRaceRankings)
+      setRankingCategory(maleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     }
   }, [loaded, event, discipline, viewRace])
 

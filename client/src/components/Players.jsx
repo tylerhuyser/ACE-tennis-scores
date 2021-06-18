@@ -18,7 +18,7 @@ export default function Players(props) {
         <PlayerCard
           playerData={player}
           playerCountry={null}
-          key={player.double_team.id}
+          key={player.id}
           discipline={discipline}
           viewRace={viewRace}
         />
@@ -37,7 +37,7 @@ export default function Players(props) {
         return (
           <PlayerCard
             playerData={player}
-            playerCountry={player.country}
+            playerCountry={player.country.toUpperCase()}
             key={player.id}
             discipline={discipline}
             componentUsage="rankings"

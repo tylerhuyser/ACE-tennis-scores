@@ -111,7 +111,7 @@ export default function PlayerCard(props) {
               <div className="player-container" key={playerData.id} onClick={(e) => handlePlayerDetails(e)}>
 
                 <p className="player-ranking">{playerData.ranking}</p>
-                <p className="player-name">{playerData.player_name ? playerData.player_name : playerData.double_team.name}</p>
+              <p className="player-name">{discipline === "Doubles" && viewRace ? `${playerData.player_name_1}/${playerData.player_name_2}` : playerData.player_Name}</p>
               
                 {discipline === "Doubles" && viewRace ?
                 
@@ -131,7 +131,7 @@ export default function PlayerCard(props) {
                         lineHeight: '200%',
                       }}
                     />
-                    <p className="player-country">{playerData.country}</p>
+                    <p className="player-country">{playerData.country.toUpperCase()}</p>
 
                   </div>
                   
@@ -164,12 +164,12 @@ export default function PlayerCard(props) {
                         lineHeight: '200%',
                       }}
                     />
-                    <p className="player-country">{playerData.country.toUppercase()}</p>
+                    <p className="player-country">{playerData.Country.toUpperCase()}</p>
                   </div>
 
                 }
                   
-                  <p className="player-name">{playerData.name}</p>
+                  <p className="player-name">{playerData.Player_Name}</p>
                 
                </div>
               
