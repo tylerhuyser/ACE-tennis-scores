@@ -484,7 +484,7 @@ async function postNewRankings(token, authToken, rankingsData, oldData) {
       console.log("PostgreSQL postNewRankings Success")
 
       await destroyOldRankings(token, authToken, oldData)
-
+ 
     }
     
   } catch (err) {
