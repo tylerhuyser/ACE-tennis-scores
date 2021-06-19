@@ -8,10 +8,7 @@ import Players from '../components/Players'
 import './Rankings.css'
 
 import {
-  playerRankings,
-  playerRaceRankings,
-  doublesTeamRankings,
-  doublesTeamRaceRankings
+  herokuRankings
 } from '../utils/rankings'
 
 export default function Rankings(props) {
@@ -38,66 +35,57 @@ export default function Rankings(props) {
 
   useEffect(() => {
     if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(femaleSinglesRankings)
+      setRankingCategory(femaleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(femaleSinglesRaceRankings)
+      setRankingCategory(femaleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(femaleDoublesRankings)
+      setRankingCategory(femaleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(femaleDoublesRaceRankings)
+      setRankingCategory(femaleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(maleSinglesRankings)
+      setRankingCategory(maleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(maleSinglesRaceRankings)
+      setRankingCategory(maleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(maleDoublesRankings)
+      setRankingCategory(maleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(maleDoublesRaceRankings)
+      setRankingCategory(maleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
     }
   }, [loaded, event, discipline, viewRace])
 
   
   useEffect(() => {
-    const gatherSinglesRankings = async () => {
-      const combinedSinglesRankings = await playerRankings()
-      console.log(combinedSinglesRankings)
-      setMaleSinglesRankings(combinedSinglesRankings.rankings[1])
-      setFemaleSinglesRankings(combinedSinglesRankings.rankings[0])
-    }
+    const gatherRankings = async () => {
+      const combinedRankingsData = await herokuRankings()
+      console.log(combinedRankingsData)
 
-    gatherSinglesRankings()
+      const combinedRankings = JSON.parse(combinedRankingsData[0].data)
+      console.log(combinedRankings)
 
-  }, [])
+      const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
+      const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
 
-  useEffect(() => {
-    const gatherDoublesRankings = async () => {
-      const combinedDoublesRankings = await doublesTeamRankings()
-      setMaleDoublesRankings(combinedDoublesRankings.rankings[1])
-      setFemaleDoublesRankings(combinedDoublesRankings.rankings[0])
-    }
-    const timeOut = setTimeout(() => gatherDoublesRankings(), 1001)
-    return () => clearTimeout(timeOut)
-  }, [])
+      console.log(ATPRANKINGS)
+      console.log(WTARANKINGS)
 
-  useEffect(() => {
-    const gatherSinglesRaceRankings = async () => {
-      const combinedSinglesRaceRankings = await playerRaceRankings()
-      setMaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[1])
-      setFemaleSinglesRaceRankings(combinedSinglesRaceRankings.rankings[0])
-    }
-    const timeOut = setTimeout(() => gatherSinglesRaceRankings(), 2002)
-    return () => clearTimeout(timeOut)
-  }, [])
+      const maleSinglesRankingsData = ATPRANKINGS.ATPRankings.ATPSINGLESRANKINGS.ATP_SINGLES_RANKINGS
 
-  useEffect(() => {
-    const gatherDoublesRaceRankings = async () => {
-      const combinedDoublesRaceRankings = await doublesTeamRaceRankings()
-      setMaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[1])
-      setFemaleDoublesRaceRankings(combinedDoublesRaceRankings.rankings[0])
+      console.log(JSON.parse(maleSinglesRankingsData).data.dataList)
+
+      setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList)
+      setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList)
+      setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList)
+      setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data.dataList)
+      setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data.dataList)
+      setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data.dataList)
+      setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data.dataList)
+      setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data.dataList)
+      
       setLoaded(true)
     }
-    const timeOut = setTimeout(() => gatherDoublesRaceRankings(), 3003)
-    return () => clearTimeout(timeOut)
+
+    gatherRankings()
+
   }, [])
 
   const handleEventSwitch = () => {

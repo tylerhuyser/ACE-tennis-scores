@@ -49,7 +49,7 @@ async function getATPSinglesRankings (token) {
       
       console.log(`ATP Singles Rankings: ${resp.data}`);
     
-      const rankings = {ATP_SINGLES_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -80,7 +80,7 @@ async function getATPSinglesRaceRankings (token) {
       
       console.log(`ATP Singles Race Rankings: ${resp.data}`);
     
-      const rankings = {ATP_SINGLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -111,7 +111,7 @@ async function getATPDoublesRankings (token) {
       
       console.log(`ATP Doubles Rankings: ${resp.data}`);
     
-      const rankings = {ATP_DOUBLES_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -142,7 +142,7 @@ async function getATPDoublesRaceRankings (token) {
       
       console.log(`ATP Doubles Race Rankings: ${resp.data}`);
     
-      const rankings = {ATP_DOUBLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -173,7 +173,7 @@ async function getWTASinglesRankings (token) {
       
       console.log(`WTA Singles Rankings: ${resp.data}`);
     
-      const rankings = {WTA_SINGLES_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -204,7 +204,7 @@ async function getWTASinglesRaceRankings (token) {
       
       console.log(`WTA Singles Race Rankings: ${resp.data}`);
     
-      const rankings = {WTA_SINGLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -235,7 +235,7 @@ async function getWTADoublesRankings (token) {
       
       console.log(`WTA Doubles Rankings: ${resp.data}`);
     
-      const rankings = {WTA_DOUBLES_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -266,7 +266,7 @@ async function getWTADoublesRaceRankings (token) {
       
       console.log(`WTA Doubles Race Rankings: ${resp.data}`);
     
-      const rankings = {WTA_DOUBLES_RACE_RANKINGS: JSON.stringify(resp.data)}
+      const rankings = JSON.stringify(resp.data)
       
       return(rankings);
     
@@ -289,12 +289,10 @@ async function getATPRankings(token) {
     const ATPDOUBLESRACERANKINGS = await getATPDoublesRaceRankings(token)
 
     const rankings = {
-      ATPRankings: {
         ATPSINGLESRANKINGS,
         ATPSINGLESRACERANKINGS,
         ATPDOUBLESRANKINGS,
         ATPDOUBLESRACERANKINGS
-      }
     }
 
     return rankings
@@ -318,12 +316,10 @@ async function getWTARankings(token) {
     const WTADOUBLESRACERANKINGS = await getWTADoublesRaceRankings(token)
 
     const rankings = {
-      WTARankings: {
         WTASINGLESRANKINGS,
         WTASINGLESRACERANKINGS,
         WTADOUBLESRANKINGS,
         WTADOUBLESRACERANKINGS
-      }
     }
 
     return rankings
@@ -488,7 +484,7 @@ async function postNewRankings(token, authToken, rankingsData, oldData) {
       console.log("PostgreSQL postNewRankings Success")
 
       await destroyOldRankings(token, authToken, oldData)
-
+ 
     }
     
   } catch (err) {

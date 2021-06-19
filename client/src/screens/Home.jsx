@@ -10,23 +10,24 @@ export default function Home (props) {
 
   const { tournaments, currentDate } = props
 
+  console.log(tournaments)
+
   const currentTournaments = tournaments.filter((tournament) => {
     
-    const startDate = new Date(tournament.current_season.start_date)
-    const endDate = new Date(tournament.current_season.end_date)
-    const tournamentCategory = tournament.name.toLowerCase().slice(0, 3)
+    const startDate = new Date(tournament.start_date)
+    const endDate = new Date(tournament.end_date)
+    const tournamentCategory = tournament.code
   
     return (
         
-      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ( (tournament.type.toLowerCase() !== "doubles") && (tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger")) && ((tournamentCategory.includes("atp") || (tournamentCategory.includes('wta'))))))
+      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ((tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger")) && (!tournament.name.includes("Cancelled"))))
       
       )
-  
     }
   ).map((tournament, index) => {
 
-    const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
-    const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
+    const startDate = tournament.start_date.split("-").splice(1).join("/")
+    const endDate = tournament.end_date.split("-").splice(1).join("/")
  
     return (
 
@@ -39,6 +40,8 @@ export default function Home (props) {
     />
       
   )})
+
+  console.log(currentTournaments)
 
   return (
     <div className="home-container">

@@ -5,22 +5,18 @@ import Layout from './components/shared/Layout'
 import Loader from './components/Loader'
 
 import {
-  getCurrentTournaments
+  getTournamentsRapidAPI
 } from './utils/tournaments'
 
 import {
-  getLiveMatches
-} from './utils/live'
-
-import {
-  getDailySchedule,
-  getDailyResults
+  getDailyMatchesRapidAPI,
+  getDailyResultsRapidAPI
 } from './utils/matches'
 
 function App () {
 
 // API Data
-  const [ tournaments, setTournaments ] = useState([])
+  const [tournaments, setTournaments] = useState([])
   const [ dailySchedule, setDailySchedule ] = useState([])
   const [ dailyResults, setDailyResults ] = useState([])
   const [ liveMatches, setLiveMatches ] = useState([])
@@ -46,20 +42,20 @@ function App () {
 
     if (totalTournaments === 0 || tournamentData === undefined || tournamentData === null || createdAt === undefined || ((today - createdAt) > (oneDay))) {
 
-      const gatherActiveTournaments = async () => {
-        console.log('apirequest 1')
-        const tournamentData = await getCurrentTournaments()
+      const gatherTournaments = async (currentYear) => {
+        console.log('gathering tournaments -- UseEffect # 1 + API Call #1 from RapidAPI in App.js')
+        const tournamentData = await getTournamentsRapidAPI(currentYear)
         console.log(tournamentData)
-        setTournaments(tournamentData.tournaments)
-        console.log(tournamentData.tournaments)
-        localStorage.setItem('tournaments', JSON.stringify(tournamentData.tournaments))
+        setTournaments(tournamentData.sort((a,b) => (a.start_date > b.start_date) ? 1 : -1 ))
+        localStorage.setItem('tournaments', JSON.stringify(tournamentData))
         localStorage.setItem('createdAt', today)
         setTournamentsLoaded(true)
       }
-      gatherActiveTournaments()
+      gatherTournaments(currentYear)
 
     } else {
 
+      console.log('retrieving Tournaments from Local Storage -- UseEffect #1 in App.js')
       console.log(JSON.parse(tournamentData))
       setTournaments(JSON.parse(tournamentData))
       setTournamentsLoaded(true)
@@ -77,14 +73,32 @@ function App () {
     console.log(tournamentsLoaded)
 
     if (tournamentsLoaded) {
-      console.log('apirequest 2')
+
+      console.log('gathering dailySchedule -- UseEffect #2 + API Call #2 from RapidAPI in App.js')
+
       const gatherDailySchedule = async (currentYear, currentMonth, currentDay) => {
-        const dailyScheduleData = await getDailySchedule(currentYear, currentMonth, currentDay)
-        console.log(dailyScheduleData.sport_events)
+
+        const dailyScheduleRawData = await getDailyMatchesRapidAPI(currentYear, currentMonth, currentDay)
+
+        console.log(dailyScheduleRawData)
+
+        const dailyScheduleData = []
+
+        dailyScheduleRawData.map((event) => 
+        
+          dailyScheduleData.push(event.matches)
+          
+        )
+
+        console.log(dailyScheduleData.flat())
+
         if (dailyScheduleData.length === 0) {
-          setDailySchedule(dailyScheduleData)
+
+          setDailySchedule("No Matches Today")
+
         } else {
-          setDailySchedule(dailyScheduleData.sport_events)
+
+          setDailySchedule(dailyScheduleData.flat())
         }
       }
       const timeOut = setTimeout(() => gatherDailySchedule(year, month, day), 1001)
@@ -95,44 +109,60 @@ function App () {
 
   useEffect(() => {
 
-    const day = currentDay
-    const month = currentMonth
-    const year = currentYear
+    if (dailySchedule && dailySchedule.length !== 0 && dailySchedule !== "No Matches Today") {
+      
+      console.log('gathering dailyResults -- UseEffect #3 + FILTERING DailySchedule in App.js')
 
-    if (dailySchedule && dailySchedule.length !== 0) {
-      console.log('apirequest 3')
-      const gatherDailyResults = async (currentYear, currentMonth, currentDay) => {
-        const dailyResultsData = await getDailyResults(currentYear, currentMonth, currentDay)
-        console.log(dailyResultsData)
-        console.log(dailyResultsData.results)
-        setDailyResults(dailyResultsData.results)
-      }
+      setDailyResults(dailySchedule.filter(match => match.status === "finished"))
 
-      const timeOut = setTimeout(() => gatherDailyResults(year, month, day), 2002)
-      return () => clearTimeout(timeOut)
+      console.log(dailyResults)
+
+    } else if (dailySchedule && dailySchedule.length !== 0 && dailySchedule === "No Matches Today") {
+
+      setDailyResults("Currently No Results")
+
     }
 
   }, [dailySchedule])
 
   useEffect(() => {
 
-    if (dailySchedule && dailySchedule.length !== 0) {
-      console.log('apirequest 4')
-      const gatherLiveMatches = async () => {
-        const liveMatchesData = await getLiveMatches()
-        console.log(liveMatchesData.summaries)
-        if (liveMatchesData.summaries.length === 0) {
-          setLoaded(true)
-        } else {
-          setLiveMatches(liveMatchesData.summaries)
-          setLoaded(true)
-        }
+    if (dailySchedule && dailySchedule.length !== 0 && dailySchedule !== "No Matches Today") {
+
+      console.log('gathering liveMatches -- UseEffect #4 + FILTERING DailySchedule in App.js')
+
+      const liveMatchData = dailySchedule.filter(match => match.status === "inprogress")
+
+      if (liveMatchData.length !== 0) {
+
+        setLiveMatches(dailySchedule.filter(match => match.status === "inprogress"))
+
+        console.log(liveMatches)
+
+      } else if (liveMatchData.length === 0) {
+
+        setLiveMatches("Currently No Live Matches")
+        
       }
-      const timeOut = setTimeout(() => gatherLiveMatches(), 3003)
-      return () => clearTimeout(timeOut)
+
+    } else if (dailySchedule && dailySchedule.length !== 0 && dailySchedule === "No Matches Today") {
+      
+      setLiveMatches("Currently No Live Matches")
+
     }
     
   }, [dailySchedule])
+
+  useEffect(() => {
+
+    if ((dailySchedule.length !== 0 || dailySchedule === "No Matches Today") && (dailyResults.length !== 0 || dailyResults === "Currently No Results") && (liveMatches.length !== 0 || liveMatches === "No Matches Today")) {
+
+      console.log('UseEffect #5 + Setting Loaded to True in App.js')
+
+      setLoaded(true)
+    }
+
+  }, [liveMatches])
 
   return (
     <div className="app-container">

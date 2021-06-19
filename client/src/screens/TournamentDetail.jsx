@@ -19,12 +19,12 @@ export default function TournamentDetail(props) {
   const [currentTournamentLiveMatchesLoaded, setCurrentTournamentLiveMatchesLoaded] = useState(false)
   
   // Visibility Switches
-  const [ currentMode, setCurrentMode ] = useState(false)
-  const [ view, setView ] = useState("Live Scores")
+  const [currentMode, setCurrentMode] = useState(false)
+  const [view, setView] = useState("Live Scores")
 
   // Data
     // Tournament Info
-  const [ currentSinglesTournament, setCurrentSinglesTournament ] = useState([])
+  const [currentSinglesTournament, setCurrentSinglesTournament] = useState([])
   const [currentDoublesTournament, setCurrentDoublesTournament] = useState([])
   
   const [startDate, setStartDate] = useState("")
@@ -35,13 +35,13 @@ export default function TournamentDetail(props) {
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
 
     // Tournament Schedule
-  const [ currentTournamentSchedule, setCurrentTournamentSchedule ] = useState([])
+  const [currentTournamentSchedule, setCurrentTournamentSchedule] = useState([])
     // Completed Matches (Results)
-  const [ completedSinglesMatches, setCompletedSinglesMatches ] = useState([])
-  const [ completedDoublesMatches, setCompletedDoublesMatches ] = useState([])
+  const [completedSinglesMatches, setCompletedSinglesMatches] = useState([])
+  const [ completedDoublesMatches, setCompletedDoublesMatches] = useState([])
     // Live Matches
-  const [ liveSinglesMatches, setLiveSinglesMatches ] = useState([])
-  const [ liveDoublesMatches, setLiveDoublesMatches ] = useState([])
+  const [liveSinglesMatches, setLiveSinglesMatches] = useState([])
+  const [liveDoublesMatches, setLiveDoublesMatches] = useState([])
 
   const params = useParams();
   const history = useHistory()
@@ -52,14 +52,31 @@ export default function TournamentDetail(props) {
   
   // Sets currentSinglesTournament Object
   useEffect(() => {
+
     if (tournaments !== undefined && tournaments !== null) {
-      const currentTournamentData = tournaments.find((tournament) => params.id === tournament.id)
+
+      console.log(tournaments)
+      console.log(params)
+
+      console.log("TournamentDetail.js - UseEffect #1 - finding currentTournamentData using params")
+
+      const currentTournamentData = tournaments.find((tournament) => parseInt(params.id) === parseInt(tournament.id))
       setCurrentSinglesTournament(currentTournamentData)
       setCurrentSinglesTournamentLoaded(true)
+
+      console.log("TournamentDetail.js - UseEffect #1 - currentSinglesTournament set")
+      console.log(currentTournamentData)
+
     } else {
+
+      console.log("TournamentDetail.js - UseEffect #1 - gathering currentTournamentData from LocalStorage")
+
       const currentTournamentData = localStorage.getItem('currentSinglesTournament')
       setCurrentSinglesTournament(JSON.parse(currentTournamentData))
       setCurrentSinglesTournamentLoaded(true)
+
+      console.log("TournamentDetail.js - UseEffect #1 - currentSinglesTournament set")
+
     }
   }, [])
 
@@ -68,39 +85,49 @@ export default function TournamentDetail(props) {
     
     if (currentSinglesTournamentLoaded) {
 
-      const parseTournamentInfo = (currentSinglesTournament) => {
+      console.log("TournamentDetail.js - UseEffect #2 - parsing CurrentSinglesTournamentInfo")
 
-        const splitTournamentName = currentSinglesTournament.name.split(",")
-        const isolatedTournamentNameAndTier = splitTournamentName[0].split(" ")
-        const isolatedTournamentName = isolatedTournamentNameAndTier.slice(1)
-    
-        if (tournamentName.includes("doubles")) {
-          return
-        } else if (currentSinglesTournament.name.includes("WTA")) {
-          setTournamentName(isolatedTournamentName.join(" "))
-          setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-        } else if (currentSinglesTournament.name.toLowerCase().includes("challenger")) {
-          console.log(isolatedTournamentName)
-          const isolatedChallengerTournamentName = isolatedTournamentName.join(" ").slice(11)
-          console.log(isolatedChallengerTournamentName)
-          setTournamentName(isolatedChallengerTournamentName)
-          setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-        } else if (currentSinglesTournament.name.includes("ATP")) {
-          setTournamentName(isolatedTournamentName.join(" "))
-          setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-        } else if (currentSinglesTournament.name.includes("ITF")) {
-          const isolatedITFTournamentName = isolatedTournamentName.slice(0, -1)
-          setTournamentName(isolatedITFTournamentName.join(" "))
-          setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
-        } else {
-          setTournamentName(isolatedTournamentNameAndTier.slice(0, 2).join(" "))
-          setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
+      const currentTournament = currentSinglesTournament
+
+      const parseTournamentName = (currentTournament) => {
+        if (currentTournament.name) {
+          setTournamentName(currentTournament.name)
+        } else if (currentTournament.city) {
+          setTournamentName(currentTournament.city)
         }
       }
-      parseTournamentInfo(currentSinglesTournament)
-      setStartDate(currentSinglesTournament.current_season.start_date.split("-").splice(1).join("/"))
-      setEndDate(currentSinglesTournament.current_season.end_date.split("-").splice(1).join("/"))
-      setTournamentGender(currentSinglesTournament.gender)
+  
+      parseTournamentName(currentTournament)
+      
+      const parseTournamentIcon = (currentTournament) => {
+      
+        if (currentTournament.name.includes("doubles")) {
+          return
+        } else if (currentTournament.code.includes("WTA")) {
+          setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
+          setTournamentGender("WTA")
+        } else if (currentTournament.name.toLowerCase().includes("challenger")) {
+          setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
+          setTournamentGender("N/A")
+        } else if (currentTournament.code.includes("ATP")) {
+          setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
+          setTournamentGender("ATP")
+        } else if (currentTournament.name.includes("ITF")) {
+          setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
+          setTournamentGender("N/A")
+        } else {
+          setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
+          setTournamentGender("N/A")
+        }
+      }
+  
+      parseTournamentIcon(currentTournament)
+
+      setStartDate(currentSinglesTournament.start_date)
+      setEndDate(currentSinglesTournament.end_date)
+
+      console.log("TournamentDetail.js - UseEffect #2 - CurrentSinglesTournamentInfo parsed & set")
+
     }
   }, [currentSinglesTournamentLoaded])
 
@@ -108,6 +135,9 @@ export default function TournamentDetail(props) {
   useEffect(() => {
 
     if (tournamentName && tournamentGender) {
+
+      console.log("TournamentDetail.js - UseEffect #3 - gathering CurrentDoublesTournamentInfo")
+
       console.log(tournaments)
       console.log(tournamentGender)
       console.log(tournamentName)
@@ -115,6 +145,8 @@ export default function TournamentDetail(props) {
       console.log(currentDoublesTournamentData)
       setCurrentDoublesTournament(currentDoublesTournamentData)
       setCurrentDoublesTournamentLoaded(true)
+
+      console.log("TournamentDetail.js - UseEffect #3 - CurrentDoublesTournamentInfo set")
     }
   }, [tournamentName, tournamentGender])
 
