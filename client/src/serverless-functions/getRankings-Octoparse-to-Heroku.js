@@ -398,7 +398,7 @@ async function exportATPDoublesRaceRankings(config) {
 
     console.log(ATPDOUBLESRACERANKINGS)
 
-    return ATPSOUBLESRACERANKINGS.data
+    return ATPDOUBLESRACERANKINGS.data
 
   } catch (err) {
 
