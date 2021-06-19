@@ -155,7 +155,7 @@ function App () {
 
   useEffect(() => {
 
-    if (dailySchedule.length !== 0 && dailyResults.length !== 0 && liveMatches.length !== 0) {
+    if ((dailySchedule.length !== 0 || dailySchedule === "No Matches Today") && (dailyResults.length !== 0 || dailyResults === "Currently No Results") && (liveMatches.length !== 0 || liveMatches === "No Matches Today")) {
 
       console.log('UseEffect #5 + Setting Loaded to True in App.js')
 
