@@ -333,6 +333,82 @@ async function getWTARankings(token) {
   }
 }
 
+async function exportATPSinglesRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const ATPSINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, config)
+
+    console.log(ATPSINGLESRANKINGS)
+
+    return ATPSINGLESRANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export ATPRankings Singles Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportATPDoublesRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const ATPDOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, config)
+
+    console.log(ATPDOUBLESRANKINGS)
+
+    return ATPSOUBLESRANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export ATPRankings Doubles Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportATPSinglesRaceRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const ATPSINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, config)
+
+    console.log(ATPSINGLESRACERANKINGS)
+
+    return ATPSINGLESRACERANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export ATPRankings Singles Race Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportATPDoublesRaceRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const ATPDOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, config)
+
+    console.log(ATPDOUBLESRACERANKINGS)
+
+    return ATPSOUBLESRACERANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export ATPRankings Doubles Race Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
 async function exportATPRankings(token) {
 
   try {
@@ -347,26 +423,100 @@ async function exportATPRankings(token) {
       }
     };
 
-    const ATPSINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, config)
+    const ATPEXPORTS = [
+      exportATPSinglesRankings(config),
+      exportATPSinglesRaceRankings(config),
+      exportATPDoublesRankings(config),
+      exportATPDoublesRaceRankings(config)
+    ]
 
-    console.log(ATPSINGLESRANKINGS)
-    
-    const ATPSINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, config)
-
-    console.log(ATPSINGLESRACERANKINGS)
-    
-    const ATPDOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, config)
-
-    console.log(ATPDOUBLESRANKINGS)
-    
-    const ATPDOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, config)
-
-    console.log(ATPDOUBLESRACERANKINGS)
+    Promise.all(ATPEXPORTS).then((values) => {
+      console.log(values)
+    }).catch(error => {
+      console.log('Octoparse ATP Export Error - PromiseAll')
+      console.error(error.message)
+    })
 
 
   } catch (err) {
 
     console.log('Octoparse Export ATPRankings Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportWTASinglesRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const WTASINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, config)
+
+    console.log(WTASINGLESRANKINGS)
+
+    return WTASINGLESRANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export WTARankings Singles Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportWTADoublesRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const WTADOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, config)
+
+    console.log(WTADOUBLESRANKINGS)
+
+    return WTADOUBLESRANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export WTARankings Doubles Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportWTASinglesRaceRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const WTASINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, config)
+
+    console.log(WTASINGLESRACERANKINGS)
+
+    return WTASINGLESRACERANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export WTARankings Singles Race Error')
+    console.log(err);
+    console.log(err.message)
+
+  }
+}
+
+async function exportWTADoublesRaceRankings(config) {
+  try {
+    const axios = require('axios')
+
+    const WTADOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, config)
+
+    console.log(WTADOUBLESRACERANKINGS)
+
+    return WTADOUBLESRACERANKINGS.data
+
+  } catch (err) {
+
+    console.log('Octoparse Export WTARankings Doubles Race Error')
     console.log(err);
     console.log(err.message)
 
@@ -387,21 +537,29 @@ async function exportWTARankings(token) {
       }
     };
 
-    const WTASINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, config)
+    const axios = require('axios');
 
-    console.log(WTASINGLESRANKINGS)
-    
-    const WTASINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, config)
+    var config = {
+      method: 'post',
+      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
+      headers: { 
+        'Authorization': token
+      }
+    };
 
-    console.log(WTASINGLESRACERANKINGS)
-    
-    const WTADOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, config)
+    const WTAEXPORTS = [
+      exportWTASinglesRankings(config),
+      exportWTASinglesRaceRankings(config),
+      exportWTADoublesRankings(config),
+      exportWTADoublesRaceRankings(config)
+    ]
 
-    console.log(WTADOUBLESRANKINGS)
-    
-    const WTADOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, config)
-
-    console.log(WTADOUBLESRACERANKINGS)
+    Promise.all(WTAEXPORTS).then((values) => {
+      console.log(values)
+    }).catch(error => {
+      console.log('Octoparse WTA Export Error - PromiseAll')
+      console.error(error.message)
+    })
 
 
   } catch (err) {
