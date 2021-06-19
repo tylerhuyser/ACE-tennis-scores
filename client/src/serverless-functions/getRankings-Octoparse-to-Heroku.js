@@ -431,7 +431,7 @@ async function exportATPRankings(token) {
     ]
 
     Promise.all(ATPEXPORTS).then((values) => {
-      console.log(values.data)
+      console.log('ATP Export PromiseAll Complete')
     }).catch(error => {
       console.log('Octoparse ATP Export Error - PromiseAll')
       console.error(error.message)
@@ -545,10 +545,10 @@ async function exportWTARankings(token) {
     ]
 
     Promise.all(WTAEXPORTS).then((values) => {
-      console.log(values.data)
+      console.log('WTA Export PromiseAll Complete')
     }).catch(error => {
       console.log('Octoparse WTA Export Error - PromiseAll')
-      console.error(error.message)
+      console.error(error)
     })
 
 
@@ -556,15 +556,23 @@ async function exportWTARankings(token) {
 
     console.log('exportWTARankings Error')
     console.log(err);
-    console.log(err.message)
+    console.log(err)
 
   }
 }
 
 async function exportOctoparseData(token) {
-  
-  await exportATPRankings(token)
-  await exportWTARankings(token)
+
+  const exportFunctions = [
+    exportATPRankings(token),
+    exportWTARankings(token)
+  ]
+
+  Promise.all(exportFunctions).then(values => {
+    console.log('Octoparse Data Export Complete - PromiseAll')
+  }).catch(error => {
+    console.log(error)
+  })
 
   console.log('Octoparse Data Export Complete')
 
