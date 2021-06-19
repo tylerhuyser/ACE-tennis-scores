@@ -339,7 +339,7 @@ async function exportATPSinglesRankings(config) {
 
     const ATPSINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, config)
 
-    console.log(ATPSINGLESRANKINGS)
+    console.log('Octoparse Export WTARankings Sinlges Complete')
 
     return ATPSINGLESRANKINGS.data
 
@@ -358,7 +358,7 @@ async function exportATPDoublesRankings(config) {
 
     const ATPDOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, config)
 
-    console.log(ATPDOUBLESRANKINGS)
+    console.log('Octoparse Export WTARankings Doubles Complete')
 
     return ATPDOUBLESRANKINGS.data
 
@@ -377,7 +377,7 @@ async function exportATPSinglesRaceRankings(config) {
 
     const ATPSINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, config)
 
-    console.log(ATPSINGLESRACERANKINGS)
+    console.log('Octoparse Export WTARankings Sinlges Race Complete')
 
     return ATPSINGLESRACERANKINGS.data
 
@@ -396,7 +396,7 @@ async function exportATPDoublesRaceRankings(config) {
 
     const ATPDOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, config)
 
-    console.log(ATPDOUBLESRACERANKINGS)
+    console.log('Octoparse Export ATPRankings Doubles Race Complete')
 
     return ATPDOUBLESRACERANKINGS.data
 
@@ -453,7 +453,7 @@ async function exportWTASinglesRankings(config) {
 
     const WTASINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, config)
 
-    console.log(WTASINGLESRANKINGS)
+    console.log('Octoparse Export WTARankings Sinlges Complete')
 
     return WTASINGLESRANKINGS.data
 
@@ -472,7 +472,7 @@ async function exportWTADoublesRankings(config) {
 
     const WTADOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, config)
 
-    console.log(WTADOUBLESRANKINGS)
+    console.log('Octoparse Export WTARankings Doubles Complete')
 
     return WTADOUBLESRANKINGS.data
 
@@ -491,7 +491,7 @@ async function exportWTASinglesRaceRankings(config) {
 
     const WTASINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, config)
 
-    console.log(WTASINGLESRACERANKINGS)
+    console.log('Octoparse Export WTARankings Singles Race Complete')
 
     return WTASINGLESRACERANKINGS.data
 
@@ -510,7 +510,7 @@ async function exportWTADoublesRaceRankings(config) {
 
     const WTADOUBLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, config)
 
-    console.log(WTADOUBLESRACERANKINGS)
+    console.log('Octoparse Export WTARankings Doubles Race Complete')
 
     return WTADOUBLESRACERANKINGS.data
 
