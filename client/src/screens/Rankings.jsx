@@ -72,14 +72,14 @@ export default function Rankings(props) {
 
       console.log(JSON.parse(maleSinglesRankingsData).data.dataList)
 
-      setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPSINGLESRANKINGS.ATP_SINGLES_RANKINGS).data.dataList)
-      setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTARankings.WTASINGLESRANKINGS.WTA_SINGLES_RANKINGS).data.dataList)
-      setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPSINGLESRACERANKINGS.ATP_SINGLES_RACE_RANKINGS).data.dataList)
-      setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTARankings.WTASINGLESRACERANKINGS.WTA_SINGLES_RACE_RANKINGS).data.dataList)
-      setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPDOUBLESRANKINGS.ATP_DOUBLES_RANKINGS).data.dataList)
-      setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTARankings.WTADOUBLESRANKINGS.WTA_DOUBLES_RANKINGS).data.dataList)
-      setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPRankings.ATPDOUBLESRACERANKINGS.ATP_DOUBLES_RACE_RANKINGS).data.dataList)
-      setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTARankings.WTADOUBLESRACERANKINGS.WTA_DOUBLES_RACE_RANKINGS).data.dataList)
+      setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList)
+      setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList)
+      setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList)
+      setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data.dataList)
+      setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data.dataList)
+      setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data.dataList)
+      setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data.dataList)
+      setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data.dataList)
       
       setLoaded(true)
     }

@@ -14,15 +14,22 @@ export default function Players(props) {
 
       console.log(rankingCategory)
 
-      const playerCards = rankingCategory?.map((player) => (
-        <PlayerCard
-          playerData={player}
-          playerCountry={null}
-          key={player.id}
-          discipline={discipline}
-          viewRace={viewRace}
-        />
-      ))
+      const playerCards = rankingCategory?.map((player, index) => {
+
+        setPlayerCount(index)
+
+        return (  
+          
+          < PlayerCard
+        playerData = { player }
+        playerCountry = { player.country.toUpperCase() }
+        key = { player.id }
+        discipline = { discipline }
+        viewRace = { viewRace }
+        componentUsage = "rankings"
+
+          />
+      )})
 
       return playerCards
 
