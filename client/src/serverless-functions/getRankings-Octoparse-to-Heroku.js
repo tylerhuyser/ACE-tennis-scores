@@ -360,7 +360,7 @@ async function exportATPDoublesRankings(config) {
 
     console.log(ATPDOUBLESRANKINGS)
 
-    return ATPSOUBLESRANKINGS.data
+    return ATPDOUBLESRANKINGS.data
 
   } catch (err) {
 
@@ -431,7 +431,7 @@ async function exportATPRankings(token) {
     ]
 
     Promise.all(ATPEXPORTS).then((values) => {
-      console.log(values)
+      console.log(values.data)
     }).catch(error => {
       console.log('Octoparse ATP Export Error - PromiseAll')
       console.error(error.message)
@@ -545,7 +545,7 @@ async function exportWTARankings(token) {
     ]
 
     Promise.all(WTAEXPORTS).then((values) => {
-      console.log(values)
+      console.log(values.data)
     }).catch(error => {
       console.log('Octoparse WTA Export Error - PromiseAll')
       console.error(error.message)
