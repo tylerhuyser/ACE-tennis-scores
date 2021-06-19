@@ -537,16 +537,6 @@ async function exportWTARankings(token) {
       }
     };
 
-    const axios = require('axios');
-
-    var config = {
-      method: 'post',
-      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
-      headers: { 
-        'Authorization': token
-      }
-    };
-
     const WTAEXPORTS = [
       exportWTASinglesRankings(config),
       exportWTASinglesRaceRankings(config),
