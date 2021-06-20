@@ -425,13 +425,13 @@ async function exportATPRankings(token) {
       }
     };
 
-    function timeOut(func, config, time) {
-      setTimeout(() => func(config), time)
+    function timeout1() {
+      setTimeout(() => exportATPSinglesRaceRankings(config), 1001)
     }
 
     const ATPEXPORTS = [
       exportATPSinglesRankings(config),
-      timeOut(exportATPSinglesRaceRankings(), config, 1001),
+      timeout1(),
       exportATPDoublesRankings(config),
       exportATPDoublesRaceRankings(config)
     ]
@@ -444,7 +444,7 @@ async function exportATPRankings(token) {
       console.error(error.message)
     })
 
-    return () => clearTimeout(timeOut)
+    return () => clearTimeout(timeOut1)
 
   } catch (err) {
 
