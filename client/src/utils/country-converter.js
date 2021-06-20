@@ -1,16 +1,15 @@
-export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
+export const convertCountryIOCtoISO3 = (IOCCountryCode) => {
 
   let ISO3CountryCode = ""
 
-  switch (FIFACountryCode) {
+  switch (IOCCountryCode) {
     case 'AFG' : ISO3CountryCode = 'AFG'; break;
     case 'ALB' : ISO3CountryCode = 'ALB'; break;
     case 'ALG' : ISO3CountryCode = 'DZA'; break;
     case 'ASA' : ISO3CountryCode = 'ASM'; break;
     case 'AND' : ISO3CountryCode = 'AND'; break;
     case 'ANG' : ISO3CountryCode = 'AGO'; break;
-    case 'AIA' : ISO3CountryCode = 'AIA'; break;
-    case 'ATG' : ISO3CountryCode = 'ATG'; break;
+    case 'ANT' : ISO3CountryCode = 'ATG'; break;
     case 'ARG' : ISO3CountryCode = 'ARG'; break;
     case 'ARM' : ISO3CountryCode = 'ARM'; break;
     case 'ARU' : ISO3CountryCode = 'ABW'; break;
@@ -18,12 +17,12 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'AUT' : ISO3CountryCode = 'AUT'; break;
     case 'AZE' : ISO3CountryCode = 'AZE'; break;
     case 'BAH' : ISO3CountryCode = 'BHS'; break;
-    case 'BHR' : ISO3CountryCode = 'BHR'; break;
+    case 'BRN' : ISO3CountryCode = 'BHR'; break;
     case 'BAN' : ISO3CountryCode = 'BGD'; break;
-    case 'BRB' : ISO3CountryCode = 'BRB'; break;
+    case 'BAR' : ISO3CountryCode = 'BRB'; break;
     case 'BLR' : ISO3CountryCode = 'BLR'; break;
     case 'BEL' : ISO3CountryCode = 'BEL'; break;
-    case 'BLZ' : ISO3CountryCode = 'BLZ'; break;
+    case 'BIZ' : ISO3CountryCode = 'BLZ'; break;
     case 'BEN' : ISO3CountryCode = 'BEN'; break;
     case 'BER' : ISO3CountryCode = 'BMU'; break;
     case 'BHU' : ISO3CountryCode = 'BTN'; break;
@@ -31,17 +30,17 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'BIH' : ISO3CountryCode = 'BIH'; break;
     case 'BOT' : ISO3CountryCode = 'BWA'; break;
     case 'BRA' : ISO3CountryCode = 'BRA'; break;
-    case 'VGB' : ISO3CountryCode = 'VGB'; break;
+    case 'IVB' : ISO3CountryCode = 'VGB'; break;
     case 'BRU' : ISO3CountryCode = 'BRN'; break;
     case 'BUL' : ISO3CountryCode = 'BGR'; break;
-    case 'BFA' : ISO3CountryCode = 'BFA'; break;
+    case 'BUR' : ISO3CountryCode = 'BFA'; break;
     case 'BDI' : ISO3CountryCode = 'BDI'; break;
     case 'CAM' : ISO3CountryCode = 'KHM'; break;
     case 'CMR' : ISO3CountryCode = 'CMR'; break;
     case 'CAN' : ISO3CountryCode = 'CAN'; break;
     case 'CPV' : ISO3CountryCode = 'CPV'; break;
     case 'CAY' : ISO3CountryCode = 'CYM'; break;
-    case 'CTA' : ISO3CountryCode = 'CAF'; break;
+    case 'CAF' : ISO3CountryCode = 'CAF'; break;
     case 'CHA' : ISO3CountryCode = 'TCD'; break;
     case 'CHI' : ISO3CountryCode = 'CHL'; break;
     case 'CHN' : ISO3CountryCode = 'CHN'; break;
@@ -62,29 +61,25 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'DOM' : ISO3CountryCode = 'DOM'; break;
     case 'ECU' : ISO3CountryCode = 'ECU'; break;
     case 'EGY' : ISO3CountryCode = 'EGY'; break;
-    case 'SLV' : ISO3CountryCode = 'SLV'; break;
-    case 'ENG' : ISO3CountryCode = '[7]'; break;
-    case 'EQG' : ISO3CountryCode = 'GNQ'; break;
+    case 'ESA' : ISO3CountryCode = 'SLV'; break;
+    case 'GEQ' : ISO3CountryCode = 'GNQ'; break;
     case 'ERI' : ISO3CountryCode = 'ERI'; break;
     case 'EST' : ISO3CountryCode = 'EST'; break;
     case 'ETH' : ISO3CountryCode = 'ETH'; break;
-    case 'FRO' : ISO3CountryCode = 'FRO'; break;
     case 'FIJ' : ISO3CountryCode = 'FJI'; break;
     case 'FIN' : ISO3CountryCode = 'FIN'; break;
     case 'FRA' : ISO3CountryCode = 'FRA'; break;
-    case 'TAH' : ISO3CountryCode = 'PYF'; break;
-    case 'GAB' : ISO3CountryCode = 'GAB'; break;
+    case 'GAB': ISO3CountryCode = 'GAB'; break;
     case 'GAM' : ISO3CountryCode = 'GMB'; break;
     case 'GEO' : ISO3CountryCode = 'GEO'; break;
     case 'GER' : ISO3CountryCode = 'DEU'; break;
     case 'GHA' : ISO3CountryCode = 'GHA'; break;
-    case 'GIB' : ISO3CountryCode = 'GIB'; break;
     case 'GRE' : ISO3CountryCode = 'GRC'; break;
     case 'GRN' : ISO3CountryCode = 'GRD'; break;
     case 'GUM' : ISO3CountryCode = 'GUM'; break;
     case 'GUA' : ISO3CountryCode = 'GTM'; break;
     case 'GUI' : ISO3CountryCode = 'GIN'; break;
-    case 'GNB' : ISO3CountryCode = 'GNB'; break;
+    case 'GBS' : ISO3CountryCode = 'GNB'; break;
     case 'GUY' : ISO3CountryCode = 'GUY'; break;
     case 'HAI' : ISO3CountryCode = 'HTI'; break;
     case 'HON' : ISO3CountryCode = 'HND'; break;
@@ -92,8 +87,8 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'HUN' : ISO3CountryCode = 'HUN'; break;
     case 'ISL' : ISO3CountryCode = 'ISL'; break;
     case 'IND' : ISO3CountryCode = 'IND'; break;
-    case 'IDN' : ISO3CountryCode = 'IDN'; break;
-    case 'IRN' : ISO3CountryCode = 'IRN'; break;
+    case 'INA' : ISO3CountryCode = 'IDN'; break;
+    case 'IRI' : ISO3CountryCode = 'IRN'; break;
     case 'IRQ' : ISO3CountryCode = 'IRQ'; break;
     case 'IRL' : ISO3CountryCode = 'IRL'; break;
     case 'ISR' : ISO3CountryCode = 'ISR'; break;
@@ -108,18 +103,17 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'KUW' : ISO3CountryCode = 'KWT'; break;
     case 'KGZ' : ISO3CountryCode = 'KGZ'; break;
     case 'LAO' : ISO3CountryCode = 'LAO'; break;
-    case 'LVA' : ISO3CountryCode = 'LVA'; break;
-    case 'LBN' : ISO3CountryCode = 'LBN'; break;
+    case 'LAT' : ISO3CountryCode = 'LVA'; break;
+    case 'LIB' : ISO3CountryCode = 'LBN'; break;
     case 'LES' : ISO3CountryCode = 'LSO'; break;
     case 'LBR' : ISO3CountryCode = 'LBR'; break;
-    case 'LBY' : ISO3CountryCode = 'LBY'; break;
+    case 'LBA' : ISO3CountryCode = 'LBY'; break;
     case 'LIE' : ISO3CountryCode = 'LIE'; break;
     case 'LTU' : ISO3CountryCode = 'LTU'; break;
     case 'LUX' : ISO3CountryCode = 'LUX'; break;
-    case 'MAC' : ISO3CountryCode = 'MAC'; break;
     case 'MKD' : ISO3CountryCode = 'MKD'; break;
     case 'MAD' : ISO3CountryCode = 'MDG'; break;
-    case 'MWI' : ISO3CountryCode = 'MWI'; break;
+    case 'MAW' : ISO3CountryCode = 'MWI'; break;
     case 'MAS' : ISO3CountryCode = 'MYS'; break;
     case 'MDV' : ISO3CountryCode = 'MDV'; break;
     case 'MLI' : ISO3CountryCode = 'MLI'; break;
@@ -128,21 +122,19 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'MRI' : ISO3CountryCode = 'MUS'; break;
     case 'MEX' : ISO3CountryCode = 'MEX'; break;
     case 'MDA' : ISO3CountryCode = 'MDA'; break;
-    case 'MNG' : ISO3CountryCode = 'MNG'; break;
+    case 'MGL' : ISO3CountryCode = 'MNG'; break;
     case 'MNE' : ISO3CountryCode = 'MNE'; break;
-    case 'MSR' : ISO3CountryCode = 'MSR'; break;
+    case 'MON' : ISO3CountryCode = 'MCO'; break;
     case 'MAR' : ISO3CountryCode = 'MAR'; break;
     case 'MOZ' : ISO3CountryCode = 'MOZ'; break;
     case 'MYA' : ISO3CountryCode = 'MMR'; break;
     case 'NAM' : ISO3CountryCode = 'NAM'; break;
     case 'NEP' : ISO3CountryCode = 'NPL'; break;
     case 'NED' : ISO3CountryCode = 'NLD'; break;
-    case 'NCL' : ISO3CountryCode = 'NCL'; break;
     case 'NZL' : ISO3CountryCode = 'NZL'; break;
     case 'NCA' : ISO3CountryCode = 'NIC'; break;
     case 'NIG' : ISO3CountryCode = 'NER'; break;
-    case 'NGA' : ISO3CountryCode = 'NGA'; break;
-    case 'NIR' : ISO3CountryCode = '[15]'; break;
+    case 'NGR' : ISO3CountryCode = 'NGA'; break;
     case 'NOR' : ISO3CountryCode = 'NOR'; break;
     case 'OMA' : ISO3CountryCode = 'OMN'; break;
     case 'PAK' : ISO3CountryCode = 'PAK'; break;
@@ -166,20 +158,19 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'SMR' : ISO3CountryCode = 'SMR'; break;
     case 'STP' : ISO3CountryCode = 'STP'; break;
     case 'KSA' : ISO3CountryCode = 'SAU'; break;
-    case 'SCO' : ISO3CountryCode = '[16]'; break;
     case 'SEN' : ISO3CountryCode = 'SEN'; break;
     case 'SRB' : ISO3CountryCode = 'SRB'; break;
     case 'SEY' : ISO3CountryCode = 'SYC'; break;
     case 'SLE' : ISO3CountryCode = 'SLE'; break;
-    case 'SIN' : ISO3CountryCode = 'SGP'; break;
+    case 'SGP' : ISO3CountryCode = 'SGP'; break;
     case 'SVK' : ISO3CountryCode = 'SVK'; break;
-    case 'SVN' : ISO3CountryCode = 'SVN'; break;
+    case 'SLO' : ISO3CountryCode = 'SVN'; break;
     case 'SOL' : ISO3CountryCode = 'SLB'; break;
     case 'SOM' : ISO3CountryCode = 'SOM'; break;
     case 'RSA' : ISO3CountryCode = 'ZAF'; break;
     case 'ESP' : ISO3CountryCode = 'ESP'; break;
     case 'SRI' : ISO3CountryCode = 'LKA'; break;
-    case 'SDN' : ISO3CountryCode = 'SDN'; break;
+    case 'SUD' : ISO3CountryCode = 'SDN'; break;
     case 'SUR' : ISO3CountryCode = 'SUR'; break;
     case 'SWZ' : ISO3CountryCode = 'SWZ'; break;
     case 'SWE' : ISO3CountryCode = 'SWE'; break;
@@ -192,16 +183,15 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'TLS' : ISO3CountryCode = 'TLS'; break;
     case 'TOG' : ISO3CountryCode = 'TGO'; break;
     case 'TGA' : ISO3CountryCode = 'TON'; break;
-    case 'TRI' : ISO3CountryCode = 'TTO'; break;
+    case 'TTO' : ISO3CountryCode = 'TTO'; break;
     case 'TUN' : ISO3CountryCode = 'TUN'; break;
     case 'TUR' : ISO3CountryCode = 'TUR'; break;
     case 'TKM' : ISO3CountryCode = 'TKM'; break;
-    case 'TCA' : ISO3CountryCode = 'TCA'; break;
     case 'UGA' : ISO3CountryCode = 'UGA'; break;
     case 'UKR' : ISO3CountryCode = 'UKR'; break;
     case 'UAE' : ISO3CountryCode = 'ARE'; break;
     case 'USA' : ISO3CountryCode = 'USA'; break;
-    case 'VIR' : ISO3CountryCode = 'VIR'; break;
+    case 'ISV' : ISO3CountryCode = 'VIR'; break;
     case 'URU' : ISO3CountryCode = 'URY'; break;
     case 'UZB' : ISO3CountryCode = 'UZB'; break;
     case 'VAN' : ISO3CountryCode = 'VUT'; break;
@@ -210,9 +200,10 @@ export const convertCountryFIFAtoISO3 = (FIFACountryCode) => {
     case 'YEM' : ISO3CountryCode = 'YEM'; break;
     case 'ZAM' : ISO3CountryCode = 'ZMB'; break;
     case 'ZIM' : ISO3CountryCode = 'ZWE'; break;
+    case 'GBR' : ISO3CountryCode = 'GBR'; break;
     default: ISO3CountryCode = 'IOC'; break;
   }
 
   return ISO3CountryCode
-  
+
 }

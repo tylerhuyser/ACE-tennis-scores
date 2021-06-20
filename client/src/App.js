@@ -113,9 +113,21 @@ function App () {
       
       console.log('gathering dailyResults -- UseEffect #3 + FILTERING DailySchedule in App.js')
 
-      setDailyResults(dailySchedule.filter(match => match.status === "finished"))
+      const scheduleData = dailySchedule.filter(match => match.status === "finished")
 
-      console.log(dailyResults)
+      if (scheduleData.length > 0) {
+
+        setDailyResults(scheduleData)
+        
+        console.log(dailyResults)
+
+      } else if (scheduleData.length === 0) {
+
+        setDailyResults("Currently No Results")
+        
+        console.log(dailyResults)
+
+      }
 
     } else if (dailySchedule && dailySchedule.length !== 0 && dailySchedule === "No Matches Today") {
 

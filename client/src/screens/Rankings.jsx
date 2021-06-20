@@ -68,10 +68,6 @@ export default function Rankings(props) {
       console.log(ATPRANKINGS)
       console.log(WTARANKINGS)
 
-      const maleSinglesRankingsData = ATPRANKINGS.ATPRankings.ATPSINGLESRANKINGS.ATP_SINGLES_RANKINGS
-
-      console.log(JSON.parse(maleSinglesRankingsData).data.dataList)
-
       setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList)
       setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList)
       setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList)
