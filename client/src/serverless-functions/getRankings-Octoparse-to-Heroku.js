@@ -432,6 +432,7 @@ async function exportATPRankings(token) {
 
     await Promise.all(ATPEXPORTS).then((values) => {
       console.log('ATP Export PromiseAll Complete')
+      console.log(values)
     }).catch(error => {
       console.log('Octoparse ATP Export Error - PromiseAll')
       console.error(error.message)
