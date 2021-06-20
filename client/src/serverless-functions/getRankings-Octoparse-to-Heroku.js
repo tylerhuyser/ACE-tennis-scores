@@ -339,7 +339,7 @@ async function exportATPSinglesRankings(config) {
 
     const ATPSINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, config)
 
-    console.log('Octoparse Export WTARankings Sinlges Complete')
+    console.log('Octoparse Export ATPRankings Singles Complete')
 
     return ATPSINGLESRANKINGS.data
 
@@ -358,7 +358,7 @@ async function exportATPDoublesRankings(config) {
 
     const ATPDOUBLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, config)
 
-    console.log('Octoparse Export WTARankings Doubles Complete')
+    console.log('Octoparse Export ATPRankings Doubles Complete')
 
     return ATPDOUBLESRANKINGS.data
 
@@ -377,7 +377,7 @@ async function exportATPSinglesRaceRankings(config) {
 
     const ATPSINGLESRACERANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, config)
 
-    console.log('Octoparse Export WTARankings Sinlges Race Complete')
+    console.log('Octoparse Export ATPRankings Singles Race Complete')
 
     return ATPSINGLESRACERANKINGS.data
 
@@ -430,7 +430,7 @@ async function exportATPRankings(token) {
       exportATPDoublesRaceRankings(config)
     ]
 
-    Promise.all(ATPEXPORTS).then((values) => {
+    await Promise.all(ATPEXPORTS).then((values) => {
       console.log('ATP Export PromiseAll Complete')
     }).catch(error => {
       console.log('Octoparse ATP Export Error - PromiseAll')
@@ -453,7 +453,7 @@ async function exportWTASinglesRankings(config) {
 
     const WTASINGLESRANKINGS = await axios(`${config.url}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, config)
 
-    console.log('Octoparse Export WTARankings Sinlges Complete')
+    console.log('Octoparse Export WTARankings Singles Complete')
 
     return WTASINGLESRANKINGS.data
 
@@ -544,7 +544,7 @@ async function exportWTARankings(token) {
       exportWTADoublesRaceRankings(config)
     ]
 
-    Promise.all(WTAEXPORTS).then((values) => {
+    await Promise.all(WTAEXPORTS).then((values) => {
       console.log('WTA Export PromiseAll Complete')
     }).catch(error => {
       console.log('Octoparse WTA Export Error - PromiseAll')
@@ -568,7 +568,7 @@ async function exportOctoparseData(token) {
     exportWTARankings(token)
   ]
 
-  Promise.all(exportFunctions).then(values => {
+  await Promise.all(exportFunctions).then(values => {
     console.log('Octoparse Data Export Complete - PromiseAll')
   }).catch(error => {
     console.log(error)
