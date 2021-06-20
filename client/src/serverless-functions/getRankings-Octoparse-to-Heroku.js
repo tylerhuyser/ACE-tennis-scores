@@ -425,13 +425,13 @@ async function exportATPRankings(token) {
       }
     };
 
-    function timeout1() {
-      setTimeout(() => exportATPSinglesRaceRankings(config), 1001)
-    }
+    // function timeout1() {
+    //   setTimeout(() => exportATPSinglesRaceRankings(config), 1001)
+    // }
 
     const ATPEXPORTS = [
       exportATPSinglesRankings(config),
-      timeout1(),
+      exportATPSinglesRaceRankings(config),
       exportATPDoublesRankings(config),
       exportATPDoublesRaceRankings(config)
     ]

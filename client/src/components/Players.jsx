@@ -4,6 +4,8 @@ import IconLogo from './IconLogo'
 import Loader from '../components/Loader'
 import PlayerCard from './PlayerCard'
 
+import { convertCountryFIFAtoISO3 } from '../utils/country-converter'
+
 
 export default function Players(props) {
 
@@ -20,14 +22,13 @@ export default function Players(props) {
 
         return (  
           
-          < PlayerCard
-        playerData = { player }
-        playerCountry = { player.country.toUpperCase() }
-        key = { player.id }
-        discipline = { discipline }
-        viewRace = { viewRace }
-        componentUsage = "rankings"
-
+          <PlayerCard
+            playerData = { player }
+            playerCountry = { convertCountryFIFAtoISO3(player.country) }
+            key = { player.id }
+            discipline = { discipline }
+            viewRace = { viewRace }
+            componentUsage = "rankings"
           />
       )})
 
