@@ -360,6 +360,8 @@ async function exportATPDoublesRankings(config) {
 
     console.log('Octoparse Export ATPRankings Doubles Complete')
 
+    console.log(ATPDOUBLESRANKINGS)
+
     return ATPDOUBLESRANKINGS.data
 
   } catch (err) {
