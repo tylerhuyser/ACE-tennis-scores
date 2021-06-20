@@ -419,7 +419,7 @@ async function exportATPRankings(token) {
 
     var config = {
       method: 'post',
-      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
+      url: `https://dataapi.octoparse.com/api/task/RemoveDataByTaskId?taskId=`,
       headers: { 
         'Authorization': token
       }
@@ -539,7 +539,7 @@ async function exportWTARankings(token) {
 
     var config = {
       method: 'post',
-      url: `https://dataapi.octoparse.com/api/notexportdata/update?taskId=`,
+      url: `https://dataapi.octoparse.com/api/task/RemoveDataByTaskId?taskId=`,
       headers: { 
         'Authorization': token
       }
