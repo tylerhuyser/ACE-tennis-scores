@@ -549,6 +549,7 @@ async function exportWTARankings(token) {
 
     await Promise.all(WTAEXPORTS).then((values) => {
       console.log('WTA Export PromiseAll Complete')
+      console.log(values)
     }).catch(error => {
       console.log('Octoparse WTA Export Error - PromiseAll')
       console.error(error)
