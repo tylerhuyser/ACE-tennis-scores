@@ -6,6 +6,7 @@ import MobileBanner from '../components/adSense/MobileBanner'
 import TournamentCard from '../components/TournamentCard'
 import ResultsContainer from '../components/ResultsContainer'
 import PlayerCard from '../components/PlayerCard'
+import RankingDetailCard from '../components/RankingDetailCard'
 
 import './PlayerDetail.css'
 
@@ -15,9 +16,11 @@ import {
   getPlayerSchedule
 } from "../utils/players"
 
+import { convertCountryIOCtoISO3 } from '../utils/country-converter'
+
 export default function PlayerDetail(props) {
 
-  const [ dataLoaded, setDataLoadedm] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [view, setView] = useState('Player Results')
 
@@ -91,7 +94,7 @@ export default function PlayerDetail(props) {
         const playerScheduleInfo = await getPlayerSchedule(currentPlayerID)
         localStorage.setItem('playerSchedule', JSON.stringify(playerScheduleInfo))
         setPlayerSchedule(playerScheduleInfo)
-        setDataLoadedm(true)
+        setDataLoaded(true)
       }
 
       const timeOut = setTimeout(() => gatherPlayerSchedule(currentPlayerID), 1001)
@@ -170,7 +173,9 @@ export default function PlayerDetail(props) {
 
             </div>
 
-            <PlayerCard playerData={playerData} key={playerData.player.id} playerCountry={playerData.player.country_code} viewRace={false} />
+            <PlayerCard playerData={playerData} key={playerData.id} playerCountry={convertCountryIOCtoISO3(playerData.country.toUpperCase())} viewRace={null} discipline={null} componentUsage={"playerDetail"} />
+
+            <RankingDetailCard playerData={playerData} componentUsage={"playerDetail"} />
 
             <MobileBanner />
             
