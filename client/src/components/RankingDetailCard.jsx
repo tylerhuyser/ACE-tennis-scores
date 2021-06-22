@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import MobileBanner from '../components/adSense/MobileBanner'
 
+import './RankingDetailCard.css'
+
 export default function RankingDetailCard(props) {
 
   const [loaded, setLoaded] = useState(false)

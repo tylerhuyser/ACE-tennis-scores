@@ -1,0 +1,266 @@
+.player-container {
+  font-family: bogart-semibold;
+  font-size: 12px;
+  color: white;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #0a192f;
+  width: 100%;
+  padding: 10px 25px;
+  border-bottom: white 1px solid;
+  box-shadow: inset 0px -1px 5px #0a192f;
+  box-shadow: 2px 2px 10px #0a192f;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+#high-detail {
+  border: solid white 1px;
+  border-radius: 8px;
+  box-shadow: inset 0px -1px 5px #0a192f;
+  margin-bottom: 50px;
+}
+
+.player-ranking {
+  width: 10%;
+}
+
+.player-name {
+  width: 50%;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.player-nationality-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 20%;
+}
+
+.player-ranking-points {
+  width: 20%;
+  text-align: right;
+}
+
+.player-country {
+  width: 50%;
+}
+
+.playerDetail-rankings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 12px;
+  color: white;
+  text-align: center;
+
+  width: 100%;
+  padding: 15px 10px;
+  margin-bottom: 50px;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.playerDetail-rankings-container-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+
+  margin: 0px;
+  padding: 15px 10px;
+  
+}
+
+.detailed-player-rankings-container {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+  
+}
+
+.player-rankings-container {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  text-align: center;
+  white-space: nowrap;
+
+  width: 50%;
+  padding: 5px;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+
+}
+
+.ranking-category-container {
+  display: flex;
+  flex-direction: row;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.ranking-discipline-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 50%;
+  height: 125px;
+  padding: 10px;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.player-rankings-container-subtitle {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+
+  margin: 0px;
+}
+
+.player-rankings-container-header {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: bogart-semibold;
+  
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+
+}
+
+.player-ranking-detail, .player-ranking-points-detail {
+  width: 100%;
+  font-weight: 500;
+  font-family: bogart-semibold;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+.player-ranking-points-detail {
+  font-size: 8px;
+}
+
+.emojiFlag {
+  margin-right: 2px;
+}
+
+
+@media (min-width: 680px) and (max-width: 1280px){
+
+  .player-container {
+    font-size: 24px;
+  }  
+
+  .player-name {
+    font-size: 24px;
+  } 
+  
+  .playerDetail-rankings-container {
+    font-size: 24px;
+    margin-bottom: 50px;
+  }
+
+  .playerDetail-rankings-container-title {
+    font-size: 48px;
+  }
+
+  .player-rankings-container-subtitle, .player-rankings-container-header {
+    font-size: 30px;
+  }
+
+  .player-ranking-points-detail {
+    font-size: 16px;
+  }
+
+  .ranking-discipline-container {
+    height: 300px;
+  }
+
+  .player-views-button {
+    font-size: 20px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
+  }
+
+}
+
+@media (min-width: 1280px){
+
+  .player-container {
+    font-size: 24px;
+  }  
+
+  .player-name {
+    font-size: 24px;
+  } 
+  
+  .playerDetail-rankings-container {
+    font-size: 24px;
+    margin-bottom: 50px;
+  }
+
+  .playerDetail-rankings-container-title {
+    font-size: 48px;
+  }
+
+  .player-rankings-container-subtitle, .player-rankings-container-header {
+    font-size: 30px;
+  }
+
+  .player-ranking-points-detail {
+    font-size: 16px;
+  }
+
+  .ranking-discipline-container {
+    height: 300px;
+  }
+
+  .player-views-button {
+    font-size: 20px;
+  }
+
+  .emojiFlag {
+    margin-right: 10px;
+  }
+
+}

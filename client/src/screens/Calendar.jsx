@@ -14,50 +14,19 @@ export default function Calendar(props) {
   
   const [viewCalendar, setViewCalendar] = useState(false)
   const [calendarTournaments, setCalendarTournaments] = useState(null)
-  const [calendarTournamentsITF, setCalendarTournamentsITF] = useState(null)
   const [calendarTournamentData, setCalendarTournamentData] = useState(null)
   const [filter, setFilter] = useState("")
 
   const { tournaments, currentDate, viewITF, setViewITF } = props
 
   useEffect(() => {
-
-    if (viewCalendar) {
-
-      const getDate = (str) => {
-        const splitDate = str.split("/")
-        const date = splitDate[0]+splitDate[1]+splitDate[2]
-        return date
-      }
-
-      const gatherCalendar = async () => {
-        const calendarData = await getTournaments()
-        console.log(calendarData)
-        const calendar = calendarData.tournaments.sort((a, b) => {
-          a = getDate(a.current_season.end_date); b = getDate(b.current_season.end_date); return a.localeCompare(b)
-      })
-        console.log(calendar)
-        setCalendarTournaments(calendar.filter(tournament => {
-          return (
-            ((tournament.current_season.year === "2021") && (tournament.type === "singles") && (!tournament.name.toLowerCase().includes("itf")))
-          )
-        }))
-        setCalendarTournamentData(calendar.filter(tournament => {
-          return (
-            ((tournament.current_season.year === "2021") && (tournament.type === "singles") && (!tournament.name.toLowerCase().includes("itf")))
-          )
-        }))
-        setCalendarTournamentsITF(calendar)
-      }
-      gatherCalendar()
-    }
-  }, [viewCalendar])
+    setCalendarTournaments(tournaments)
+    setCalendarTournamentData(tournaments)
+  }, [])
 
   useEffect(() => {
     if (calendarTournamentData !== undefined || calendarTournamentData !== null) {
-      if (viewCalendar && viewITF) {
-        setCalendarTournamentData(calendarTournamentsITF)
-      } else if (viewCalendar) {
+      if (viewCalendar) {
         setCalendarTournamentData(calendarTournaments)
       }
     }
@@ -66,20 +35,6 @@ export default function Calendar(props) {
   useEffect(() => {
 
     if (filter != "" && viewCalendar) {
-
-      if (viewITF) {
-
-        const calendar = calendarTournamentsITF
-    
-        setCalendarTournamentData(calendar.filter((tournament) => {
-
-          const tournamentMonth = tournament.current_season.start_date.split("-")[1]
-
-          return (
-            (tournamentMonth === filter)
-          )
-        }))
-      } else {
 
         const calendar = calendarTournaments
 
@@ -91,17 +46,11 @@ export default function Calendar(props) {
             (tournamentMonth === filter)
           )
         }))
-
-      }
     }
   }, [filter])
 
   const handleSwitch = () => {
     setViewCalendar(!viewCalendar)
-  }
-
-  const handleChange = (e) => {
-    setViewITF(!viewITF)
   }
 
   const handleNavigation = (month) => {
@@ -122,23 +71,6 @@ export default function Calendar(props) {
         
         <p className="calendar-switch-label">Calendar</p>
         
-      </div>
-
-      <div className="checkbox-container">
-
-        <label class="checkbox-label">
-          <input type="checkbox"
-            className="checkbox-input"
-            id="calendar-checkbox"
-            name="viewITF"
-            value={viewITF}
-            onChange={(e) => handleChange(e)}
-          />
-            <span class="checkbox-custom rectangular"></span>
-        </label>
-        
-        <p className="checkbox-label-copy"> Include ITF?</p>
-  
       </div>
 
       <MobileBanner />
@@ -211,7 +143,19 @@ export default function Calendar(props) {
         </select>
       </div>
       
-      <Tournaments tournaments={viewCalendar ? calendarTournamentData : tournaments} currentDate={currentDate} viewCalendar={viewCalendar} />
+      <Tournaments tournaments={viewCalendar ? calendarTournamentData : tournaments.filter((tournament) => {
+    
+    const startDate = new Date(tournament.start_date)
+    const endDate = new Date(tournament.end_date)
+    const tournamentCategory = tournament.code
+  
+    return (
+        
+      (((startDate <= currentDate) && (endDate >= currentDate) && ((endDate - currentDate) <= (14*24*60*60*1000))) && ((tournamentCategory !== "itf") && (!tournament.name.toLowerCase().includes("challenger")) && (!tournament.name.includes("Cancelled"))))
+      
+      )
+    }
+  )} currentDate={currentDate} viewCalendar={viewCalendar} />
 
     </div>
   )

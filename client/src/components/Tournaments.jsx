@@ -16,11 +16,11 @@ export default function Tournaments(props) {
 
       const tournamentsData = tournaments && tournaments?.filter((tournament) => {
         
-        const endDate = new Date(tournament.current_season.end_date)
+        const endDate = new Date(tournament.end_date)
         
           return (
   
-            (((endDate >= currentDate)) && ((tournament.type.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
+            (((endDate >= currentDate)) && ((tournament.code.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
             
           )
       })
@@ -103,7 +103,7 @@ export default function Tournaments(props) {
 
         calendarData[i].data = tournamentsData && tournamentsData?.filter((tournament) => {
           
-          const tournamentMonth = tournament.current_season.start_date.split("-")[1]
+          const tournamentMonth = tournament.start_date.split("-")[1]
 
           return (
             (tournamentMonth === calendarData[i].number)
@@ -123,19 +123,19 @@ export default function Tournaments(props) {
 
       const calendarData = tournaments && tournaments?.filter((tournament) => {
 
-        const endDate = new Date(tournament.current_season.end_date)
+        const endDate = new Date(tournament.end_date)
         
         
           return (
               
-            (((endDate >= currentDate)) && ((tournament.type.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
+            (((endDate >= currentDate)) && ((tournament.code.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
             
           )
       
         }).map((tournament, index) => {
           
-          const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
-          const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
+          const startDate = tournament.start_date.split("-").splice(1).join("/")
+          const endDate = tournament.end_date.split("-").splice(1).join("/")
           
           return (
       
