@@ -8,14 +8,14 @@ import './Tournaments.css'
 
 export default function Tournaments(props) {
   
-  const { tournaments, currentDate, viewCalendar } = props
+  const { tournaments, currentDate, viewCalendar, filter } = props
 
   const generateTournaments = () => {
 
-    if (viewCalendar && tournaments) {
+    if (viewCalendar && tournaments && (filter === "" || filter === "-- Select a Month --")) {
 
       const tournamentsData = tournaments && tournaments?.filter((tournament) => {
-        
+
         const endDate = new Date(tournament.end_date)
         
           return (
@@ -111,9 +111,116 @@ export default function Tournaments(props) {
         })
       }
 
-      const tournamentCalendar = calendarData.map((month) => (
+      const tournamentCalendar = calendarData.map((month, index) => (
         <CalendarCard
           month={month}
+          key={index}
+        />
+      ))
+
+      return tournamentCalendar
+
+    } else if (viewCalendar && tournaments && (filter !== "" || filter !== "-- Select a Month --")) {
+
+      const tournamentsData = tournaments && tournaments?.filter((tournament) => {
+        
+          return (
+  
+            (((tournament.code.toLowerCase() !== "doubles")) && ((!tournament.name.toLowerCase().includes("srl"))))
+            
+          )
+      })
+      
+      let calendarData = [
+        {
+            name: "january",
+            number: "01",
+            index: 0,
+            data: []
+        },
+        {
+          name: "february",
+          number: "02",
+          index: 1,
+          data: []
+        },
+        {
+          name: "march",
+          number: "03",
+          index: 2,
+          data: []
+        },
+        {
+          name: "april",
+          number: "04",
+          index: 3,
+          data: []
+        },
+        {
+          name: "may",
+          number: "05",
+          index: 4,
+          data: []
+        },
+        {
+          name: "june",
+          number: "06",
+          index: 5,
+          data: []
+        },
+        {
+          name: "july",
+          number: "07",
+          index: 6,
+          data: []
+        },
+        {
+          name: "august",
+          number: "08",
+          index: 7,
+          data: []
+        },
+        {
+          name: "september",
+          number: "09",
+          index: 8,
+          data: []
+        },
+        {
+          name: "october",
+          number: "10",
+          index: 9,
+          data: []
+        },
+        {
+          name: "november",
+          number: "11",
+          index: 10,
+          data: []
+        },
+        {
+          name: "december",
+          number: "12",
+          index: 11,
+          data: []
+      }]
+    
+      for (let i = 0; i < 12; i++) {
+
+        calendarData[i].data = tournamentsData && tournamentsData?.filter((tournament) => {
+          
+          const tournamentMonth = tournament.start_date.split("-")[1]
+
+          return (
+            (tournamentMonth === calendarData[i].number)
+          )
+        })
+      }
+
+      const tournamentCalendar = calendarData.map((month, index) => (
+        <CalendarCard
+          month={month}
+          key={index}
         />
       ))
 

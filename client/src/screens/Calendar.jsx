@@ -30,22 +30,24 @@ export default function Calendar(props) {
         setCalendarTournamentData(calendarTournaments)
       }
     }
-  }, [viewITF])
+  }, [viewCalendar, viewITF])
 
   useEffect(() => {
 
-    if (filter != "" && viewCalendar) {
+    if (viewCalendar && (filter !== "-- Select a Month ==" || filter !== "")) {
 
         const calendar = calendarTournaments
 
-        setCalendarTournamentData(calendar.filter((tournament) => {
+        setCalendarTournamentData(calendarTournaments.filter((tournament) => {
 
-          const tournamentMonth = tournament.current_season.start_date.split("-")[1]
+          const tournamentMonth = tournament.start_date.split("-")[1]
 
           return (
             (tournamentMonth === filter)
           )
         }))
+    } else if (viewCalendar && (filter === "-- Select a Month ==" || filter === "")) {
+      setCalendarTournamentData(calendarTournaments)
     }
   }, [filter])
 
@@ -75,71 +77,95 @@ export default function Calendar(props) {
 
       <MobileBanner />
 
-      <div class="calendar-navigation-container-desktop">
+      {viewCalendar ?
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("01")}>JAN</p>
+        <>
 
-        <p class="calendar-month-separator">•</p>
+          <div className="calendar-navigation-container-desktop" id={viewCalendar ? "" : "inactive"}>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("02")}>FEB</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("01")}>JAN</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("03")}>MAR</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("02")}>FEB</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("04")}>APR</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("03")}>MAR</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("05")}>MAY</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("04")}>APR</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("06")}>JUN</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("05")}>MAY</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("07")}>JUL</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("06")}>JUN</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("08")}>AUG</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("07")}>JUL</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("09")}>SEP</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("08")}>AUG</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("10")}>OCT</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("09")}>SEP</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("11")}>NOV</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("10")}>OCT</p>
 
-        <p class="calendar-month-separator">•</p>
+            <p className="calendar-month-separator">•</p>
 
-        <p className="calendar-month-copy" onClick={(e) => handleNavigation("12")}>DEC</p>
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("11")}>NOV</p>
 
-      </div>
+            <p className="calendar-month-separator">•</p>
+
+            <p className="calendar-month-copy" onClick={(e) => handleNavigation("12")}>DEC</p>
+
+          </div>
+
+        </>
+
+        :
+        
+        <>
+        </>
+
+      }
 
       <div className="calendar-navigation-container-mobile">
-        <select className="calendar-navigations-select-input" defaultValue={'default'} name="mobile-navigation" onChange={(e) => handleNavigation(e.target.value)}>
+        <select className="calendar-navigations-select-input" id={viewCalendar ? "" : "inactive"} defaultValue={'default'} name="mobile-navigation" onChange={(e) => handleNavigation(e.target.value)}>
           <option defaultValue="default">-- Select a Month --</option>
-          <option value="01" className="calendar-navigations-select-option">JAN</option>
-          <option value="02" className="calendar-navigations-select-option">FEB</option>
-          <option value="03" className="calendar-navigations-select-option">MAR</option>
-          <option value="04" className="calendar-navigations-select-option">APR</option>
-          <option value="05" className="calendar-navigations-select-option">MAY</option>
-          <option value="06" className="calendar-navigations-select-option">JUN</option>
-          <option value="07" className="calendar-navigations-select-option">JUL</option>
-          <option value="08" className="calendar-navigations-select-option">AUG</option>
-          <option value="09" className="calendar-navigations-select-option">SEP</option>
-          <option value="10" className="calendar-navigations-select-option">OCT</option>
-          <option value="11" className="calendar-navigations-select-option">NOV</option>
-          <option value="12" className="calendar-navigations-select-option">DEC</option>
+
+          {viewCalendar?
+
+            <>
+              <option value="01" className="calendar-navigations-select-option">JAN</option>
+              <option value="02" className="calendar-navigations-select-option">FEB</option>
+              <option value="03" className="calendar-navigations-select-option">MAR</option>
+              <option value="04" className="calendar-navigations-select-option">APR</option>
+              <option value="05" className="calendar-navigations-select-option">MAY</option>
+              <option value="06" className="calendar-navigations-select-option">JUN</option>
+              <option value="07" className="calendar-navigations-select-option">JUL</option>
+              <option value="08" className="calendar-navigations-select-option">AUG</option>
+              <option value="09" className="calendar-navigations-select-option">SEP</option>
+              <option value="10" className="calendar-navigations-select-option">OCT</option>
+              <option value="11" className="calendar-navigations-select-option">NOV</option>
+              <option value="12" className="calendar-navigations-select-option">DEC</option>
+            </>
+          :
+            
+            <>
+            </>
+
+          }
         </select>
       </div>
       
@@ -155,7 +181,7 @@ export default function Calendar(props) {
       
       )
     }
-  )} currentDate={currentDate} viewCalendar={viewCalendar} />
+  )} currentDate={currentDate} viewCalendar={viewCalendar} filter={filter} />
 
     </div>
   )

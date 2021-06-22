@@ -11,8 +11,8 @@ export default function CalendarCard(props) {
 
   const tournaments = month && month?.data.map((tournament, index) => {
           
-    const startDate = tournament.current_season.start_date.split("-").splice(1).join("/")
-    const endDate = tournament.current_season.end_date.split("-").splice(1).join("/")
+    const startDate = tournament.start_date.split("-").splice(1).join("/")
+    const endDate = tournament.end_date.split("-").splice(1).join("/")
     
     return (
 
