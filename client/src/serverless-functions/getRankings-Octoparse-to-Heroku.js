@@ -449,7 +449,7 @@ async function exportATPRankings(token) {
     const responses = []
 
     for (let i = 0; i < ATPEXPORTS.length; i++) {
-      const resp = ATPEXPORTS[i]
+      const resp = await ATPEXPORTS[i]
       responses.push(resp)
     }
 
@@ -576,7 +576,7 @@ async function exportWTARankings(token) {
     const responses = []
 
     for (let i = 0; i < WTAEXPORTS.length; i++) {
-      const resp = WTAEXPORTS[i]
+      const resp = await WTAEXPORTS[i]
       responses.push(resp)
     }
 
@@ -608,7 +608,7 @@ async function exportOctoparseData(token) {
   const responses = []
 
   for (let i = 0; i < exportFunctions.length; i++) {
-    const resp = exportFunctions[i]
+    const resp = await exportFunctions[i]
     responses.push(resp)
   }
 
