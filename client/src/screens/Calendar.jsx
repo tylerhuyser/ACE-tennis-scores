@@ -142,7 +142,7 @@ export default function Calendar(props) {
 
       <div className="calendar-navigation-container-mobile">
         <select className="calendar-navigations-select-input" id={viewCalendar ? "" : "inactive"} defaultValue={'default'} name="mobile-navigation" onChange={(e) => handleNavigation(e.target.value)}>
-          <option defaultValue="default">-- Select a Month --</option>
+          <option defaultValue="default" className="calendar-navigations-select-option">-- Select a Month --</option>
 
           {viewCalendar?
 

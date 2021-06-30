@@ -68,7 +68,7 @@ display: none;
 }
 
 .calendar-navigations-select-option {
-  background-color: white;
+  background-color: transparent;
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -93,9 +93,9 @@ select::-ms-expand {
   border-radius: 90px;
   width: 170px;
   height: 40px;
-  background-color: white;
+  background-color: transparent;
   height: 30px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 
   display: flex;
   flex-direction: row;
