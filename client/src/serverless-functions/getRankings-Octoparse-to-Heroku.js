@@ -436,15 +436,24 @@ async function exportATPRankings(token) {
       exportATPDoublesRaceRankings(config)
     ]
 
-    await Promise.all(ATPEXPORTS).then((values) => {
-      console.log('ATP Export PromiseAll Complete')
-      console.log(values)
-    }).catch(error => {
-      console.log('Octoparse ATP Export Error - PromiseAll')
-      console.error(error.message)
-    })
+    // await Promise.all(ATPEXPORTS).then((values) => {
+    //   console.log('ATP Export PromiseAll Complete')
+    //   console.log(values)
+    // }).catch(error => {
+    //   console.log('Octoparse ATP Export Error - PromiseAll')
+    //   console.error(error.message)
+    // })
 
-    return () => clearTimeout(timeOut1)
+    // return () => clearTimeout(timeOut1)
+
+    const responses = []
+
+    for (let i = 0; i < ATPEXPORTS.length; i++) {
+      const resp = ATPEXPORTS[i]
+      responses.push(resp)
+    }
+
+    return responses
 
   } catch (err) {
 
@@ -552,13 +561,26 @@ async function exportWTARankings(token) {
       exportWTADoublesRaceRankings(config)
     ]
 
-    await Promise.all(WTAEXPORTS).then((values) => {
-      console.log('WTA Export PromiseAll Complete')
-      console.log(values)
-    }).catch(error => {
-      console.log('Octoparse WTA Export Error - PromiseAll')
-      console.error(error)
-    })
+    // await Promise.all(WTAEXPORTS).then((values) => {
+    //   console.log('WTA Export PromiseAll Complete')
+    //   console.log(values)
+    // }).catch(error => {
+    //   console.log('Octoparse WTA Export Error - PromiseAll')
+    //   console.error(error)
+    // })
+
+    // const WTAEXPORTS = new Promise(function (resolve, reject) {
+    //   setTimeout(() => resolve(1), 1000);
+    // }).then
+
+    const responses = []
+
+    for (let i = 0; i < WTAEXPORTS.length; i++) {
+      const resp = WTAEXPORTS[i]
+      responses.push(resp)
+    }
+
+    return responses
 
 
   } catch (err) {
@@ -577,13 +599,22 @@ async function exportOctoparseData(token) {
     exportWTARankings(token)
   ]
 
-  await Promise.all(exportFunctions).then(values => {
-    console.log('Octoparse Data Export Complete - PromiseAll')
-  }).catch(error => {
-    console.log(error)
-  })
+  // await Promise.all(exportFunctions).then(values => {
+  //   console.log('Octoparse Data Export Complete - PromiseAll')
+  // }).catch(error => {
+  //   console.log(error)
+  // })
+
+  const responses = []
+
+  for (let i = 0; i < exportFunctions.length; i++) {
+    const resp = exportFunctions[i]
+    responses.push(resp)
+  }
 
   console.log('Octoparse Data Export Complete')
+
+  return responses
 
 }
 
