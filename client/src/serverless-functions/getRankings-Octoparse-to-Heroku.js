@@ -422,9 +422,9 @@ async function exportATPSinglesRaceRankings(token) {
 
 async function exportATPDoublesRaceRankings(token) {
   try {
-    const ATP_DOUBLES_RACE_CONFIG = require('axios')
+    const axios = require('axios')
 
-    var config = {
+    var ATP_DOUBLES_RACE_CONFIG = {
       method: 'post',
       baseURL: `https://dataapi.octoparse.com/api/task/RemoveDataByTaskId?taskId=`,
       headers: { 
