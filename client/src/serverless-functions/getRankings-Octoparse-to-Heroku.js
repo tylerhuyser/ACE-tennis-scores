@@ -345,7 +345,7 @@ async function exportATPSinglesRankings(token) {
       }
     };
 
-    const ATPSINGLESRANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, ATP_SINGLES_CONFIG)
+    const ATPSINGLESRANKINGS = await axios(`${ATP_SINGLES_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RANKINGS}`, ATP_SINGLES_CONFIG)
 
     console.log('Octoparse Export ATPRankings Singles Complete')
 
@@ -374,7 +374,7 @@ async function exportATPDoublesRankings(token) {
       }
     };
 
-    const ATPDOUBLESRANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, ATP_DOUBLES_CONFIG)
+    const ATPDOUBLESRANKINGS = await axios(`${ATP_DOUBLES_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RANKINGS}`, ATP_DOUBLES_CONFIG)
 
     console.log('Octoparse Export ATPRankings Doubles Complete')
 
@@ -403,7 +403,7 @@ async function exportATPSinglesRaceRankings(token) {
       }
     };
 
-    const ATPSINGLESRACERANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, ATP_SINGLES_RACE_CONFIG)
+    const ATPSINGLESRACERANKINGS = await axios(`${ATP_SINGLES_RACE_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_ATP_SINGLES_RACE_RANKINGS}`, ATP_SINGLES_RACE_CONFIG)
 
     console.log('Octoparse Export ATPRankings Singles Race Complete')
 
@@ -432,7 +432,7 @@ async function exportATPDoublesRaceRankings(token) {
       }
     };
 
-    const ATPDOUBLESRACERANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, ATP_DOUBLES_RACE_CONFIG)
+    const ATPDOUBLESRACERANKINGS = await axios(`${ATP_DOUBLES_RACE_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_ATP_DOUBLES_RACE_RANKINGS}`, ATP_DOUBLES_RACE_CONFIG)
 
     console.log('Octoparse Export ATPRankings Doubles Race Complete')
 
@@ -506,7 +506,7 @@ async function exportWTASinglesRankings(token) {
       }
     };
 
-    const WTASINGLESRANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, WTA_SINGLES_CONFIG)
+    const WTASINGLESRANKINGS = await axios(`${WTA_SINGLES_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RANKINGS}`, WTA_SINGLES_CONFIG)
 
     console.log('Octoparse Export WTARankings Singles Complete')
 
@@ -535,7 +535,7 @@ async function exportWTADoublesRankings(token) {
       }
     };
 
-    const WTADOUBLESRANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, WTA_DOUBLES_CONFIG)
+    const WTADOUBLESRANKINGS = await axios(`${WTA_DOUBLES_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RANKINGS}`, WTA_DOUBLES_CONFIG)
 
     console.log('Octoparse Export WTARankings Doubles Complete')
 
@@ -564,7 +564,7 @@ async function exportWTASinglesRaceRankings(token) {
       }
     };
 
-    const WTASINGLESRACERANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, WTA_SINGLES_RACE_CONFIG)
+    const WTASINGLESRACERANKINGS = await axios(`${WTA_SINGLES_RACE_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_WTA_SINGLES_RACE_RANKINGS}`, WTA_SINGLES_RACE_CONFIG)
 
     console.log('Octoparse Export WTARankings Singles Race Complete')
 
@@ -593,7 +593,7 @@ async function exportWTADoublesRaceRankings(token) {
       }
     };
 
-    const WTADOUBLESRACERANKINGS = await axios(`${config.baseURL}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, WTA_DOUBLES_RACE_CONFIG)
+    const WTADOUBLESRACERANKINGS = await axios(`${WTA_DOUBLES_RACE_CONFIG.baseURL}${process.env.OCTOPARSE_TASKID_WTA_DOUBLES_RACE_RANKINGS}`, WTA_DOUBLES_RACE_CONFIG)
 
     console.log('Octoparse Export WTARankings Doubles Race Complete')
 
