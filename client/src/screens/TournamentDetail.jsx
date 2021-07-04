@@ -7,6 +7,10 @@ import MobileBanner from '../components/adSense/MobileBanner'
 import Matches from '../components/Matches'
 import OrderOfPlay from '../components/OrderOfPlay'
 
+import {
+  getDailyTournamentMatchesAndResults
+} from '../utils/matches'
+
 import './TournamentDetail.css'
 
 export default function TournamentDetail(props) {
@@ -38,7 +42,7 @@ export default function TournamentDetail(props) {
   const [currentTournamentSchedule, setCurrentTournamentSchedule] = useState([])
     // Completed Matches (Results)
   const [completedSinglesMatches, setCompletedSinglesMatches] = useState([])
-  const [ completedDoublesMatches, setCompletedDoublesMatches] = useState([])
+  const [completedDoublesMatches, setCompletedDoublesMatches] = useState([])
     // Live Matches
   const [liveSinglesMatches, setLiveSinglesMatches] = useState([])
   const [liveDoublesMatches, setLiveDoublesMatches] = useState([])
@@ -46,9 +50,27 @@ export default function TournamentDetail(props) {
   const params = useParams();
   const history = useHistory()
 
-  const { tournaments, dailySchedule, dailyResults, liveMatches } = props;
+  const { tournaments, dailySchedule, dailyResults, liveMatches, currentDate, currentYear, currentMonth, currentDay } = props;
 
 // UseEffects
+
+  useEffect(() => {
+    if (tournaments !== undefined && currentTournamentSchedule.length === 0) {
+
+      console.log("TournamentDetail.js - UseEffect #1a - finding currentTournamentSchedule using params")
+
+      const gatherCurrentTournamentSchedule = async (params, currentYear, currentMonth, currentDay) => {
+        const tournamentScheduleData = await getDailyTournamentMatchesAndResults(params.id, currentYear, currentMonth, currentDay)
+        setCurrentTournamentSchedule(tournamentScheduleData)
+        setCurrentTournamentScheduleLoaded(true)
+      }
+
+      gatherCurrentTournamentSchedule(params, currentYear, currentMonth, currentDay)
+
+      console.log("TournamentDetail.js - UseEffect #1a - currentTournamentSchedule set")
+
+    }
+  }, [])
   
   // Sets currentSinglesTournament Object
   useEffect(() => {
@@ -58,24 +80,24 @@ export default function TournamentDetail(props) {
       console.log(tournaments)
       console.log(params)
 
-      console.log("TournamentDetail.js - UseEffect #1 - finding currentTournamentData using params")
+      console.log("TournamentDetail.js - UseEffect #1b - finding currentTournamentData using params")
 
       const currentTournamentData = tournaments.find((tournament) => parseInt(params.id) === parseInt(tournament.id))
       setCurrentSinglesTournament(currentTournamentData)
       setCurrentSinglesTournamentLoaded(true)
 
-      console.log("TournamentDetail.js - UseEffect #1 - currentSinglesTournament set")
+      console.log("TournamentDetail.js - UseEffect #1b - currentSinglesTournament set")
       console.log(currentTournamentData)
 
     } else {
 
-      console.log("TournamentDetail.js - UseEffect #1 - gathering currentTournamentData from LocalStorage")
+      console.log("TournamentDetail.js - UseEffect #1b - gathering currentTournamentData from LocalStorage")
 
       const currentTournamentData = localStorage.getItem('currentSinglesTournament')
       setCurrentSinglesTournament(JSON.parse(currentTournamentData))
       setCurrentSinglesTournamentLoaded(true)
 
-      console.log("TournamentDetail.js - UseEffect #1 - currentSinglesTournament set")
+      console.log("TournamentDetail.js - UseEffect #1b - currentSinglesTournament set")
 
     }
   }, [])
@@ -150,66 +172,18 @@ export default function TournamentDetail(props) {
     }
   }, [tournamentName, tournamentGender])
 
-
-  // Collects Tournament Schedule
-  useEffect(() => {
-    if (currentDoublesTournamentLoaded) {
-      
-      console.log(currentDoublesTournament)
-
-      if (dailySchedule.length > 0 && currentDoublesTournament) {
-        console.log(currentSinglesTournament.id)
-        console.log(currentDoublesTournament.id)
-        const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id) || (match.tournament.id === currentDoublesTournament.id)))
-        if (currentTournamentScheduleData === undefined) {
-          setCurrentTournamentScheduleLoaded(true)
-          console.log('schedule completed')
-        } else {
-          setCurrentTournamentSchedule(currentTournamentScheduleData)
-          setCurrentTournamentScheduleLoaded(true)
-          console.log('schedule completed')
-        }
-      } else if (dailySchedule.length > 0 && !currentDoublesTournament) {
-        const currentTournamentScheduleData = dailySchedule.filter((match) => ((match.tournament.id === currentSinglesTournament.id)))
-        if (currentTournamentScheduleData === undefined) {
-          setCurrentTournamentScheduleLoaded(true)
-          console.log('schedule completed')
-        } else {
-          setCurrentTournamentSchedule(currentTournamentScheduleData)
-          setCurrentTournamentScheduleLoaded(true)
-          console.log('schedule completed')
-        }
-      }
-
-    }
-  }, [currentDoublesTournamentLoaded])
-
   // Collect Completed Matches (Results)
   useEffect(() => {
 
     if (currentTournamentScheduleLoaded) {
 
-      if (dailySchedule.length > 0 && currentDoublesTournament) {
-
-        const completedSinglesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
-        setCompletedSinglesMatches(completedSinglesMatchesData)
-        const completedDoublesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentDoublesTournament.id)))
-        setCompletedDoublesMatches(completedDoublesMatchesData)
-        setCurrentTournamentCompletedMatchesLoaded(true)
-        console.log(dailyResults)
-        console.log(completedSinglesMatchesData)
-        console.log('completed matches pulled')
-
-      } else if (dailySchedule.length > 0 && !currentDoublesTournament) {
-
-        const completedSinglesMatchesData = dailyResults.filter((match) => ((match.sport_event_status.status === "closed") && (match.sport_event.tournament.id === currentSinglesTournament.id)))
+        const completedSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "closed"))
         setCompletedSinglesMatches(completedSinglesMatchesData)
         setCurrentTournamentCompletedMatchesLoaded(true)
         console.log(dailyResults)
         console.log(completedSinglesMatchesData)
         console.log('completed matches pulled')
 
-      }
     }
   }, [currentTournamentScheduleLoaded])
   
@@ -219,33 +193,7 @@ export default function TournamentDetail(props) {
 
     if (currentTournamentCompletedMatchesLoaded) {
 
-      if (dailySchedule.length > 0 && currentDoublesTournament) {
-
-        const liveSinglesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
-        const liveDoublesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentDoublesTournament.id)))
-        
-        if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData === undefined)) {
-          setCurrentTournamentLiveMatchesLoaded(true)
-          return
-        } else if ((liveSinglesMatchesData === undefined) && (liveDoublesMatchesData !== undefined)) {
-          setLiveDoublesMatches(liveDoublesMatchesData)
-          setCurrentTournamentLiveMatchesLoaded(true)
-        } else if ((liveSinglesMatchesData !== undefined) && (liveDoublesMatchesData === undefined)) {
-          setLiveSinglesMatches(liveSinglesMatchesData)
-          setCurrentTournamentLiveMatchesLoaded(true)
-        } else if ((liveSinglesMatchesData) && (liveDoublesMatchesData)) {
-          setLiveSinglesMatches(liveSinglesMatchesData)
-          setLiveDoublesMatches(liveDoublesMatchesData)
-          setCurrentTournamentLiveMatchesLoaded(true)
-        }
-        console.log('live matches completed')
-        console.log(liveMatches)
-        console.log(currentSinglesTournament.id)
-        console.log(liveSinglesMatchesData)
-
-      } else if (dailySchedule.length > 0 && !currentDoublesTournament) {
-
-        const liveSinglesMatchesData = liveMatches.filter((match) => ((match.sport_event.tournament.id === currentSinglesTournament.id)))
+        const liveSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "inprogress"))
   
         if ((liveSinglesMatchesData === undefined)) {
           setCurrentTournamentLiveMatchesLoaded(true)
@@ -259,7 +207,6 @@ export default function TournamentDetail(props) {
         console.log(currentSinglesTournament.id)
         console.log(liveSinglesMatchesData)
 
-      }
     }
   }, [currentTournamentCompletedMatchesLoaded])
 

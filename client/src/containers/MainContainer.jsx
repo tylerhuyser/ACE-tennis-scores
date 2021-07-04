@@ -20,6 +20,9 @@ export default function MainContainer(props) {
     dailyResults,
     liveMatches,
     currentDate,
+    currentYear, 
+    currentMonth,
+    currentDay
   } = props;
 
   return (
@@ -44,6 +47,9 @@ export default function MainContainer(props) {
             dailyResults={dailyResults}
             liveMatches={liveMatches}
             currentDate={currentDate}
+            currentYear={currentYear} 
+            currentMonth={currentMonth}
+            currentDay={currentDay}
           />
         </Route>
 

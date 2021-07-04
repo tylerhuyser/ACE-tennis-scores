@@ -182,7 +182,7 @@ function App () {
       { loaded ?
 
         <Layout>
-          <MainContainer tournaments={tournaments} dailySchedule={dailySchedule} dailyResults={dailyResults} liveMatches={liveMatches} currentDate={currentDate} />
+          <MainContainer tournaments={tournaments} dailySchedule={dailySchedule} dailyResults={dailyResults} liveMatches={liveMatches} currentDate={currentDate} currentYear={currentYear} currentMonth={currentMonth} currentDay={currentDay} />
         </Layout>
         
         :

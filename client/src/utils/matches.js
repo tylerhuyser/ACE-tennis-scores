@@ -26,3 +26,9 @@ export const getDailyMatchesRapidAPI = async (currentYear, currentMonth, current
   const resp = await rapidAPI.get(`/matches-by-date/${currentYear}-${currentMonth}-${currentDay}`)
   return resp.data.results
 }
+
+export const getDailyTournamentMatchesAndResults = async (tournamentID, currentYear, currentMonth, currentDay) => {
+  const resp = await rapidAPI.get(`/matches-results/${tournamentID}/${currentYear}-${currentMonth}-${currentDay}`)
+  console.log(resp)
+  return resp.data.results.matches
+}
