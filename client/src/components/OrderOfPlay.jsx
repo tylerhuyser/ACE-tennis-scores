@@ -8,119 +8,26 @@ export default function OrderOfPlay(props) {
   const { currentTournamentSchedule } = props
 
   const getCountryISO2 = require("country-iso-3-to-2");
+  const CountryCodes = require('countrycodes/countryCodes.js')
 
   const generateMatch = (match) => {
 
     console.log(match)
-    if (match.sport_event_type === "doubles") {
 
-      const competitorA = match.competitors[0]
-      const competitorB = match.competitors[1]
+      const competitorA = match.home
+      const competitorB = match.away
 
-      const doublesTeamInfo = {
-        doublesTeamA: {
-          partnerA: {
-            name: competitorA.players[0].name.split(',')[0],
-            countryCode: competitorA.players[0].country_code
-          },
-          partnerB: {
-            name: competitorA.players[1].name.split(',')[0],
-            countryCode: competitorA.players[1].country_code
-          },
-          seed: '[' + competitorA.seed + ']'
-        },
-        doublesTeamB: {
-          partnerA: {
-            name: competitorB.players[0].name.split(',')[0],
-            countryCode: competitorB.players[0].country_code
-          },
-          partnerB: {
-            name: competitorB.players[1].name.split(',')[0],
-            countryCode: competitorB.players[1].country_code
-          },
-          seed: '[' + competitorB.seed + ']'
-        }
-      }
+      const competitorAName = competitorA.first_name.charAt(0) + ". " + competitorA.last_name
+      const competitorASeed = '(' + competitorA.ranking + ')'
+      const competitorACountry = CountryCodes.getCountry(competitorA.country)
+      const competitorACountryCode = competitorACountry.iso2
 
-      const competitorAPartnerAAlpha2Country = getCountryISO2(doublesTeamInfo.doublesTeamA.partnerA.countryCode)
-      const competitorAPartnerBAlpha2Country = getCountryISO2(doublesTeamInfo.doublesTeamA.partnerB.countryCode)
-      const competitorBPartnerAAlpha2Country = getCountryISO2(doublesTeamInfo.doublesTeamB.partnerA.countryCode)
-      const competitorBPartnerBAlpha2Country = getCountryISO2(doublesTeamInfo.doublesTeamB.partnerB.countryCode)
+      const competitorBName = competitorB.first_name.charAt(0) + ". " + competitorB.last_name
+      const competitorBSeed = '(' + competitorB.ranking + ')'
+      const competitorBCountry = CountryCodes.getCountry(competitorB.country)
+      const competitorBCountryCode = competitorBCountry.iso2
 
-      return (
-
-        <div className="upcoming-match-container" key={match.id}>
-
-          <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorAPartnerAAlpha2Country}
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
-              }}
-              aria-label="United States"
-            />
-            
-            <p className="player-country-seperator">/</p>
-
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorAPartnerBAlpha2Country}
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
-              }}
-              aria-label="United States"
-            />
-          
-          <p className="competitor-name">{doublesTeamInfo.doublesTeamA.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.name}{' '}{(competitorA.seed !== undefined) ? doublesTeamInfo.doublesTeamA.seed : ''}{` (`}{doublesTeamInfo.doublesTeamA.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamA.partnerB.countryCode}{')'}</p>
-
-          <p className='player-separator'>vs.</p>
-
-          <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorBPartnerAAlpha2Country}
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
-              }}
-              aria-label="United States"
-            />
-            
-            <p className="player-country-seperator">/</p>
-
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorBPartnerBAlpha2Country}
-              style={{
-                fontSize: '200%',
-                lineHeight: '200%',
-              }}
-              aria-label="United States"
-            />
-          
-          <p className="competitor-name">{doublesTeamInfo.doublesTeamB.partnerA.name}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.name}{' '}{(competitorB.seed !== undefined) ? doublesTeamInfo.doublesTeamB.seed : ''}{` (`}{doublesTeamInfo.doublesTeamB.partnerA.countryCode}{'/'}{doublesTeamInfo.doublesTeamB.partnerB.countryCode}{')'}</p>
-
-        </div>
-
-      )
-
-    } else {
-
-      const competitorA = match.competitors[0]
-      const competitorB = match.competitors[1]
-
-      const competitorAName = competitorA.name
-      const competitorASeed = '[' + competitorA.seed + ']'
-      const competitorACountryCode = competitorA.country_code
-      const competitorAAlpha2Country = getCountryISO2(competitorACountryCode)
-
-      const competitorBName = competitorB.name
-      const competitorBSeed = '[' + competitorB.seed + ']'
-      const competitorBCountryCode = competitorB.country_code
-      const competitorBAlpha2Country = getCountryISO2(competitorBCountryCode)
-
-      const matchTime = new Date(match.scheduled).toLocaleTimeString()
+      const matchTime = new Date(match.date).toLocaleTimeString()
       const matchTimeString = matchTime.slice(0,-6) + matchTime.substring(matchTime.length - 3)
       console.log(matchTime)
       console.log(matchTimeString)
@@ -129,13 +36,13 @@ export default function OrderOfPlay(props) {
 
         <div className="upcoming-match-container" key={match.id}>
 
-          <p className="upcoming-match-time">START TIME: NOT BEFORE {matchTimeString} (LOCAL)</p>
+          <p className="upcoming-match-time">START TIME: NOT BEFORE {matchTimeString} (UTC)</p>
           
           <div className="upcoming-match-competitors-container">
 
             <ReactCountryFlag
                 className="emojiFlag"
-                countryCode={competitorAAlpha2Country}
+                countryCode={competitorACountryCode}
                 aria-label="United States"
                 style={{
                   fontSize: '200%',
@@ -143,13 +50,13 @@ export default function OrderOfPlay(props) {
               }}
             />
 
-            <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountryCode}{`)`}</p>
+            <p className="competitor-name">{competitorAName}{' '}{(competitorA.seed !== undefined) ? competitorASeed : ''}{` (`}{competitorACountry.iso3}{`)`}</p>
 
             <p className='player-separator'>vs.</p>
 
             <ReactCountryFlag
                 className="emojiFlag"
-                countryCode={competitorBAlpha2Country}
+                countryCode={competitorBCountryCode}
                 style={{
                   fontSize: '200%',
                   lineHeight: '200%',
@@ -157,14 +64,13 @@ export default function OrderOfPlay(props) {
                 aria-label="United States"
             />
 
-            <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountryCode}{`)`}</p>
+            <p className="competitor-name">{competitorBName}{' '}{(competitorB.seed !== undefined) ? competitorBSeed : ''}{` (`}{competitorBCountry.iso3}{`)`}</p>
 
           </div>
           
         </div>
 
       )
-    }
   }
 
 const schedule = currentTournamentSchedule.map((match) => {

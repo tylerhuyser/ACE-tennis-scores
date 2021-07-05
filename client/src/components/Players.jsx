@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import IconLogo from './IconLogo'
 import Loader from '../components/Loader'
@@ -11,21 +11,25 @@ export default function Players(props) {
 
   const { rankingCategory, discipline, viewRace, playerCount, setPlayerCount } = props
 
+  const [loaded, setLoaded] = useState(false)
+
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && discipline === "Doubles") {
+    if (rankingCategory && discipline === "Doubles" && viewRace) {
 
       console.log(rankingCategory)
 
       const playerCards = rankingCategory?.map((player, index) => {
 
-        setPlayerCount(index)
+        if ((index === (rankingCategory.length + 1))) {
+          setLoaded(true)
+        }
 
         return (  
           
           <PlayerCard
             playerData = { player }
-            playerCountry = { convertCountryIOCtoISO3(player.country.toUpperCase()) }
-            key = { player.id }
+            playerCountry = { null }
+            key={player.current_time}
             discipline = { discipline }
             viewRace = { viewRace }
             componentUsage = "rankings"
@@ -40,13 +44,15 @@ export default function Players(props) {
 
       const playerCards = rankingCategory?.map((player, index) => {
 
-        setPlayerCount(index)
+        if ((index === (rankingCategory.length + 1))) {
+          setLoaded(true)
+        }
       
         return (
           <PlayerCard
             playerData={player}
             playerCountry={convertCountryIOCtoISO3(player.country.toUpperCase())}
-            key={player.id}
+            key={player.player_name}
             discipline={discipline}
             componentUsage="rankings"
 
@@ -71,7 +77,7 @@ export default function Players(props) {
 
     <>
       
-      { playerCount < 100 ?
+      { (loaded || (playerCount < 100)) ?
 
         <div className="loader-icon heartbeat" id="rankings-loader">
 

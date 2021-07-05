@@ -4,6 +4,7 @@ import Switch from "react-switch";
 import MobileBanner from '../components/adSense/MobileBanner'
 import Loader from '../components/Loader'
 import Players from '../components/Players'
+import IconLogo from '../components/IconLogo'
 
 import './Rankings.css'
 
@@ -14,6 +15,7 @@ import {
 export default function Rankings(props) {
 
   const [loaded, setLoaded] = useState(false)
+  const [activateSwitch, setActivateSwitch] = useState(false)
 
   const [event, setEvent] = useState('ATP')
   const [discipline, setDiscipline] = useState('Singles')
@@ -34,78 +36,104 @@ export default function Rankings(props) {
   const [playerCount, setPlayerCount] = useState(0)
 
   useEffect(() => {
-    if (loaded && event === "WTA" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(femaleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "WTA" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(femaleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(femaleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "WTA" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(femaleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(maleSinglesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "ATP" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(maleSinglesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(maleDoublesRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-    } else if (loaded && event === "ATP" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(maleDoublesRaceRankings.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+    if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Singles" && viewRace === false) {
+      setRankingCategory(femaleSinglesRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(femaleSinglesRaceRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(femaleDoublesRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(femaleDoublesRaceRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Singles" && viewRace === false) {
+      setRankingCategory(maleSinglesRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(maleSinglesRaceRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(maleDoublesRankings)
+    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(maleDoublesRaceRankings)
     }
-  }, [loaded, event, discipline, viewRace])
+  }, [activateSwitch])
 
   
   useEffect(() => {
-    const gatherRankings = async () => {
-      const combinedRankingsData = await herokuRankings()
-      console.log(combinedRankingsData)
 
-      const combinedRankings = JSON.parse(combinedRankingsData[0].data)
-      console.log(combinedRankings)
-
-      const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
-      const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
-
-      console.log(ATPRANKINGS)
-      console.log(WTARANKINGS)
-
-      setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList)
-      setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList)
-      setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList)
-      setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data.dataList)
-      setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data.dataList)
-      setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data.dataList)
-      setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data.dataList)
-      setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data.dataList)
+    if ( !loaded ) {
       
-      setLoaded(true)
-    }
+      const gatherRankings = async () => {
+        const combinedRankingsData = await herokuRankings()
+        console.log(combinedRankingsData)
 
-    gatherRankings()
+        const combinedRankings = JSON.parse(combinedRankingsData[0].data)
+        console.log(combinedRankings)
+
+        const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
+        const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
+
+        console.log(ATPRANKINGS)
+        console.log(WTARANKINGS)
+
+        setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+
+        setRankingCategory(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        
+        setLoaded(true)
+      }
+
+      gatherRankings()
+  
+    }
 
   }, [])
 
+  useEffect(() => {
+    if (loaded) {
+      setPlayerCount(0)
+    }
+  }, [event, discipline, viewRace])
+
+  useEffect(() => {
+    if (loaded && playerCount === 0) {
+      setActivateSwitch(true)
+    }
+  }, [playerCount])
+
+  useEffect(() => {
+    if (activateSwitch) {
+      setActivateSwitch(false)
+    }
+  }, [rankingCategory])
+
+  useEffect(() => {
+    if (!activateSwitch) {
+      setPlayerCount(rankingCategory.length)
+    }
+  }, [activateSwitch])
+
   const handleEventSwitch = () => {
     if (event === "WTA") {
-      setPlayerCount(0)
       setEvent("ATP")
     } else if (event === "ATP") {
-      setPlayerCount(0)
       setEvent("WTA")
     }
   }
 
   const handleDisciplineSwitch = () => {
     if (discipline === "Singles") {
-      setPlayerCount(0)
       setDiscipline("Doubles")
     } else if (discipline === "Doubles") {
-      setPlayerCount(0)
       setDiscipline("Singles")
     }
   }
 
   const handleRaceSwitch = () => {
-    setPlayerCount(0)
     setViewRace(!viewRace)
   }
   
@@ -160,7 +188,19 @@ export default function Rankings(props) {
 
             <MobileBanner />
 
-              <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} playerCount={playerCount} setPlayerCount={setPlayerCount} />
+              { (!activateSwitch && (playerCount !== 0)) ?
+
+                <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} playerCount={playerCount} setPlayerCount={setPlayerCount} />
+
+              :
+
+                <div className="loader-icon heartbeat" id="rankings-loader">
+
+                  <IconLogo />
+
+                </div>
+
+              }
             
           </div>
           

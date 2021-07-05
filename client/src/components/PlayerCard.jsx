@@ -55,7 +55,7 @@ export default function PlayerCard(props) {
         
         :
           
-        <div className="player-container" id={componentUsage === "rankings" ? "low-detail" : "high-detail"} key={playerData.id} onClick={(e) => handlePlayerDetails(e)}>
+        <div className="player-container" id={componentUsage === "rankings" ? `low-detail` : `high-detail`} key={playerData.current_time} onClick={(e) => handlePlayerDetails(e)}>
           
           {componentUsage === "rankings" ?
             
@@ -63,9 +63,9 @@ export default function PlayerCard(props) {
 
               <p className="player-ranking">{playerData.ranking}</p>
 
-              <p className="player-name">{discipline === "Doubles" && viewRace ? `${playerData.player_name_1}/${playerData.player_name_2}` : playerData.player_Name}</p>
+              <p className="player-name">{discipline === "Doubles" && viewRace ? `${playerData.player_name_1}/${playerData.player_name_2}` : playerData.player_name}</p>
               
-              {discipline === "Doubles" && viewRace ?
+              {((discipline === "Doubles") && viewRace) ?
                 
                 <>
                 </>
@@ -108,7 +108,7 @@ export default function PlayerCard(props) {
                 }}
               />
               
-              <p className="player-country">{playerData.Country.toUpperCase()}</p>
+              <p className="player-country">{playerData.country.toUpperCase()}</p>
               
             </div>
             

@@ -177,7 +177,7 @@ export default function TournamentDetail(props) {
 
     if (currentTournamentScheduleLoaded) {
 
-        const completedSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "closed"))
+        const completedSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "finished"))
         setCompletedSinglesMatches(completedSinglesMatchesData)
         setCurrentTournamentCompletedMatchesLoaded(true)
         console.log(dailyResults)
@@ -293,7 +293,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} view={view} />
+            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} view={view} touramentGender={tournamentGender} />
 
             :
         
@@ -301,7 +301,7 @@ export default function TournamentDetail(props) {
           
               {view === "Completed Matches" ?
         
-                <Matches matchesData={currentMode ? completedDoublesMatches : completedSinglesMatches} view={view} />
+                <Matches matchesData={currentMode ? completedDoublesMatches : completedSinglesMatches} view={view} touramentGender={tournamentGender} />
               
                 :
             

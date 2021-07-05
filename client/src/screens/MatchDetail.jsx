@@ -18,6 +18,7 @@ export default function MatchDetail(props) {
   const [ matchData, setMatchData ] = useState(null)
   const [ homeStats, setHomeStats] = useState(null)
   const [ awayStats, setAwayStats ] = useState(null)
+  const [tournamentGender, setTournamentGender] = useState("")
 
   const history = useHistory()
 
@@ -25,16 +26,18 @@ export default function MatchDetail(props) {
 
     const match = localStorage.getItem('currentMatch')
     const matchDetails = localStorage.getItem('matchDetails')
+    const currentTournament = localStorage.getItem('currentSinglesTournament')
 
     if (matchDetails) {
       setMatchData(JSON.parse(matchDetails))
       setHomeStats(JSON.parse(matchDetails).statistics.teams[0])
       setAwayStats(JSON.parse(matchDetails).statistics.teams[1])
+      setTournamentGender(JSON.parse(currentTournament.code))
       setMatchDetailsLoaded(true)
  
     } else {
 
-      const matchID = JSON.parse(match).sport_event.id
+      const matchID = JSON.parse(match).id
       console.log(matchID)
 
       const getMatchStatistics = async (matchID) => {
@@ -52,6 +55,7 @@ export default function MatchDetail(props) {
         }
       }
       getMatchStatistics(matchID)
+      setTournamentGender(JSON.parse(currentTournament.code))
 
     }
   }, [])
@@ -68,12 +72,12 @@ export default function MatchDetail(props) {
 
     const interval = setInterval(() => {
 
-      if (matchData.matchStatus === "live") {
+      if (matchData.matchStatus === "live" || matchData.matchStatus === "inprogress") {
           const getLiveMatchStatistics = async (matchID) => {
             const matchDetails = await getMatchDetails(matchID)
             setMatchData(matchDetails)
           }
-          getLiveMatchStatistics(matchData.sport_event.id)
+          getLiveMatchStatistics(matchData.id)
        } else {
          clearInterval(interval)
       }
