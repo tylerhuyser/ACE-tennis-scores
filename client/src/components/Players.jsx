@@ -1,64 +1,73 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, Suspense, lazy} from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 
 import IconLogo from './IconLogo'
 import Loader from '../components/Loader'
-import PlayerCard from './PlayerCard'
+// import PlayerCard from './PlayerCard'
 
 import { convertCountryIOCtoISO3 } from '../utils/country-converter'
+
+const PlayerCard = React.lazy(() => import('./PlayerCard'))
 
 
 export default function Players(props) {
 
-  const { rankingCategory, discipline, viewRace, playerCount, setPlayerCount } = props
+  const { rankingCategory, discipline, viewRace, activateSwitch } = props
 
-  const [loaded, setLoaded] = useState(false)
+  const [ loaded, setLoaded ] = useState(false)
 
   const generatePlayers = (rankingCategory) => {
-    if (rankingCategory && discipline === "Doubles" && viewRace) {
+
+    if (!activateSwitch && rankingCategory && discipline === "Doubles" && viewRace) {
 
       console.log(rankingCategory)
 
       const playerCards = rankingCategory?.map((player, index) => {
 
-        if ((index === (rankingCategory.length + 1))) {
-          setLoaded(true)
-        }
+        return ( 
 
-        return (  
+          <Suspense fallback={   
+
+            <div className="loader-icon heartbeat" id="rankings-loader">
+
+              <IconLogo />
+
+            </div>
+          }> 
           
-          <PlayerCard
-            playerData = { player }
-            playerCountry = { null }
-            key={player.current_time}
-            discipline = { discipline }
-            viewRace = { viewRace }
-            componentUsage = "rankings"
-          />
+            <PlayerCard
+              playerData = { player }
+              playerCountry = { null }
+              key={player.current_time}
+              discipline = { discipline }
+              viewRace = { viewRace }
+              componentUsage = "rankings"
+            />
+
+          </Suspense>
       )})
 
       return playerCards
 
-    } else if (rankingCategory) {
+    } else if (!activateSwitch && rankingCategory) {
 
       console.log(rankingCategory)
+      console.log(rankingCategory.length)
 
       const playerCards = rankingCategory?.map((player, index) => {
-
-        if ((index === (rankingCategory.length + 1))) {
-          setLoaded(true)
-        }
       
         return (
+
           <PlayerCard
             playerData={player}
             playerCountry={convertCountryIOCtoISO3(player.country.toUpperCase())}
-            key={player.player_name}
+            key={player.current_time}
             discipline={discipline}
             componentUsage="rankings"
-
           />
+
       )})
-      
+
       return playerCards
 
     } else {
@@ -73,11 +82,15 @@ export default function Players(props) {
 
   console.log(players)
 
+  // useDeepCompareEffect(() => {
+  //   setLoaded(true)
+  // },[rankingCategory])
+
   return (
 
     <>
       
-      { (loaded || (playerCount < 100)) ?
+      {(activateSwitch || !rankingCategory) ?
 
         <div className="loader-icon heartbeat" id="rankings-loader">
 
@@ -88,8 +101,19 @@ export default function Players(props) {
       :
       
         <>
+
+          <Suspense fallback={   
+
+            <div className="loader-icon heartbeat" id="rankings-loader">
+
+              <IconLogo />
+
+            </div>
+          }> 
     
-          { players }
+            { players }
+
+          </Suspense>
           
         </>
       

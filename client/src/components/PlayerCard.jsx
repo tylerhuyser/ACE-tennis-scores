@@ -19,7 +19,7 @@ export default function PlayerCard(props) {
   useEffect(() => {
     const gatherPlayerRankings = (playerData) => {
 
-      if (componentUsage === "rankings") {
+      if (!loaded && componentUsage === "rankings") {
         setDetailLevel("medium")
       }
     }
@@ -48,12 +48,12 @@ export default function PlayerCard(props) {
 
     <>
       
-      { !loaded ?
+      {/* { !loaded ?
         
-        <>
-        </>
+        <div className="empty-div-playerCard">
+        </div>
         
-        :
+        : */}
           
         <div className="player-container" id={componentUsage === "rankings" ? `low-detail` : `high-detail`} key={playerData.current_time} onClick={(e) => handlePlayerDetails(e)}>
           
@@ -116,7 +116,7 @@ export default function PlayerCard(props) {
         
         </div>
           
-      }
+      {/* } */}
 
     </>
       

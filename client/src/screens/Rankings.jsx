@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense, lazy } from 'react'
 import Switch from "react-switch";
 
 import MobileBanner from '../components/adSense/MobileBanner'
 import Loader from '../components/Loader'
-import Players from '../components/Players'
+// import Players from '../components/Players'
 import IconLogo from '../components/IconLogo'
 
 import './Rankings.css'
@@ -11,6 +11,8 @@ import './Rankings.css'
 import {
   herokuRankings
 } from '../utils/rankings'
+
+const Players = React.lazy(() => import('../components/Players'))
 
 export default function Rankings(props) {
 
@@ -33,30 +35,9 @@ export default function Rankings(props) {
 
   const [ rankingCategory, setRankingCategory ] = useState(false)
 
-  const [playerCount, setPlayerCount] = useState(0)
+  // The Below UseEffect collects ranking data via Heroku API
 
-  useEffect(() => {
-    if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(femaleSinglesRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(femaleSinglesRaceRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(femaleDoublesRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "WTA" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(femaleDoublesRaceRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Singles" && viewRace === false) {
-      setRankingCategory(maleSinglesRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Singles" && viewRace === true) {
-      setRankingCategory(maleSinglesRaceRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Doubles" && viewRace === false) {
-      setRankingCategory(maleDoublesRankings)
-    } else if (loaded && activateSwitch && playerCount === 0 && event === "ATP" && discipline === "Doubles" && viewRace === true) {
-      setRankingCategory(maleDoublesRaceRankings)
-    }
-  }, [activateSwitch])
-
-  
-  useEffect(() => {
+    useEffect(() => {
 
     if ( !loaded ) {
       
@@ -91,51 +72,88 @@ export default function Rankings(props) {
   
     }
 
-  }, [])
+  }, [loaded])
 
-  useEffect(() => {
-    if (loaded) {
-      setPlayerCount(0)
-    }
-  }, [event, discipline, viewRace])
-
-  useEffect(() => {
-    if (loaded && playerCount === 0) {
-      setActivateSwitch(true)
-    }
-  }, [playerCount])
-
-  useEffect(() => {
-    if (activateSwitch) {
-      setActivateSwitch(false)
-    }
-  }, [rankingCategory])
-
-  useEffect(() => {
-    if (!activateSwitch) {
-      setPlayerCount(rankingCategory.length)
-    }
-  }, [activateSwitch])
+// The Below Functions Handle Switch Actions for Ranking Data
 
   const handleEventSwitch = () => {
     if (event === "WTA") {
       setEvent("ATP")
+      setActivateSwitch(true)
     } else if (event === "ATP") {
       setEvent("WTA")
+      setActivateSwitch(true)
     }
   }
 
   const handleDisciplineSwitch = () => {
     if (discipline === "Singles") {
       setDiscipline("Doubles")
+      setActivateSwitch(true)
     } else if (discipline === "Doubles") {
       setDiscipline("Singles")
+      setActivateSwitch(true)
     }
   }
 
   const handleRaceSwitch = () => {
     setViewRace(!viewRace)
+    setActivateSwitch(true)
   }
+
+  // The Below UseEffect activates when ActivateSwitch is true, thereby changing the current ranking data fed to the Players component and rendered as individual PlayerCards
+
+  useEffect(() => {
+    if (loaded && activateSwitch && event === "WTA" && discipline === "Singles" && viewRace === false) {
+      setRankingCategory(femaleSinglesRankings)
+    } else if (loaded && activateSwitch && event === "WTA" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(femaleSinglesRaceRankings)
+    } else if (loaded && activateSwitch && event === "WTA" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(femaleDoublesRankings)
+    } else if (loaded && activateSwitch && event === "WTA" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(femaleDoublesRaceRankings)
+    } else if (loaded && activateSwitch && event === "ATP" && discipline === "Singles" && viewRace === false) {
+      setRankingCategory(maleSinglesRankings)
+    } else if (loaded && activateSwitch && event === "ATP" && discipline === "Singles" && viewRace === true) {
+      setRankingCategory(maleSinglesRaceRankings)
+    } else if (loaded && activateSwitch && event === "ATP" && discipline === "Doubles" && viewRace === false) {
+      setRankingCategory(maleDoublesRankings)
+    } else if (loaded && activateSwitch && event === "ATP" && discipline === "Doubles" && viewRace === true) {
+      setRankingCategory(maleDoublesRaceRankings)
+    }
+  }, [activateSwitch])
+
+// Below UseEffect triggers when RankingCategory changes AND when ActivateSwitch is TRUE. It sets ActivateSwitch back to false.
+
+  useEffect(() => {
+    if (loaded && activateSwitch && rankingCategory) {
+      setActivateSwitch(false)
+    }
+  }, [rankingCategory])
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     setPlayerCount(0)
+  //   }
+  // }, [event, discipline, viewRace])
+
+  // useEffect(() => {
+  //   if (loaded && playerCount === 0) {
+  //     setActivateSwitch(true)
+  //   }
+  // }, [playerCount])
+
+  // useEffect(() => {
+  //   if (loaded && activateSwitch) {
+  //     setActivateSwitch(false)
+  //   }
+  // }, [rankingCategory])
+
+  // useEffect(() => {
+  //   if (loaded && rankingCategory && !activateSwitch) {
+  //     setActivateSwitch(true)
+  //   }
+  // }, [event, discipline, viewRace])
   
   return (
     <>
@@ -188,19 +206,17 @@ export default function Rankings(props) {
 
             <MobileBanner />
 
-              { (!activateSwitch && (playerCount !== 0)) ?
-
-                <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} playerCount={playerCount} setPlayerCount={setPlayerCount} />
-
-              :
-
+              <Suspense fallback={        
                 <div className="loader-icon heartbeat" id="rankings-loader">
 
                   <IconLogo />
 
                 </div>
+              }>
 
-              }
+                <Players rankingCategory={rankingCategory} discipline={discipline} viewRace={viewRace} activateSwitch={activateSwitch} />
+
+              </Suspense>
             
           </div>
           
