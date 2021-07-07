@@ -131,29 +131,6 @@ export default function Rankings(props) {
     }
   }, [rankingCategory])
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     setPlayerCount(0)
-  //   }
-  // }, [event, discipline, viewRace])
-
-  // useEffect(() => {
-  //   if (loaded && playerCount === 0) {
-  //     setActivateSwitch(true)
-  //   }
-  // }, [playerCount])
-
-  // useEffect(() => {
-  //   if (loaded && activateSwitch) {
-  //     setActivateSwitch(false)
-  //   }
-  // }, [rankingCategory])
-
-  // useEffect(() => {
-  //   if (loaded && rankingCategory && !activateSwitch) {
-  //     setActivateSwitch(true)
-  //   }
-  // }, [event, discipline, viewRace])
   
   return (
     <>

@@ -1,14 +1,10 @@
-import React, {useState, useEffect, Suspense, lazy} from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
+import React, {useState, useEffect} from 'react'
 
 import IconLogo from './IconLogo'
 import Loader from '../components/Loader'
-// import PlayerCard from './PlayerCard'
+import PlayerCard from './PlayerCard'
 
 import { convertCountryIOCtoISO3 } from '../utils/country-converter'
-
-const PlayerCard = React.lazy(() => import('./PlayerCard'))
-
 
 export default function Players(props) {
 
@@ -20,20 +16,9 @@ export default function Players(props) {
 
     if (!activateSwitch && rankingCategory && discipline === "Doubles" && viewRace) {
 
-      console.log(rankingCategory)
-
       const playerCards = rankingCategory?.map((player, index) => {
 
         return ( 
-
-          <Suspense fallback={   
-
-            <div className="loader-icon heartbeat" id="rankings-loader">
-
-              <IconLogo />
-
-            </div>
-          }> 
           
             <PlayerCard
               playerData = { player }
@@ -44,15 +29,11 @@ export default function Players(props) {
               componentUsage = "rankings"
             />
 
-          </Suspense>
       )})
 
       return playerCards
 
     } else if (!activateSwitch && rankingCategory) {
-
-      console.log(rankingCategory)
-      console.log(rankingCategory.length)
 
       const playerCards = rankingCategory?.map((player, index) => {
       
@@ -82,10 +63,6 @@ export default function Players(props) {
 
   console.log(players)
 
-  // useDeepCompareEffect(() => {
-  //   setLoaded(true)
-  // },[rankingCategory])
-
   return (
 
     <>
@@ -101,19 +78,8 @@ export default function Players(props) {
       :
       
         <>
-
-          <Suspense fallback={   
-
-            <div className="loader-icon heartbeat" id="rankings-loader">
-
-              <IconLogo />
-
-            </div>
-          }> 
     
             { players }
-
-          </Suspense>
           
         </>
       
