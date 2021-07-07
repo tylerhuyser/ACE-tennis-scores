@@ -7,8 +7,6 @@ async function octoparseAPIConfig () {
     const axios = require('axios');
     const urldata = `username=${process.env.OCTOPARSE_USERNAME}&password=${process.env.OCTOPARSE_PASSWORD}&grant_type=password`;
 
-    console.log(urldata)
-
     var tokenConfig = {
       method: 'post',
       url: 'https://dataapi.octoparse.com/token',
@@ -455,26 +453,12 @@ async function exportATPRankings(token) {
 
     const axios = require('axios');
 
-    // function timeout1() {
-    //   setTimeout(() => exportATPSinglesRaceRankings(config), 1001)
-    // }
-
     const ATPEXPORTS = [
       exportATPSinglesRankings(token),
       exportATPSinglesRaceRankings(token),
       exportATPDoublesRankings(token),
       exportATPDoublesRaceRankings(token)
     ]
-
-    // await Promise.all(ATPEXPORTS).then((values) => {
-    //   console.log('ATP Export PromiseAll Complete')
-    //   console.log(values)
-    // }).catch(error => {
-    //   console.log('Octoparse ATP Export Error - PromiseAll')
-    //   console.error(error.message)
-    // })
-
-    // return () => clearTimeout(timeOut1)
 
     const responses = []
 
@@ -623,18 +607,6 @@ async function exportWTARankings(token) {
       exportWTADoublesRaceRankings(token)
     ]
 
-    // await Promise.all(WTAEXPORTS).then((values) => {
-    //   console.log('WTA Export PromiseAll Complete')
-    //   console.log(values)
-    // }).catch(error => {
-    //   console.log('Octoparse WTA Export Error - PromiseAll')
-    //   console.error(error)
-    // })
-
-    // const WTAEXPORTS = new Promise(function (resolve, reject) {
-    //   setTimeout(() => resolve(1), 1000);
-    // }).then
-
     const responses = []
 
     for (let i = 0; i < WTAEXPORTS.length; i++) {
@@ -660,12 +632,6 @@ async function exportOctoparseData(token) {
     exportATPRankings(token),
     exportWTARankings(token)
   ]
-
-  // await Promise.all(exportFunctions).then(values => {
-  //   console.log('Octoparse Data Export Complete - PromiseAll')
-  // }).catch(error => {
-  //   console.log(error)
-  // })
 
   const responses = []
 
@@ -796,8 +762,6 @@ async function getOldRankings(token, authToken, rankingsData) {
 
   try {
 
-    console.log(authToken)
-
     const axios = require('axios');
 
     var config = {
@@ -849,8 +813,6 @@ async function loginHerokuPostgreSQL(token, rankingsData) {
     })
 
     const authToken = resp.data.token
-
-    console.log(authToken)
 
     if (resp.status === 200) {
 
