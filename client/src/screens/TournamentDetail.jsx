@@ -12,6 +12,7 @@ import {
 } from '../utils/matches'
 
 import './TournamentDetail.css'
+import axios from 'axios';
 
 export default function TournamentDetail(props) {
 
@@ -21,6 +22,7 @@ export default function TournamentDetail(props) {
   const [currentTournamentScheduleLoaded, setCurrentTournamentScheduleLoaded] = useState(false)
   const [currentTournamentCompletedMatchesLoaded, setCurrentTournamentCompletedMatchesLoaded] = useState(false)
   const [currentTournamentLiveMatchesLoaded, setCurrentTournamentLiveMatchesLoaded] = useState(false)
+  const [liveSinglesMatchDetailsLoaded, setLiveSinglesMatchDetailsLoaded] = useState(false)
   
   // Visibility Switches
   const [currentMode, setCurrentMode] = useState(false)
@@ -45,6 +47,7 @@ export default function TournamentDetail(props) {
   const [completedDoublesMatches, setCompletedDoublesMatches] = useState([])
     // Live Matches
   const [liveSinglesMatches, setLiveSinglesMatches] = useState([])
+  const [liveSinglesMatchDetails, setLiveSinglesMatchDetails] = useState([])
   const [liveDoublesMatches, setLiveDoublesMatches] = useState([])
 
   const params = useParams();
@@ -209,6 +212,32 @@ export default function TournamentDetail(props) {
 
     }
   }, [currentTournamentCompletedMatchesLoaded])
+
+  useEffect(() => {
+    if (currentTournamentLiveMatchesLoaded) {
+
+      if (liveSinglesMatches) {
+
+        const gatherLiveMatchDetailsData = async (currentSinglesTournament) =>  {
+          const liveMatchDetailsData = await axios.get('https://www.goalserve.com/getfeed/226fb4fb7379439208cf08d8f39d64a7/tennis_scores/home?json=1')
+          const liveMatchesCurrentTournamentData = liveMatchDetailsData.scores.category.filter((tournament) => {
+            return (
+              tournament.name.toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament.name.toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
+            )
+          })
+          setLiveSinglesMatchDetails(liveMatchesCurrentTournamentData)
+        }
+
+        gatherLiveMatchDetailsData(currentSinglesTournament)
+
+        setLiveSinglesMatchDetailsLoaded(true)
+      } else {
+        
+        setLiveSinglesMatchDetailsLoaded(true)
+      }
+
+    }
+  }, [setCurrentTournamentLiveMatchesLoaded])
 
   // Switch Functions
 

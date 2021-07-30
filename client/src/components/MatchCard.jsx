@@ -153,16 +153,20 @@ export default function MatchCard(props) {
           case "round_of_2":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentRound: "FINAL"
+              tournamentRound: "Final"
             }));
             break;
           case "final":
             setMatchInfo(prevState => ({
               ...prevState,
-              tournamentRound: "FINAL"
+              tournamentRound: "Final"
             }));
             break;
           default:
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: tournamentRound
+            }));
             break;
         }
       };

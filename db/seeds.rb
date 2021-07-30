@@ -10,6 +10,7 @@ User.destroy_all
 Ranking.destroy_all
 
 @user = User.create!(username: 'admin', email: 'tyler@gameset.blog', password: 'DD_vZtHFB8-c')
+@rapidAPIUser = User.create!(username: 'rapidAPI', email: 'hello@gameset.blog', password: 'U!XGCK3mnt*!Lz2z')
 @rankings = Ranking.create!(data: 'none', date: "2021-05-24")
 
 puts "#{User.count} users created"
