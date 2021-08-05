@@ -11,8 +11,12 @@ import {
   getDailyTournamentMatchesAndResults
 } from '../utils/matches'
 
+import {
+  getLiveMatchesGoalServe
+} from '../utils/live'
+
 import './TournamentDetail.css'
-import axios from 'axios';
+
 
 export default function TournamentDetail(props) {
 
@@ -219,7 +223,7 @@ export default function TournamentDetail(props) {
       if (liveSinglesMatches) {
 
         const gatherLiveMatchDetailsData = async (currentSinglesTournament) =>  {
-          const liveMatchDetailsData = await axios.get('https://www.goalserve.com/getfeed/226fb4fb7379439208cf08d8f39d64a7/tennis_scores/home?json=1')
+          const liveMatchDetailsData = await getLiveMatchesGoalServe()
           const liveMatchesCurrentTournamentData = liveMatchDetailsData.scores.category.filter((tournament) => {
             return (
               tournament.name.toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament.name.toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
@@ -232,7 +236,7 @@ export default function TournamentDetail(props) {
 
         setLiveSinglesMatchDetailsLoaded(true)
       } else {
-        
+
         setLiveSinglesMatchDetailsLoaded(true)
       }
 
@@ -268,7 +272,7 @@ export default function TournamentDetail(props) {
 
     <>
       
-      { currentTournamentLiveMatchesLoaded ?
+      { liveSinglesMatchDetailsLoaded ?
       
         <div className="tournament-detail-container">
 
