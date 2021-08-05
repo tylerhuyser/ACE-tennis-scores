@@ -232,10 +232,17 @@ export default function TournamentDetail(props) {
           setLiveSinglesMatchDetails(liveMatchesCurrentTournamentData)
         }
 
+        console.log('gathering live matches from GoalServe')
+
         gatherLiveMatchDetailsData(currentSinglesTournament)
 
+        console.log('completed gathering live matches from GoalServe')
+
         setLiveSinglesMatchDetailsLoaded(true)
+
       } else {
+
+        console.log('No Live Matches - NOT GETting Data from GoalServe')
 
         setLiveSinglesMatchDetailsLoaded(true)
       }
@@ -326,7 +333,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} view={view} touramentGender={tournamentGender} />
+            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatchDetails} view={view} touramentGender={tournamentGender} />
 
             :
         
