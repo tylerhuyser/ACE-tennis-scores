@@ -9,6 +9,6 @@ export const getLiveMatches = async () => {
 
 export const getLiveMatchesGoalServe = async () => {
   const resp = await goalServeAPI.get('tennis_scores/home?json=1')
-  console.log(resp.data)
-  return resp.data
+  console.log(resp.data.scores)
+  return resp.data.scores
 }

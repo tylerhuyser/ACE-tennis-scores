@@ -184,12 +184,16 @@ export default function TournamentDetail(props) {
 
     if (currentTournamentScheduleLoaded) {
 
+        console.log("TournamentDetail.js - UseEffect #2b - filtering completed singles matches")
+
         const completedSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "finished"))
         setCompletedSinglesMatches(completedSinglesMatchesData)
         setCurrentTournamentCompletedMatchesLoaded(true)
         console.log(dailyResults)
         console.log(completedSinglesMatchesData)
         console.log('completed matches pulled')
+
+        console.log("TournamentDetail.js - UseEffect #2b - completedSinglesMatches set")
 
     }
   }, [currentTournamentScheduleLoaded])
@@ -200,39 +204,51 @@ export default function TournamentDetail(props) {
 
     if (currentTournamentCompletedMatchesLoaded) {
 
+        console.log("TournamentDetail.js - UseEffect #3b - filtering live singles matches")
+
         const liveSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "inprogress"))
-  
+        console.log(liveSinglesMatchesData)
+      
         if ((liveSinglesMatchesData === undefined)) {
+          setLiveSinglesMatches("Currently No Live Matches")
           setCurrentTournamentLiveMatchesLoaded(true)
-          return
         } else if ((liveSinglesMatchesData !== undefined)) {
           setLiveSinglesMatches(liveSinglesMatchesData)
           setCurrentTournamentLiveMatchesLoaded(true)
         }
-        console.log('live matches completed')
-        console.log(liveMatches)
-        console.log(currentSinglesTournament.id)
-        console.log(liveSinglesMatchesData)
+
+        console.log("TournamentDetail.js - UseEffect #3b - live singles matches set")
 
     }
   }, [currentTournamentCompletedMatchesLoaded])
 
   useEffect(() => {
-    if (currentTournamentLiveMatchesLoaded) {
 
-      if (liveSinglesMatches) {
+    if (liveSinglesMatches && (liveSinglesMatches.length > 0)) {
+
+      console.log('gathering live matches from GoalServe')
+
+      console.log(liveSinglesMatches)
 
         const gatherLiveMatchDetailsData = async (currentSinglesTournament) =>  {
           const liveMatchDetailsData = await getLiveMatchesGoalServe()
-          const liveMatchesCurrentTournamentData = liveMatchDetailsData.scores.category.filter((tournament) => {
+          console.log(liveMatchDetailsData)
+          const liveMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
+
+            const nameEndpoint = "@name"
+            
+            console.log(nameEndpoint)
+            console.log(tournament)
+            console.log(tournament.nameEndpoint)
+            console.log(tournament.name)
+            
             return (
-              tournament.name.toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament.name.toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
+              tournament.tournamentName.toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament.name.toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
             )
           })
+          console.log(liveMatchesCurrentTournamentData)
           setLiveSinglesMatchDetails(liveMatchesCurrentTournamentData)
         }
-
-        console.log('gathering live matches from GoalServe')
 
         gatherLiveMatchDetailsData(currentSinglesTournament)
 
@@ -240,14 +256,12 @@ export default function TournamentDetail(props) {
 
         setLiveSinglesMatchDetailsLoaded(true)
 
-      } else {
+      } else if (liveSinglesMatches && (liveSinglesMatches === "Currently No Live Matches")) {
 
         console.log('No Live Matches - NOT GETting Data from GoalServe')
 
         setLiveSinglesMatchDetailsLoaded(true)
-      }
-
-    }
+      }   
   }, [setCurrentTournamentLiveMatchesLoaded])
 
   // Switch Functions
