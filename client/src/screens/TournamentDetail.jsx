@@ -234,16 +234,9 @@ export default function TournamentDetail(props) {
           const liveMatchDetailsData = await getLiveMatchesGoalServe()
           console.log(liveMatchDetailsData)
           const liveMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
-
-            const nameEndpoint = "@name"
-            
-            console.log(nameEndpoint)
-            console.log(tournament)
-            console.log(tournament.nameEndpoint)
-            console.log(tournament.name)
-            
+          
             return (
-              tournament.tournamentName.toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament.name.toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
+              tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
             )
           })
           console.log(liveMatchesCurrentTournamentData)
@@ -262,7 +255,7 @@ export default function TournamentDetail(props) {
 
         setLiveSinglesMatchDetailsLoaded(true)
       }   
-  }, [setCurrentTournamentLiveMatchesLoaded])
+  }, [setCurrentTournamentLiveMatchesLoaded, liveSinglesMatches])
 
   // Switch Functions
 
