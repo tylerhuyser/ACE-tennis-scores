@@ -5,9 +5,10 @@ import MatchCard from "../components/MatchCard";
 import "./Matches.css";
 
 export default function Matches(props) {
-  const { matchesData, view } = props;
+  const { matchesData, detailedMatchesData, view } = props;
 
   console.log(matchesData);
+  console.log(detailedMatchesData)
   console.log(matchesData.length !== 0);
 
   const matches =

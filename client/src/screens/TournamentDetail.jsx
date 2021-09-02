@@ -51,8 +51,14 @@ export default function TournamentDetail(props) {
   const [completedDoublesMatches, setCompletedDoublesMatches] = useState([])
     // Live Matches
   const [liveSinglesMatches, setLiveSinglesMatches] = useState([])
-  const [liveSinglesMatchDetails, setLiveSinglesMatchDetails] = useState([])
   const [liveDoublesMatches, setLiveDoublesMatches] = useState([])
+  
+  // Match Details
+  const [combinedMatchesDetails, setCombinedMatchesDetails] = useState([])
+  const [completedSinglesMatchesDetails, setCompletedSinglesMatchesDetails] = useState([])
+  const [completedDoublesMatchesDetails, setCompletedDoublesMatchesDetails] = useState([])
+  const [liveSinglesMatchesDetails, setLiveSinglesMatchesDetails] = useState([])
+  const [liveDoublesMatchesDetails, setLiveDoublesMatchesDetails] = useState([])
 
   const params = useParams();
   const history = useHistory()
@@ -179,6 +185,25 @@ export default function TournamentDetail(props) {
     }
   }, [tournamentName, tournamentGender])
 
+    // Collects Corresponding Doubles Tournament Data
+    useEffect(() => {
+
+      if (tournamentName && tournamentGender) {
+  
+        console.log("TournamentDetail.js - UseEffect #4 - gathering Combined Match Details from GoalServe")
+  
+        console.log(tournaments)
+        console.log(tournamentGender)
+        console.log(tournamentName)
+        const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.parent_id === currentSinglesTournament.parent_id)))
+        console.log(currentDoublesTournamentData)
+        setCurrentDoublesTournament(currentDoublesTournamentData)
+        setCurrentDoublesTournamentLoaded(true)
+  
+        console.log("TournamentDetail.js - UseEffect #4 - Combined Match Details from GoalServe Complete")
+      }
+    }, [tournamentName, tournamentGender])
+
   // Collect Completed Matches (Results)
   useEffect(() => {
 
@@ -209,7 +234,7 @@ export default function TournamentDetail(props) {
         const liveSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "inprogress"))
         console.log(liveSinglesMatchesData)
       
-        if ((liveSinglesMatchesData === undefined)) {
+        if ((liveSinglesMatchesData === undefined) || (liveSinglesMatchesData.length === 0)) {
           setLiveSinglesMatches("Currently No Live Matches")
           setCurrentTournamentLiveMatchesLoaded(true)
         } else if ((liveSinglesMatchesData !== undefined)) {
@@ -224,7 +249,7 @@ export default function TournamentDetail(props) {
 
   useEffect(() => {
 
-    if (liveSinglesMatches && (liveSinglesMatches.length > 0)) {
+    if (currentTournamentLiveMatchesLoaded && liveSinglesMatches && (liveSinglesMatches.length > 0)) {
 
       console.log('gathering live matches from GoalServe')
 
@@ -233,14 +258,22 @@ export default function TournamentDetail(props) {
         const gatherLiveMatchDetailsData = async (currentSinglesTournament) =>  {
           const liveMatchDetailsData = await getLiveMatchesGoalServe()
           console.log(liveMatchDetailsData)
-          const liveMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
+          const liveSinglesMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
           
             return (
-              tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase())
+              (tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentSinglesTournament.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase()) && tournament["@name"].toLowerCase().includes("singles")
             )
           })
-          console.log(liveMatchesCurrentTournamentData)
-          setLiveSinglesMatchDetails(liveMatchesCurrentTournamentData)
+          const liveDoublesMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
+          
+            return (
+              (tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentSinglesTournament.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase()) && tournament["@name"].toLowerCase().includes('doubles')
+            )
+          })
+          console.log(liveSinglesMatchesCurrentTournamentData)
+          console.log(liveDoublesMatchesCurrentTournamentData)
+          setLiveSinglesMatchDetails(liveSinglesMatchesCurrentTournamentData)
+          setLiveDoublesMatchDetails(liveDoublesMatchesCurrentTournamentData)
         }
 
         gatherLiveMatchDetailsData(currentSinglesTournament)
@@ -249,7 +282,7 @@ export default function TournamentDetail(props) {
 
         setLiveSinglesMatchDetailsLoaded(true)
 
-      } else if (liveSinglesMatches && (liveSinglesMatches === "Currently No Live Matches")) {
+      } else if (currentTournamentLiveMatchesLoaded && liveSinglesMatches && (liveSinglesMatches === "Currently No Live Matches")) {
 
         console.log('No Live Matches - NOT GETting Data from GoalServe')
 
@@ -340,7 +373,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatchDetails} view={view} touramentGender={tournamentGender} />
+            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} detailedMatchesData={currentMode ? liveDoublesMatchDetails.match.filter((match) => (match["status"] !== "Finished" || match["status"] !== "Not Started")) : liveSinglesMatchDetails.match.filter((match) => (match["status"] !== "Finished" || match["status"] !== "Not Started"))} view={view} touramentGender={tournamentGender} />
 
             :
         
