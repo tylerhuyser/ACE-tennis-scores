@@ -356,7 +356,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatchDetailsGoalServe : liveSinglesMatchDetailsGoalServe} supportingMatchesData={completedSinglesMatchesRapidAPI } view={view} />
+            <Matches matchesData={currentMode ? liveDoublesMatchDetailsGoalServe : liveSinglesMatchDetailsGoalServe} supportingMatchesData={completedSinglesMatchesRapidAPI } view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
 
             :
         
@@ -364,7 +364,7 @@ export default function TournamentDetail(props) {
           
               {view === "Completed Matches" ?
         
-                <Matches matchesData={currentMode ? completedDoublesMatchDetailsGoalServe : completedSinglesMatchDetailsGoalServe} supportingMatchesData={liveSinglesMatchesRapidAPI } view={view} />
+                <Matches matchesData={currentMode ? completedDoublesMatchDetailsGoalServe : completedSinglesMatchDetailsGoalServe} supportingMatchesData={liveSinglesMatchesRapidAPI } view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
               
                 :
             

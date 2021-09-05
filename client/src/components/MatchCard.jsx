@@ -9,7 +9,7 @@ import {
 } from '../utils/matches'
 
 export default function MatchCard(props) {
-  const { matchData, tournamentGender } = props;
+  const { matchData, correspondingMatchData, discipline, tournamentGender, court, round, status } = props;
   const history = useHistory();
 
   console.log(matchData)
@@ -21,34 +21,34 @@ export default function MatchCard(props) {
   const [matchInfo, setMatchInfo] = useState({
 
     tournamentEvent: tournamentGender,
-    tournamentDiscipline: "Singles",
-    tournamentRound: matchData.round_name,
+    tournamentDiscipline: discipline,
+    tournamentRound: round,
 
-    matchCourt: matchData.court,
-    matchStatus: matchData.status,
+    matchCourt: court,
+    matchStatus: status,
 
-    homeCompetitorID: matchData.home_id,
-    homeCompetitor: matchData.home_player,
+    homeCompetitorID: matchData.player[0]["@id"],
+    homeCompetitor: matchData.player[0]["@name"],
 
-    awayCompetitorID: matchData.away_id,
-    awayCompetitor: matchData.away_player
+    awayCompetitorID: matchData.player[1]["@id"],
+    awayCompetitor: matchData.player[0]["@name"]
 
   })
 
   const [scoreInfo, setScoreInfo] = useState({
 
-    setOneScoreHome: "",
-    setOneScoreAway: "",
-    setTwoScoreHome: "",
-    setTwoScoreAway: "",
-    setThreeScoreHome: "",
-    setThreeScoreAway: "",
-    setFourScoreHome: "",
-    setFourScoreAway: "",
-    setFiveScoreHome: "",
-    setFiveScoreAway: "",
-    serviceScoreHome: "",
-    serviceScoreAway: "",
+    setOneScoreHome: matchData.player[0]["@s1"],
+    setOneScoreAway: matchData.player[1]["@s1"],
+    setTwoScoreHome: matchData.player[0]["@s2"],
+    setTwoScoreAway: matchData.player[1]["@s2"],
+    setThreeScoreHome: matchData.player[0]["@s3"],
+    setThreeScoreAway: matchData.player[1]["@s3"],
+    setFourScoreHome: matchData.player[0]["@s4"],
+    setFourScoreAway: matchData.player[1]["@s4"],
+    setFiveScoreHome: matchData.player[0]["@s5"],
+    setFiveScoreAway: matchData.player[1]["@s5"],
+    serviceScoreHome: matchData.player[0]["@game_score"],
+    serviceScoreAway: matchData.player[1]["@game_score"],
     server: ""
 
   })
@@ -75,7 +75,7 @@ export default function MatchCard(props) {
 
       if (matchInfo.matchStatus.toLowerCase() === "inprogress") {
 
-        const currentMatchID = matchData.id
+        const currentMatchID = matchData["@id"]
 
         console.log('live data')
         console.log(matchData)
@@ -108,30 +108,60 @@ export default function MatchCard(props) {
               tournamentRound: "Round of 128"
             }));
             break;
+          case "1/128":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 128"
+            }));
+          break;
           case "round_of_64":
             setMatchInfo(prevState => ({
               ...prevState,
               tournamentRound: "Round of 64"
             }));
             break;
+          case "1/64":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 64"
+            }));
+          break;
           case "round_of_32":
             setMatchInfo(prevState => ({
               ...prevState,
               tournamentRound: "Round of 32"
             }));
             break;
+          case "1/32":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 32"
+            }));
+          break;
           case "round_of_16":
             setMatchInfo(prevState => ({
               ...prevState,
               tournamentRound: "Round of 16"
             }));
             break;
+          case "1/16":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Round of 16"
+            }));
+          break;
           case "round_of_8":
             setMatchInfo(prevState => ({
               ...prevState,
               tournamentRound: "Quarterfinal"
             }));
             break;
+          case "1/8":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Quarterfinal"
+            }));
+          break;
           case "quarterfinal":
             setMatchInfo(prevState => ({
               ...prevState,
@@ -144,6 +174,12 @@ export default function MatchCard(props) {
               tournamentRound: "Semifinal"
             }));
             break;
+          case "1/4":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Semifinal"
+            }));
+          break;
           case "semifinal":
             setMatchInfo(prevState => ({
               ...prevState,
@@ -156,6 +192,12 @@ export default function MatchCard(props) {
               tournamentRound: "Final"
             }));
             break;
+          case "1/2":
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentRound: "Final"
+            }));
+          break;
           case "final":
             setMatchInfo(prevState => ({
               ...prevState,
@@ -172,7 +214,7 @@ export default function MatchCard(props) {
       };
 
       parseTournamentRound(
-        match.round_name
+        round
       );
 
       const parseTournamentDiscipline = (tournamentType) => {
@@ -196,12 +238,16 @@ export default function MatchCard(props) {
             }));
             break;
           default:
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentDiscipline: discipline
+            }))
             break;
         }
       };
 
       parseTournamentDiscipline(
-        matchInfo.tournamentDiscipline
+        discipline
       );
 
       const parseTournamentGender = (tournamentGender) => {
@@ -237,6 +283,10 @@ export default function MatchCard(props) {
             }));
             break;
           default:
+            setMatchInfo(prevState => ({
+              ...prevState,
+              tournamentEvent: tournamentGender
+            }));
             break;
         }
       };
@@ -326,31 +376,35 @@ export default function MatchCard(props) {
             }));
           break;
           default:
+            setMatchInfo(prevState => ({
+              ...prevState,
+              matchStatus: status
+            }));
             break;
         }
       };
 
 
       parseMatchStatus(
-        matchData.status
+        status
       );
 
       const parseMatchCompetitors = (match) => {
         setMatchInfo(prevState => ({
           ...prevState,
-          homeCompetitorID: match.home_id
+          homeCompetitorID: matchData.player[0]["@id"]
         }));
         setMatchInfo(prevState => ({
           ...prevState,
-          homeCompetitor: match.home_player
+          homeCompetitor: matchData.player[0]["@name"]
         }));
         setMatchInfo(prevState => ({
           ...prevState,
-          awayCompetitorID: match.away_id
+          awayCompetitorID: matchData.player[1]["@id"]
         }));
         setMatchInfo(prevState => ({
           ...prevState,
-          awayCompetitor: match.away_player
+          awayCompetitor: matchData.player[1]["@name"]
         }));
       }
 
@@ -530,7 +584,7 @@ export default function MatchCard(props) {
 
     } else {
 
-      const competitor = matchData.[type]
+      const competitor = matchData[type]
       const competitorName = competitor.full_name
       const competitorRanking = '(' + competitor.ranking + ')'
         console.log(competitorRanking)
