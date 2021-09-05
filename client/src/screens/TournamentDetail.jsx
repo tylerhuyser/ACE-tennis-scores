@@ -21,12 +21,11 @@ import './TournamentDetail.css'
 export default function TournamentDetail(props) {
 
   // Data Loaded Switches
-  const [currentSinglesTournamentLoaded, setCurrentSinglesTournamentLoaded] = useState(false)
-  const [currentDoublesTournamentLoaded, setCurrentDoublesTournamentLoaded] = useState(false)
-  const [currentTournamentScheduleLoaded, setCurrentTournamentScheduleLoaded] = useState(false)
-  const [currentTournamentCompletedMatchesLoaded, setCurrentTournamentCompletedMatchesLoaded] = useState(false)
-  const [currentTournamentLiveMatchesLoaded, setCurrentTournamentLiveMatchesLoaded] = useState(false)
-  const [liveSinglesMatchDetailsLoaded, setLiveSinglesMatchDetailsLoaded] = useState(false)
+  const [currentTournamentLoadedRapidAPI, setCurrentTournamentLoadedRapidAPI] = useState(false)
+  const [currentTournamentScheduleLoadedRapidAPI, setCurrentTournamentScheduleLoadedRapidAPI] = useState(false)
+  const [completedMatchesLoadedRapidAPI, setCompletedMatchesLoadedRapidAPI] = useState(false)
+  const [liveMatchesLoadedRapidAPI, setLiveMatchesLoadedRapidAPI] = useState(false)
+  const [liveMatchDetailsLoadedGoalServe, setLiveMatchDetailsLoadedGoalServe] = useState(false)
   
   // Visibility Switches
   const [currentMode, setCurrentMode] = useState(false)
@@ -34,31 +33,25 @@ export default function TournamentDetail(props) {
 
   // Data
     // Tournament Info
-  const [currentSinglesTournament, setCurrentSinglesTournament] = useState([])
-  const [currentDoublesTournament, setCurrentDoublesTournament] = useState([])
-  
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
+  const [currentTournamentRapidAPI, setCurrentTournamentRapidAPI] = useState([])
 
-  const [tournamentName, setTournamentName] = useState("")
-  const [tournamentGender, setTournamentGender] = useState("")
   const [tournamentCategoryIcon, setTournamentCategoryIcon] = useState("")
 
     // Tournament Schedule
-  const [currentTournamentSchedule, setCurrentTournamentSchedule] = useState([])
+  const [currentTournamentScheduleRapidAPI, setCurrentTournamentScheduleRapidAPI] = useState([])
     // Completed Matches (Results)
-  const [completedSinglesMatches, setCompletedSinglesMatches] = useState([])
-  const [completedDoublesMatches, setCompletedDoublesMatches] = useState([])
+  const [completedSinglesMatchesRapidAPI, setCompletedSinglesMatchesRapidAPI] = useState([])
+  const [completedDoublesMatchesRapidAPI, setCompletedDoublesMatchesRapidAPI] = useState([])
     // Live Matches
-  const [liveSinglesMatches, setLiveSinglesMatches] = useState([])
-  const [liveDoublesMatches, setLiveDoublesMatches] = useState([])
+  const [liveSinglesMatchesRapidAPI, setLiveSinglesMatchesRapidAPI] = useState([])
+  const [liveDoublesMatchesRapidAPI, setLiveDoublesMatchesRapidAPI] = useState([])
   
   // Match Details
-  const [combinedMatchesDetails, setCombinedMatchesDetails] = useState([])
-  const [completedSinglesMatchesDetails, setCompletedSinglesMatchesDetails] = useState([])
-  const [completedDoublesMatchesDetails, setCompletedDoublesMatchesDetails] = useState([])
-  const [liveSinglesMatchesDetails, setLiveSinglesMatchesDetails] = useState([])
-  const [liveDoublesMatchesDetails, setLiveDoublesMatchesDetails] = useState([])
+  const [combinedMatchDetailsGoalServe, setCombinedMatchDetailsGoalServe] = useState([])
+  const [completedSinglesMatchDetailsGoalServe, setCompletedSinglesMatchDetailsGoalServe] = useState([])
+  const [completedDoublesMatchDetailsGoalServe, setCompletedDoublesMatchDetailsGoalServe] = useState([])
+  const [liveSinglesMatchDetailsGoalServe, setLiveSinglesMatchDetailsGoalServe] = useState([])
+  const [liveDoublesMatchDetailsGoalServe, setLiveDoublesMatchDetailsGoalServe] = useState([])
 
   const params = useParams();
   const history = useHistory()
@@ -67,7 +60,7 @@ export default function TournamentDetail(props) {
 
 // UseEffects
   
-  // Sets currentSinglesTournament Object
+  // Sets currentTournamentRapidAPI Object
   useEffect(() => {
 
     if (tournaments !== undefined && tournaments !== null) {
@@ -78,42 +71,44 @@ export default function TournamentDetail(props) {
       console.log("TournamentDetail.js - UseEffect #1a - finding currentTournamentData using params and tournaments prop")
 
       const currentTournamentData = tournaments.find((tournament) => parseInt(params.id) === parseInt(tournament.id))
-      setCurrentSinglesTournament(currentTournamentData)
-      setCurrentSinglesTournamentLoaded(true)
+      setCurrentTournamentRapidAPI(currentTournamentData)
+      setCurrentTournamentLoadedRapidAPI(true)
 
-      console.log("TournamentDetail.js - UseEffect #1a - currentSinglesTournament set")
+      console.log("TournamentDetail.js - UseEffect #1a - currentTournamentRapidAPI set")
       console.log(currentTournamentData)
 
     } else {
 
       console.log("TournamentDetail.js - UseEffect #1b - gathering currentTournamentData from LocalStorage")
 
-      const currentTournamentData = localStorage.getItem('currentSinglesTournament')
-      setCurrentSinglesTournament(JSON.parse(currentTournamentData))
-      setCurrentSinglesTournamentLoaded(true)
+      const currentTournamentData = localStorage.getItem('currentTournamentRapidAPI')
+      setCurrentTournamentRapidAPI(JSON.parse(currentTournamentData))
+      setCurrentTournamentLoadedRapidAPI(true)
 
-      console.log("TournamentDetail.js - UseEffect #1b - currentSinglesTournament set")
+      console.log("TournamentDetail.js - UseEffect #1b - currentTournamentRapidAPI set")
 
     }
   }, [])
 
-  // Sets Current Tournaments Schedule
+  // Sets Current Tournament Schedule
   useEffect(() => {
 
     const currentTournamentScheduleData = localStorage.getItem('currentTournamentSchedule')
     const scheduleDate = localStorage.getItem('scheduleDate')
     const today = new Date().getDate()
 
-    if (singlesTournamentLoaded && (currentTournamentScheduleData === undefined || ((today - scheduleDate === 1) || (today - scheduleDate === (-30)) || (today - scheduleDate === (-29))))) {
+    if (currentTournamentLoadedRapidAPI && (currentTournamentScheduleData === undefined  || currentTournamentScheduleData === null || ((today - scheduleDate === 1) || (today - scheduleDate === (-30)) || (today - scheduleDate === (-29))))) {
 
       console.log("TournamentDetail.js - UseEffect #2a - GETting from RapidAPI Current Tournament Schedule using Params, due to absence of 'tournaments' props")
 
       const gatherCurrentTournamentSchedule = async (params, currentYear, currentMonth, currentDay) => {
         const tournamentScheduleData = await getDailyTournamentMatchesAndResults(params.id, currentYear, currentMonth, currentDay)
-        localStorage.setItem("currentTournamentSchedule", tournamentScheduleData)
+        console.log(tournamentScheduleData)
+        localStorage.setItem("currentTournamentSchedule", JSON.stringify(tournamentScheduleData))
         localStorage.setItem('scheduleDate', today)
-        setCurrentTournamentSchedule(tournamentScheduleData)
-        setCurrentTournamentScheduleLoaded(true)
+
+        setCurrentTournamentScheduleRapidAPI(tournamentScheduleData)
+        setCurrentTournamentScheduleLoadedRapidAPI(true)
       }
 
       gatherCurrentTournamentSchedule(params, currentYear, currentMonth, currentDay)
@@ -122,197 +117,154 @@ export default function TournamentDetail(props) {
 
     }
     
-    if (singlesTournamentLoaded && currentTournamentScheduleData) {
+    if (currentTournamentLoadedRapidAPI && currentTournamentScheduleData) {
 
       console.log("TournamentDetail.js - UseEffect #2b - GETting Current Tournament Schedule from LocalStorage")
 
-      setCurrentTournamentSchedule(tournamentScheduleData)
-      setCurrentTournamentScheduleLoaded(true)
+      console.log(JSON.parse(currentTournamentScheduleData))
+      setCurrentTournamentScheduleRapidAPI(JSON.parse(currentTournamentScheduleData))
+      setCurrentTournamentScheduleLoadedRapidAPI(true)
 
       console.log("TournamentDetail.js - UseEffect #2b - GETting Current Tournament Schedule from LocalStorage")
 
     }
-  }, [currentSinglesTournamentLoaded])
+  }, [currentTournamentLoadedRapidAPI])
 
     // Filters Completed Matches (Results) from RapidAPI Data
     useEffect(() => {
 
-      if (currentTournamentScheduleLoaded) {
+      if (currentTournamentLoadedRapidAPI) {
   
           console.log("TournamentDetail.js - UseEffect #3a - filtering completed singles matches from RapidAPI data")
   
-          const completedSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "finished"))
-          setCompletedSinglesMatches(completedSinglesMatchesData)
-          setCurrentTournamentCompletedMatchesLoaded(true)
+          const completedSinglesMatchesData = currentTournamentScheduleRapidAPI.filter((match) => (match.status === "finished"))
+          setCompletedSinglesMatchesRapidAPI(completedSinglesMatchesData)
+          setCompletedMatchesLoadedRapidAPI(true)
           console.log(dailyResults)
           console.log(completedSinglesMatchesData)
   
           console.log("TournamentDetail.js - UseEffect #3a - completedSinglesMatches filtered from RapidAPI data set")
   
       }
-    }, [currentTournamentScheduleLoaded])
+    }, [currentTournamentLoadedRapidAPI])
     
     
     // Filters Live Singles Matches from RapidAPI Data
     useEffect(() => {
   
-      if (currentTournamentScheduleLoaded) {
+      if (currentTournamentLoadedRapidAPI) {
   
           console.log("TournamentDetail.js - UseEffect #3b - filtering live singles matches from RapidAPI data")
   
-          const liveSinglesMatchesData = currentTournamentSchedule.filter((match) => (match.status === "inprogress"))
-          console.log(liveSinglesMatchesData)
+          const liveSinglesMatchesDataRapidAPI = currentTournamentScheduleRapidAPI.filter((match) => (match.status === "inprogress"))
+          console.log(liveSinglesMatchesDataRapidAPI)
         
-        if ((liveSinglesMatchesData === undefined) || (liveSinglesMatchesData.length === 0)) {
-            console.log(liveSinglesMatchesData)
-            setLiveSinglesMatches("Currently No Live Matches")
-            setCurrentTournamentLiveMatchesLoaded(true)
-        } else if ((liveSinglesMatchesData !== undefined)) {
-            console.log(liveSinglesMatchesData)
-            setLiveSinglesMatches(liveSinglesMatchesData)
-            setCurrentTournamentLiveMatchesLoaded(true)
+        if ((liveSinglesMatchesDataRapidAPI === undefined) || (liveSinglesMatchesDataRapidAPI.length === 0)) {
+            console.log(liveSinglesMatchesDataRapidAPI)
+            setLiveSinglesMatchesRapidAPI("Currently No Live Matches")
+            setLiveMatchesLoadedRapidAPI(true)
+        } else if ((liveSinglesMatchesDataRapidAPI !== undefined)) {
+            console.log(liveSinglesMatchesDataRapidAPI)
+            setLiveSinglesMatchesRapidAPI(liveSinglesMatchesDataRapidAPI)
+            setLiveMatchesLoadedRapidAPI(true)
           }
   
           console.log("TournamentDetail.js - UseEffect #3b - live singles matches filtered from RapidAPI data set")
   
       }
-    }, [currentTournamentScheduleLoaded])
+    }, [currentTournamentLoadedRapidAPI])
 
+  
+  // Gathers Live Match Details from GoalServe
   useEffect(() => {
-// Add GOALSERVE EQUATION HERE
-  }, [currentTournamentScheduleLoaded])
+
+    if (currentTournamentScheduleLoadedRapidAPI && (currentTournamentScheduleRapidAPI.length > 0 && currentTournamentScheduleRapidAPI !== undefined)) {
+
+      const gatherLiveMatchDetailsDataGoalServe = async (currentTournamentRapidAPI) => {
+        
+        const liveMatchDetailsDataGoalServe = await getLiveMatchesGoalServe()
+        console.log(liveMatchDetailsDataGoalServe)
+
+        const completedSinglesMatchesDataGoalServe = liveMatchDetailsDataGoalServe.category.filter((tournament) => {
+          return (
+            (tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.code.toLowerCase()) && tournament["@name"].toLowerCase().includes("singles")
+          )
+        })
+        
+        const completedDoublesMatchesDataGoalServe = liveMatchDetailsDataGoalServe.category.filter((tournament) => {
+          return (
+            (tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.code.toLowerCase()) && tournament["@name"].toLowerCase().includes('doubles')
+          )
+        })
+        
+        const liveSinglesMatchesDataGoalServe = liveMatchDetailsDataGoalServe.category.filter((tournament) => {
+          return (
+            (tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.code.toLowerCase()) && tournament["@name"].toLowerCase().includes("singles")
+          )
+        })
+        
+        const liveDoublesMatchesDataGoalServe = liveMatchDetailsDataGoalServe.category.filter((tournament) => {
+          return (
+            (tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.code.toLowerCase()) && tournament["@name"].toLowerCase().includes('doubles')
+          )
+        })
+        
+        console.log(liveSinglesMatchesDataGoalServe)
+        console.log(liveDoublesMatchesDataGoalServe)
+
+        setCombinedMatchDetailsGoalServe(liveMatchDetailsDataGoalServe)
+        setLiveSinglesMatchDetailsGoalServe(liveSinglesMatchesDataGoalServe)
+        setLiveDoublesMatchDetailsGoalServe(liveDoublesMatchesDataGoalServe)
+        }
+      
+      console.log('TournamentDetail.js - UseEffect #4a - gathering live match details data from GoalServe')
+
+      gatherLiveMatchDetailsDataGoalServe(currentTournamentRapidAPI)
+
+      console.log('TournamentDetail.js - UseEffect #4a - completed gathering live match details data from GoalServe')
+
+      setLiveMatchDetailsLoadedGoalServe(true)
+
+    } else if (currentTournamentScheduleLoadedRapidAPI && (currentTournamentScheduleRapidAPI.length === 0 || currentTournamentScheduleRapidAPI === undefined)) {
+
+      console.log('TournamentDetail.js - UseEffect 4b - No Matches Today - Will NOT gather live match details data from GoalServe')
+
+      setLiveMatchDetailsLoadedGoalServe(true)
+
+    }
+  }, [currentTournamentScheduleLoadedRapidAPI])
 
   // Parses Key Tournament Info
   useEffect(() => {
     
-    if (currentSinglesTournamentLoaded) {
+    if (currentTournamentLoadedRapidAPI) {
 
-      console.log("TournamentDetail.js - UseEffect #2 - parsing CurrentSinglesTournamentInfo")
-
-      const currentTournament = currentSinglesTournament
-
-      const parseTournamentName = (currentTournament) => {
-        if (currentTournament.name) {
-          setTournamentName(currentTournament.name)
-        } else if (currentTournament.city) {
-          setTournamentName(currentTournament.city)
-        }
-      }
-  
-      parseTournamentName(currentTournament)
+      console.log("TournamentDetail.js - UseEffect #5 - setting Current Tournament Logo")
       
-      const parseTournamentIcon = (currentTournament) => {
+      const parseTournamentIcon = (currentTournamentRapidAPI) => {
       
-        if (currentTournament.name.includes("doubles")) {
+        if (currentTournamentRapidAPI.name.includes("doubles")) {
           return
-        } else if (currentTournament.code.includes("WTA")) {
+        } else if (currentTournamentRapidAPI.code.includes("WTA")) {
           setTournamentCategoryIcon("https://images.firstpost.com/wp-content/uploads/2020/12/wta-logo-640.png?impolicy=website&width=1200&height=800")
-          setTournamentGender("WTA")
-        } else if (currentTournament.name.toLowerCase().includes("challenger")) {
+        } else if (currentTournamentRapidAPI.name.toLowerCase().includes("challenger")) {
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-          setTournamentGender("N/A")
-        } else if (currentTournament.code.includes("ATP")) {
+        } else if (currentTournamentRapidAPI.code.includes("ATP")) {
           setTournamentCategoryIcon("https://logodix.com/logo/1903236.png")
-          setTournamentGender("ATP")
-        } else if (currentTournament.name.includes("ITF")) {
+        } else if (currentTournamentRapidAPI.name.includes("ITF")) {
           setTournamentCategoryIcon("https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/International_Tennis_Federation_logo.svg/1200px-International_Tennis_Federation_logo.svg.png")
-          setTournamentGender("N/A")
         } else {
           setTournamentCategoryIcon("https://www.californiasportssurfaces.com/stage/wp-content/uploads/2019/02/au-open-logo.png")
-          setTournamentGender("N/A")
         }
       }
   
-      parseTournamentIcon(currentTournament)
+      parseTournamentIcon(currentTournamentRapidAPI)
 
-      setStartDate(currentSinglesTournament.start_date)
-      setEndDate(currentSinglesTournament.end_date)
-
-      console.log("TournamentDetail.js - UseEffect #2 - CurrentSinglesTournamentInfo parsed & set")
+      console.log("TournamentDetail.js - UseEffect #5 - Current Tournament Logo set")
 
     }
-  }, [currentSinglesTournamentLoaded])
+  }, [currentTournamentLoadedRapidAPI])
 
-  // Collects Corresponding Doubles Tournament Data
-  useEffect(() => {
-
-    if (tournamentName && tournamentGender) {
-
-      console.log("TournamentDetail.js - UseEffect #3 - gathering CurrentDoublesTournamentInfo")
-
-      console.log(tournaments)
-      console.log(tournamentGender)
-      console.log(tournamentName)
-      const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.parent_id === currentSinglesTournament.parent_id)))
-      console.log(currentDoublesTournamentData)
-      setCurrentDoublesTournament(currentDoublesTournamentData)
-      setCurrentDoublesTournamentLoaded(true)
-
-      console.log("TournamentDetail.js - UseEffect #3 - CurrentDoublesTournamentInfo set")
-    }
-  }, [tournamentName, tournamentGender])
-
-    // Collects Corresponding Doubles Tournament Data
-    useEffect(() => {
-
-      if (tournamentName && tournamentGender) {
-  
-        console.log("TournamentDetail.js - UseEffect #4 - gathering Combined Match Details from GoalServe")
-  
-        console.log(tournaments)
-        console.log(tournamentGender)
-        console.log(tournamentName)
-        const currentDoublesTournamentData = tournaments.find((tournament) => ((tournament.type === "doubles") && (tournament.gender === tournamentGender) && (tournament.parent_id === currentSinglesTournament.parent_id)))
-        console.log(currentDoublesTournamentData)
-        setCurrentDoublesTournament(currentDoublesTournamentData)
-        setCurrentDoublesTournamentLoaded(true)
-  
-        console.log("TournamentDetail.js - UseEffect #4 - Combined Match Details from GoalServe Complete")
-      }
-    }, [tournamentName, tournamentGender])
-
-  useEffect(() => {
-
-    if (currentTournamentLiveMatchesLoaded && liveSinglesMatches && (liveSinglesMatches.length > 0)) {
-
-      console.log('gathering live matches from GoalServe')
-
-      console.log(liveSinglesMatches)
-
-        const gatherLiveMatchDetailsData = async (currentSinglesTournament) =>  {
-          const liveMatchDetailsData = await getLiveMatchesGoalServe()
-          console.log(liveMatchDetailsData)
-          const liveSinglesMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
-          
-            return (
-              (tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentSinglesTournament.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase()) && tournament["@name"].toLowerCase().includes("singles")
-            )
-          })
-          const liveDoublesMatchesCurrentTournamentData = liveMatchDetailsData.category.filter((tournament) => {
-          
-            return (
-              (tournament["@name"].toLowerCase().includes(currentSinglesTournament.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentSinglesTournament.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentSinglesTournament.code.toLowerCase()) && tournament["@name"].toLowerCase().includes('doubles')
-            )
-          })
-          console.log(liveSinglesMatchesCurrentTournamentData)
-          console.log(liveDoublesMatchesCurrentTournamentData)
-          setLiveSinglesMatchDetails(liveSinglesMatchesCurrentTournamentData)
-          setLiveDoublesMatchDetails(liveDoublesMatchesCurrentTournamentData)
-        }
-
-        gatherLiveMatchDetailsData(currentSinglesTournament)
-
-        console.log('completed gathering live matches from GoalServe')
-
-        setLiveSinglesMatchDetailsLoaded(true)
-
-      } else if (currentTournamentLiveMatchesLoaded && liveSinglesMatches && (liveSinglesMatches === "Currently No Live Matches")) {
-
-        console.log('No Live Matches - NOT GETting Data from GoalServe')
-
-        setLiveSinglesMatchDetailsLoaded(true)
-      }   
-  }, [setCurrentTournamentLiveMatchesLoaded, liveSinglesMatches])
 
   // Switch Functions
 
@@ -335,7 +287,8 @@ export default function TournamentDetail(props) {
   }
 
   const handleReturnToCalendar = (e) => {
-    localStorage.removeItem('currentSinglesTournament')
+    localStorage.removeItem('currentTournamentRapidAPI')
+    localStorage.removeItem('scheduleDate')
     history.push('/calendar')
   }
   
@@ -343,7 +296,7 @@ export default function TournamentDetail(props) {
 
     <>
       
-      { liveSinglesMatchDetailsLoaded ?
+      { liveMatchDetailsLoadedGoalServe ?
       
         <div className="tournament-detail-container">
 
@@ -357,11 +310,11 @@ export default function TournamentDetail(props) {
 
           <div className="tournament-card-container">
 
-            <p className="tournament-card-name">{tournamentName}</p>
+            <p className="tournament-card-name">{currentTournamentRapidAPI.name}</p>
 
             <div className="tournament-category-container">
 
-              <p className="tournament-date">{`${startDate} - ${endDate}`}</p>
+              <p className="tournament-date">{`${currentTournamentRapidAPI.start_date} - ${currentTournamentRapidAPI.end_date}`}</p>
 
               <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
           
@@ -397,7 +350,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatches : liveSinglesMatches} detailedMatchesData={currentMode ? liveDoublesMatchDetails.match.filter((match) => (match["status"] !== "Finished" || match["status"] !== "Not Started")) : liveSinglesMatchDetails.match.filter((match) => (match["status"] !== "Finished" || match["status"] !== "Not Started"))} view={view} touramentGender={tournamentGender} />
+            <Matches matchesData={currentMode ? liveDoublesMatchDetailsGoalServe : liveSinglesMatchDetailsGoalServe} view={view} />
 
             :
         
@@ -405,19 +358,19 @@ export default function TournamentDetail(props) {
           
               {view === "Completed Matches" ?
         
-                <Matches matchesData={currentMode ? completedDoublesMatches : completedSinglesMatches} view={view} touramentGender={tournamentGender} />
+                <Matches matchesData={currentMode ? completedDoublesMatchDetailsGoalServe : completedSinglesMatchesRapidAPI} view={view} />
               
                 :
             
                 <>
               
-                  {currentTournamentSchedule.length === 0 ?
+                  {currentTournamentScheduleRapidAPI.length === 0 ?
               
                     <p className="match-container-copy">Tournament schedule currently unavailable.</p>
             
                     :
 
-                    <OrderOfPlay currentTournamentSchedule={currentTournamentSchedule} />
+                    <OrderOfPlay currentTournamentSchedule={currentTournamentScheduleRapidAPI} />
         
                   }
 
