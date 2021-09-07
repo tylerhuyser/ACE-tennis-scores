@@ -25,7 +25,8 @@ export default function TournamentDetail(props) {
   const [currentTournamentScheduleLoadedRapidAPI, setCurrentTournamentScheduleLoadedRapidAPI] = useState(false)
   const [completedMatchesLoadedRapidAPI, setCompletedMatchesLoadedRapidAPI] = useState(false)
   const [liveMatchesLoadedRapidAPI, setLiveMatchesLoadedRapidAPI] = useState(false)
-  const [liveMatchDetailsLoadedGoalServe, setLiveMatchDetailsLoadedGoalServe] = useState(false)
+  const [matchDetailsLoadedGoalServe, setMatchDetailsLoadedGoalServe] = useState(false)
+  const [dataLoadedRapidAPIGoalServe, setDataLoadedRapidAPIGoalServe] = useState(false)
   
   // Visibility Switches
   const [currentMode, setCurrentMode] = useState(false)
@@ -333,13 +334,13 @@ export default function TournamentDetail(props) {
 
       console.log('TournamentDetail.js - UseEffect #4a - completed gathering live match details data from GoalServe')
 
-      setLiveMatchDetailsLoadedGoalServe(true)
+      setMatchDetailsLoadedGoalServe(true)
 
     } else if (currentTournamentScheduleLoadedRapidAPI && (currentTournamentScheduleRapidAPI.length === 0 || currentTournamentScheduleRapidAPI === undefined)) {
 
       console.log('TournamentDetail.js - UseEffect 4b - No Matches Today - Will NOT gather live match details data from GoalServe')
 
-      setLiveMatchDetailsLoadedGoalServe(true)
+      setMatchDetailsLoadedGoalServe(true)
 
     }
   }, [currentTournamentScheduleLoadedRapidAPI])
@@ -375,6 +376,12 @@ export default function TournamentDetail(props) {
     }
   }, [currentTournamentLoadedRapidAPI])
 
+  useEffect(() => {
+    if (completedMatchesLoadedRapidAPI && liveMatchesLoadedRapidAPI && matchDetailsLoadedGoalServe) {
+      setDataLoadedRapidAPIGoalServe(true)
+    }
+  })
+
 
   // Switch Functions
 
@@ -406,7 +413,7 @@ export default function TournamentDetail(props) {
 
     <>
       
-      { completedMatchesLoadedRapidAPI && liveMatchesLoadedRapidAPI && liveMatchDetailsLoadedGoalServe ?
+      { dataLoadedRapidAPIGoalServe ?
       
         <div className="tournament-detail-container">
 
@@ -460,7 +467,7 @@ export default function TournamentDetail(props) {
 
           {view === "Live Scores" ?
         
-            <Matches matchesData={currentMode ? liveDoublesMatchDetailsGoalServe : liveSinglesMatchDetailsGoalServe} supportingMatchesData={completedSinglesMatchesRapidAPI } view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
+            <Matches matchesData={currentMode ? liveDoublesMatchDetailsGoalServe : liveSinglesMatchDetailsGoalServe} supportingMatchesData={currentTournamentScheduleRapidAPI} view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
 
             :
         
@@ -468,7 +475,7 @@ export default function TournamentDetail(props) {
           
               {view === "Completed Matches" ?
         
-                <Matches matchesData={currentMode ? completedDoublesMatchDetailsGoalServe : completedSinglesMatchDetailsGoalServe} supportingMatchesData={liveSinglesMatchesRapidAPI } view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
+                <Matches matchesData={currentMode ? completedDoublesMatchDetailsGoalServe : completedSinglesMatchDetailsGoalServe} supportingMatchesData={currentTournamentScheduleRapidAPI} view={view} discipline={currentMode ? "DOUBLES" : "SINGLES"} tournamentGender={currentTournamentRapidAPI.code === "ATP" ? "MEN'S" : "WOMEN'S"} />
               
                 :
             

@@ -15,7 +15,7 @@ export default function Matches(props) {
     matchesData &&
     matchesData?.map((matchData, index) => {
 
-      const correspondingMatchData = supportingMatchesData && supportingMatchesData?.filter((match) => match.player[0]["@name"].includes(matchData.title.split(" ")[1]) || match.player[1]["@name"].includes(matchData.title.split(" ")[1]))
+      const correspondingMatchData = supportingMatchesData && supportingMatchesData?.filter((match) => (match.title.includes(matchData.player[0]["@name"].split(" ")[1]) || match.title.includes(matchData.player[1]["@name"].split(" ")[1])))
       
       console.log(correspondingMatchData)
 
@@ -27,8 +27,8 @@ export default function Matches(props) {
           discipline={discipline}
           tournamentGender={tournamentGender}
           supportingMatchData={(correspondingMatchData === null || correspondingMatchData === undefined) ? "No Corresponding Match" : correspondingMatchData}
-          court={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData[0].court}
-          round={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData[0].round_name}
+          court={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData.court}
+          round={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData.round_name}
           status={matchData["@status"]}
         />
       )

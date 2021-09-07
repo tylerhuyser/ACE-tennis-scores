@@ -9,10 +9,11 @@ import {
 } from '../utils/matches'
 
 export default function MatchCard(props) {
-  const { matchData, correspondingMatchData, discipline, tournamentGender, court, round, status } = props;
+  const { matchData, supportingMatchData, discipline, tournamentGender, court, round, status } = props;
   const history = useHistory();
 
   console.log(matchData)
+  console.log(supportingMatchData)
 
   const [currentMatchData, setCurrentMatchData] = useState(matchData)
 
@@ -530,7 +531,7 @@ export default function MatchCard(props) {
     history.push(`/match/${matchID}`);
   };
 
-  const generateCompetitor = (type) => {
+  const generateCompetitor = (index, type) => {
     if (matchInfo.tournamentDiscipline === "Doubles") {
 
       const competitor = matchData.type
@@ -584,12 +585,43 @@ export default function MatchCard(props) {
 
     } else {
 
-      const competitor = matchData[type]
-      const competitorName = competitor.full_name
-      const competitorRanking = '(' + competitor.ranking + ')'
+      const competitor = matchData.player[index]
+      const competitorName = competitor["@name"]
+
+      const generateRanking = (type) => {
+        if (type === "home") {
+
+          const ranking = '(' + supportingMatchData[0].home.ranking + ')'
+          return ranking
+
+        } else if (type === "away") {
+
+          const ranking = '(' + supportingMatchData[0].away.ranking + ')'
+          return ranking
+
+        }
+      }
+
+      const competitorRanking = generateRanking(type)
         console.log(competitorRanking)
-      const competitorCountry = CountryCodes.getCountry(competitor.country)
+
+      const generateCountry = (type) => {
+        if (type === "home") {
+  
+          const country = supportingMatchData[0].home.country
+          return country
+  
+        } else if (type === "away") {
+  
+          const country = supportingMatchData[0].away.country
+          return country
+  
+        }
+      }
+      
+      const competitorCountry = CountryCodes.getCountry(generateCountry(type))
         console.log(competitorCountry)
+      
       const competitorCountryCode = competitorCountry.iso2
         console.log(competitorCountryCode)  
 
@@ -615,9 +647,9 @@ export default function MatchCard(props) {
     }
   }
   
-  const homePlayer = generateCompetitor("home")
+  const homePlayer = generateCompetitor(0, "home")
 
-  const awayPlayer = generateCompetitor("away")
+  const awayPlayer = generateCompetitor(1, "away")
 
   return (
     <div
