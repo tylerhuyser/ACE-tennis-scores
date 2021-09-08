@@ -122,7 +122,7 @@ export default function TournamentDetail(props) {
   
           console.log("TournamentDetail.js - UseEffect #3a - filtering completed singles matches from RapidAPI data")
   
-          const completedSinglesMatchesData = currentTournamentScheduleRapidAPI.filter((match) => (match.status === "finished"))
+          const completedSinglesMatchesData = currentTournamentScheduleRapidAPI.filter((match) => (match.status.toLowerCase() === "finished" || match.status === "retired"))
           setCompletedSinglesMatchesRapidAPI(completedSinglesMatchesData)
           setCompletedMatchesLoadedRapidAPI(true)
           console.log(dailyResults)
@@ -195,7 +195,7 @@ export default function TournamentDetail(props) {
 
               const filteredSinglesMatchesDataGoalServe = []
 
-              if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+              if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Finished" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Retired") {
 
                 return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
 
@@ -209,7 +209,7 @@ export default function TournamentDetail(props) {
 
               const filteredSinglesMatchesDataGoalServe = combinedSinglesMatchesDataGoalServe[0].match.filter((match) => {
                 return (
-                  (match["@status"] === "Finished")
+                  (match["@status"] === "Finished" || match["@status"] === "Retired")
                 )
               })
 
@@ -236,7 +236,7 @@ export default function TournamentDetail(props) {
 
               const filteredDoublesMatchesDataGoalServe = []
 
-              if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+              if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Retired") {
 
                 return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
 
@@ -250,7 +250,7 @@ export default function TournamentDetail(props) {
 
               const filteredDoublesMatchesDataGoalServe = combinedDoublesMatchesDataGoalServe[0].match.filter((match) => {
                 return (
-                  (match["@status"] === "Finished")
+                  (match["@status"] === "Finished" || match["@status"] === "Retired")
                 )
               })
 

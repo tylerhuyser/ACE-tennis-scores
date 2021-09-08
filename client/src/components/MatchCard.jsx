@@ -5,8 +5,8 @@ import ReactCountryFlag from "react-country-flag"
 import "./MatchCard.css";
 
 import {
-  getMatch,
-} from '../utils/matches'
+  getLiveMatchGoalServe
+} from '../utils/live'
 
 export default function MatchCard(props) {
   const { matchData, supportingMatchData, discipline, tournamentGender, court, round, status } = props;
@@ -74,14 +74,14 @@ export default function MatchCard(props) {
 
     const interval = setInterval(() => {
 
-      if (matchInfo.matchStatus.toLowerCase() === "inprogress") {
+      if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
 
         const currentMatchID = matchData["@id"]
 
         console.log('live data')
         console.log(matchData)
         const fetchMatch = async (matchID) => {
-          const data = await getMatch(matchID)
+          const data = await getLiveMatchGoalServe(matchID)
           console.log("interval for fetchMatch within MatchCard")
           setMatch(data)
         }
@@ -421,9 +421,9 @@ export default function MatchCard(props) {
     if (currentMatch !== null) {
 
       const handleHomeScore = () => {
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.result !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
 
-          if (match.result === 50) {
+          if (match.player[0]["@game_score"] === "A") {
 
             setScoreInfo(prevState => ({
               ...prevState,
@@ -434,7 +434,7 @@ export default function MatchCard(props) {
 
             setScoreInfo(prevState => ({
               ...prevState,
-              serviceScoreHome: match.result
+              serviceScoreHome: match.player[0]["@game_score"]
             }))
 
           }
@@ -445,9 +445,9 @@ export default function MatchCard(props) {
 
       const handleAwayScore = () => {
         
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.result !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
 
-          if (match.result === 50) {
+          if (match.player[1]["@game_score"] === "A") {
 
             setScoreInfo(prevState => ({
               ...prevState,
@@ -457,64 +457,71 @@ export default function MatchCard(props) {
           } else {
             setScoreInfo(prevState => ({
               ...prevState,
-              serviceScoreAway: match.result
+              serviceScoreAway: match.player[1]["@game_score"]
             }))
           }
         }
       }
 
-      const generateSets = () => {
+      const generateSets = (match) => {
         
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete") && match.result !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
 
-          const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
+          setScoreInfo(prevState => ({
+            ...prevState,
+            setOneScoreHome: match.player[0]["@s1"],
+            setOneScoreAway: match.player[1]["@s1"],
+            setTwoScoreHome: match.player[0]["@s2"],
+            setTwoScoreAway: match.player[1]["@s2"],
+            setThreeScoreHome: match.player[0]["@s3"],
+            setThreeScoreAway: match.player[1]["@s3"],
+            setFourScoreHome: match.player[0]["@s4"],
+            setFourScoreAway: match.player[1]["@s4"],
+            setFiveScoreHome: match.player[0]["@s5"],
+            setFiveScoreAway: match.player[1]["@s5"],
+            serviceScoreHome: match.player[0]["@game_score"],
+            serviceScoreAway: match.player[1]["@game_score"],
+          }))
 
-          for (let i = 1; i <= 5; i++) {
-
-            let index = i - 1
-
-            let test = `home_set${i}`
-
-            if (match.result.[test] !== undefined) {
-          
-              let homeScore = sets[index] + "Home"
-              let awayScore = sets[index] + "Away"
-
-              let homeEndpoint = `home_set${i}`
-              let awayEndpoint = `away_set${i}`
-
-              setScoreInfo(prevState => ({
-                ...prevState,
-                [homeScore]: match.result.[homeEndpoint],
-                [awayScore]: match.result.[awayEndpoint]
-              }))
-            }
-          }
         }
       }
 
       const handleServer = () => {
-        if (matchInfo.matchStatus.toLowerCase() === "live") {
-          if (match.result.serving) {
+        if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
+
+          if (match.player[0]["@serve"] === "True") {
+
             setScoreInfo(prevState => ({
               ...prevState,
-              server: match.result.serving
+              server: "home"
+            }))
+
+          } else if (match.player[1]["@serve"] === "True") {
+            
+            setScoreInfo(prevState => ({
+              ...prevState,
+              server: "away"
             }))
           }
-        } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "complete") {
-          if (match.result.winner_id) {
-            if (match.result.winner_id === matchInfo.homeCompetitorID) {
-              setScoreInfo(prevState => ({
-                ...prevState,
-                server: "homeWinner"
-              }))
-            } else {
-              setScoreInfo(prevState => ({
-                ...prevState,
-                server: "awayWinner"
-              }))
-            }
+
+
+        } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
+
+          if (match.player[0]["@winner"] === "True") {
+
+            setScoreInfo(prevState => ({
+              ...prevState,
+              server: "homeWinner"
+            }))
+
+          } else if (match.player[1]["@winner"] === "True") {
+            
+            setScoreInfo(prevState => ({
+              ...prevState,
+              server: "awayWinner"
+            }))
           }
+
         }
       }
         
@@ -532,6 +539,7 @@ export default function MatchCard(props) {
   };
 
   const generateCompetitor = (index, type) => {
+
     if (matchInfo.tournamentDiscipline === "Doubles") {
 
       const competitor = matchData.type
@@ -555,17 +563,33 @@ export default function MatchCard(props) {
 
         <div className="competitor-name-container" id={type}>
 
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={partnerAAlpha2Country}
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-              aria-label="United States"
-            />
+          {supportingMatchData.length !== undefined ?
             
-            <p className="player-country-seperator">/</p>
+            <>
+
+              <ReactCountryFlag
+                className="emojiFlag"
+                countryCode={partnerAAlpha2Country}
+                style={{
+                  fontSize: '150%',
+                  lineHeight: '150%',
+                }}
+                aria-label="United States"
+              />
+              
+            </>
+
+            :
+            
+            <></>
+
+          }
+            
+          <p className="player-country-seperator">/</p>
+          
+          {supportingMatchData.length !== undefined ?
+            
+            <>
 
             <ReactCountryFlag
               className="emojiFlag"
@@ -576,6 +600,14 @@ export default function MatchCard(props) {
             }}
               aria-label="United States"
             />
+          
+          </>
+
+          :
+
+          <></>
+
+          }
 
           <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? doublesTeamInfo.seed : ''}</p>
 
@@ -586,15 +618,15 @@ export default function MatchCard(props) {
     } else {
 
       const competitor = matchData.player[index]
-      const competitorName = competitor["@name"]
+      const competitorName = competitor["@name"].split(". ")[1]
 
       const generateRanking = (type) => {
-        if (supportingMatchData.length === undefined && type === "home") {
+        if (supportingMatchData.length !== undefined && type === "home") {
 
           const ranking = '(' + supportingMatchData[0].home.ranking + ')'
           return ranking
 
-        } else if (supportingMatchData.length === undefined && type === "away") {
+        } else if (supportingMatchData.length !== undefined && type === "away") {
 
           const ranking = '(' + supportingMatchData[0].away.ranking + ')'
           return ranking
@@ -611,38 +643,45 @@ export default function MatchCard(props) {
         console.log(competitorRanking)
 
       const generateCountry = (type) => {
-        if (supportingMatchData.length === undefined && type === "home") {
+        if (supportingMatchData.length !== undefined && type === "home") {
   
           const country = supportingMatchData[0].home.country
           return country
   
-        } else if (supportingMatchData.length === undefined && type === "away") {
+        } else if (supportingMatchData.length !== undefined && type === "away") {
   
           const country = supportingMatchData[0].away.country
           return country
   
         }
-      }
-      
-      const competitorCountry = CountryCodes.getCountry(generateCountry(type))
-        console.log(competitorCountry)
-      
-      const competitorCountryCode = competitorCountry.iso2
-        console.log(competitorCountryCode)  
+      } 
 
       return (
 
         <div className="competitor-name-container" id={type}>
 
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorCountryCode}
-              aria-label="United States"
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-            />
+
+          {supportingMatchData.length !== undefined ?
+            
+            <>
+
+              <ReactCountryFlag
+                className="emojiFlag"
+                countryCode={CountryCodes.getCountry(generateCountry(type)).iso2}
+                aria-label="United States"
+                style={{
+                  fontSize: '150%',
+                  lineHeight: '150%',
+                }}
+              />
+              
+            </>
+
+            :
+
+            <></>
+
+          }
 
           <p className="competitor-name">{competitorName}{' '}{(competitorRanking !== null && competitorRanking !== undefined) ? competitorRanking : ''}</p>
 
