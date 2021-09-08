@@ -184,65 +184,83 @@ export default function TournamentDetail(props) {
 
         console.log(combinedSinglesMatchesDataGoalServe)
         console.log(combinedDoublesMatchesDataGoalServe)
+        console.log(combinedSinglesMatchesDataGoalServe.length)
+        console.log(combinedDoublesMatchesDataGoalServe.length)
 
         const filterCompletedSinglesMatchesGoalServe = () => {
 
-          if (combinedSinglesMatchesDataGoalServe[0].match.length === undefined) {
+          if (combinedSinglesMatchesDataGoalServe.length > 0) {
 
-            const filteredSinglesMatchesDataGoalServe = []
+            if (combinedSinglesMatchesDataGoalServe[0].match.length === undefined) {
 
-            if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+              const filteredSinglesMatchesDataGoalServe = []
 
-              return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+              if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+
+                return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+
+              } else {
+
+                return filteredSinglesMatchesDataGoalServe
+
+              }
 
             } else {
+
+              const filteredSinglesMatchesDataGoalServe = combinedSinglesMatchesDataGoalServe[0].match.filter((match) => {
+                return (
+                  (match["@status"] === "Finished")
+                )
+              })
 
               return filteredSinglesMatchesDataGoalServe
 
             }
 
           } else {
+  
+              const filteredSinglesMatchesDataGoalServe = []
 
-            const filteredSinglesMatchesDataGoalServe = combinedSinglesMatchesDataGoalServe[0].match.filter((match) => {
-              return (
-                (match["@status"] === "Finished")
-              )
-            })
+              return filteredSinglesMatchesDataGoalServe
 
-            return filteredSinglesMatchesDataGoalServe
-
-          }
+            }
         }
 
         const completedSinglesMatchesDataGoalServe = filterCompletedSinglesMatchesGoalServe()
 
-        console.log(completedSinglesMatchesDataGoalServe)
-        console.log(combinedDoublesMatchesDataGoalServe[0].match.length)
-        console.log(combinedSinglesMatchesDataGoalServe[0].match["@status"])
-
         const filterCompletedDoublesMatchesGoalServe = () => {
 
-          if (combinedDoublesMatchesDataGoalServe[0].match.length === undefined) {
+          if (combinedDoublesMatchesDataGoalServe.length > 0) {
 
-            const filteredDoublesMatchesDataGoalServe = []
+            if (combinedDoublesMatchesDataGoalServe[0].match.length === undefined) {
 
-            if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+              const filteredDoublesMatchesDataGoalServe = []
 
-              return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+              if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished") {
+
+                return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+
+              } else {
+
+                return filteredDoublesMatchesDataGoalServe
+                
+              }
 
             } else {
 
+              const filteredDoublesMatchesDataGoalServe = combinedDoublesMatchesDataGoalServe[0].match.filter((match) => {
+                return (
+                  (match["@status"] === "Finished")
+                )
+              })
+
               return filteredDoublesMatchesDataGoalServe
-              
+
             }
 
           } else {
 
-            const filteredDoublesMatchesDataGoalServe = combinedDoublesMatchesDataGoalServe[0].match.filter((match) => {
-              return (
-                (match["@status"] === "Finished")
-              )
-            })
+            const filteredDoublesMatchesDataGoalServe = []
 
             return filteredDoublesMatchesDataGoalServe
 
@@ -251,17 +269,36 @@ export default function TournamentDetail(props) {
 
         const completedDoublesMatchesDataGoalServe = filterCompletedDoublesMatchesGoalServe()
 
+        console.log(completedSinglesMatchesDataGoalServe)
+        console.log(completedDoublesMatchesDataGoalServe)
+        // console.log(combinedDoublesMatchesDataGoalServe[0].match.length)
+        // console.log(combinedSinglesMatchesDataGoalServe[0].match["@status"])
+
         const filterLiveSinglesMatchesGoalServe = () => {
 
-          if (combinedSinglesMatchesDataGoalServe[0].match.length === undefined) {
+          if (combinedSinglesMatchesDataGoalServe.length > 0) {
 
-            const filteredSinglesMatchesDataGoalServe = []
+            if (combinedSinglesMatchesDataGoalServe[0].match.length === undefined) {
 
-            if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
+              const filteredSinglesMatchesDataGoalServe = []
 
-              return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+              if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
+
+                return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+
+              } else {
+
+                return filteredSinglesMatchesDataGoalServe
+
+              }
 
             } else {
+
+              const filteredSinglesMatchesDataGoalServe = combinedSinglesMatchesDataGoalServe[0].match.filter((match) => {
+                return (
+                  (match["@status"] === "Set 1" || match["@status"] === "Set 2" || match["@status"] === "Set 3" || match["@status"] === "Set 4" || match["@status"] === "Set 5")
+                )
+              })
 
               return filteredSinglesMatchesDataGoalServe
 
@@ -269,46 +306,53 @@ export default function TournamentDetail(props) {
 
           } else {
 
-            const filteredSinglesMatchesDataGoalServe = combinedSinglesMatchesDataGoalServe[0].match.filter((match) => {
-              return (
-                (match["@status"] === "Set 1" || match["@status"] === "Set 2" || match["@status"] === "Set 3" || match["@status"] === "Set 4" || match["@status"] === "Set 5")
-              )
-            })
+            const filteredSinglesMatchesDataGoalServe = []
 
             return filteredSinglesMatchesDataGoalServe
 
           }
+
         }
         
         const liveSinglesMatchesDataGoalServe = filterLiveSinglesMatchesGoalServe()
 
         const filterLiveDoublesMatchesGoalServe = () => {
 
-          if (combinedDoublesMatchesDataGoalServe[0].match.length === undefined) {
+          if (combinedDoublesMatchesDataGoalServe.length > 0) {
 
-            const filteredDoublesMatchesDataGoalServe = []
+            if (combinedDoublesMatchesDataGoalServe[0].match.length === undefined) {
 
-            if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
+              const filteredDoublesMatchesDataGoalServe = []
 
-              return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+              if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
+
+                return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+
+              } else {
+
+                return filteredDoublesMatchesDataGoalServe
+                
+              }
 
             } else {
 
+              const filteredDoublesMatchesDataGoalServe = combinedDoublesMatchesDataGoalServe[0].match.filter((match) => {
+                return (
+                  (match["@status"] === "Set 1" || match["@status"] === "Set 2" || match["@status"] === "Set 3" || match["@status"] === "Set 4" || match["@status"] === "Set 5")
+                )
+              })
+
               return filteredDoublesMatchesDataGoalServe
-              
+
             }
 
           } else {
 
-            const filteredDoublesMatchesDataGoalServe = combinedDoublesMatchesDataGoalServe[0].match.filter((match) => {
-              return (
-                (match["@status"] === "Set 1" || match["@status"] === "Set 2" || match["@status"] === "Set 3" || match["@status"] === "Set 4" || match["@status"] === "Set 5")
-              )
-            })
+            const filteredDoublesMatchesDataGoalServe = []
 
             return filteredDoublesMatchesDataGoalServe
-
           }
+      
         }
 
         const liveDoublesMatchesDataGoalServe = filterLiveDoublesMatchesGoalServe()

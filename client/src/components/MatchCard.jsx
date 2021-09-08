@@ -589,14 +589,19 @@ export default function MatchCard(props) {
       const competitorName = competitor["@name"]
 
       const generateRanking = (type) => {
-        if (type === "home") {
+        if (supportingMatchData.length === undefined && type === "home") {
 
           const ranking = '(' + supportingMatchData[0].home.ranking + ')'
           return ranking
 
-        } else if (type === "away") {
+        } else if (supportingMatchData.length === undefined && type === "away") {
 
           const ranking = '(' + supportingMatchData[0].away.ranking + ')'
+          return ranking
+
+        } else {
+
+          const ranking = ""
           return ranking
 
         }
@@ -606,12 +611,12 @@ export default function MatchCard(props) {
         console.log(competitorRanking)
 
       const generateCountry = (type) => {
-        if (type === "home") {
+        if (supportingMatchData.length === undefined && type === "home") {
   
           const country = supportingMatchData[0].home.country
           return country
   
-        } else if (type === "away") {
+        } else if (supportingMatchData.length === undefined && type === "away") {
   
           const country = supportingMatchData[0].away.country
           return country
