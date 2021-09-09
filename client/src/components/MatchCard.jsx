@@ -322,74 +322,20 @@ export default function MatchCard(props) {
 
     if (matchInfo.tournamentDiscipline === "Doubles") {
 
-      const competitor = matchData.type
-
       const doublesTeamInfo = {
         partnerA: {
-          name: competitor.players[0].name.split(',')[0],
-          countryCode: competitor.players[0].country_code
+          name: matchInfo.homeCompetitor.split('/ ')[0]
         },
         partnerB: {
-          name: competitor.players[1].name.split(',')[0],
-          countryCode: competitor.players[1].country_code
+          name: matchInfo.homeCompetitor.split('/ ')[1]
         },
-        seed: competitor.seed
       }
-
-      const partnerAAlpha2Country = getCountryISO2(doublesTeamInfo.partnerA.countryCode)
-      const partnerBAlpha2Country = getCountryISO2(doublesTeamInfo.partnerB.countryCode)
 
       return (
 
         <div className="competitor-name-container" id={type}>
 
-          {supportingMatchData.length !== undefined ?
-            
-            <>
-
-              <ReactCountryFlag
-                className="emojiFlag"
-                countryCode={partnerAAlpha2Country}
-                style={{
-                  fontSize: '150%',
-                  lineHeight: '150%',
-                }}
-                aria-label="United States"
-              />
-              
-            </>
-
-            :
-            
-            <></>
-
-          }
-            
-          <p className="player-country-seperator">/</p>
-          
-          {supportingMatchData.length !== undefined ?
-            
-            <>
-
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={partnerBAlpha2Country}
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-              aria-label="United States"
-            />
-          
-          </>
-
-          :
-
-          <></>
-
-          }
-
-          <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? doublesTeamInfo.seed : ''}</p>
+          <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}</p>
 
         </div>
 
