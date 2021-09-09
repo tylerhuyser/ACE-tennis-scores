@@ -197,7 +197,9 @@ export default function TournamentDetail(props) {
 
               if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Finished" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Retired") {
 
-                return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                const filteredCompletedSinglesMatchesDataGoalServe = filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                
+                return filteredSinglesMatchesDataGoalServe
 
               } else {
 
@@ -238,7 +240,9 @@ export default function TournamentDetail(props) {
 
               if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Retired") {
 
-                return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+                const filteredCompletedDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+
+                return filteredDoublesMatchesDataGoalServe
 
               } else {
 
@@ -282,19 +286,7 @@ export default function TournamentDetail(props) {
 
               if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
 
-                console.log(combinedSinglesMatchesDataGoalServe)
-
-                console.log(combinedSinglesMatchesDataGoalServe[0])
-
-                console.log(combinedSinglesMatchesDataGoalServe[0].match)
-
-                console.log(combinedSinglesMatchesDataGoalServe[0].match["@status"])
-
                 const filteredLiveSinglesMatchesDataGoalServe = filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
-
-                console.log(filteredLiveSinglesMatchesDataGoalServe)
-
-                console.log(filteredSinglesMatchesDataGoalServe)
 
                 return filteredSinglesMatchesDataGoalServe
 
@@ -340,7 +332,9 @@ export default function TournamentDetail(props) {
 
               if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
 
-                return filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
+                const filteredLiveDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                
+                return filteredDoublesMatchesDataGoalServe
 
               } else {
 
