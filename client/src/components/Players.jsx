@@ -10,7 +10,17 @@ export default function Players(props) {
 
   const { rankingCategory, discipline, viewRace, activateSwitch } = props
 
-  const [ loaded, setLoaded ] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  console.log(rankingCategory[1])
+  
+  useEffect(() => {
+    if (activateSwitch) {
+      setLoaded(false)
+    } else if (!activateSwitch) {
+      setLoaded(true)
+    }
+  }, [])
 
   const generatePlayers = (rankingCategory) => {
 
@@ -36,13 +46,15 @@ export default function Players(props) {
     } else if (!activateSwitch && rankingCategory) {
 
       const playerCards = rankingCategory?.map((player, index) => {
+
+        const key = player.name + player.current_time
       
         return (
 
           <PlayerCard
             playerData={player}
             playerCountry={convertCountryIOCtoISO3(player.country.toUpperCase())}
-            key={player.current_time}
+            key={key}
             discipline={discipline}
             componentUsage="rankings"
           />
@@ -61,13 +73,13 @@ export default function Players(props) {
 
   const players = generatePlayers(rankingCategory)
 
-  console.log(players)
+  // console.log(players[1])
 
   return (
 
     <>
       
-      {(activateSwitch || !rankingCategory) ?
+      {(activateSwitch || !rankingCategory || !loaded) ?
 
         <div className="loader-icon heartbeat" id="rankings-loader">
 

@@ -9,7 +9,7 @@ export default function PlayerCard(props) {
   const [loaded, setLoaded] =  useState(false)
   const [detailLevel, setDetailLevel] = useState("none")
 
-  const { playerData, playerCountry, discipline, viewRace, componentUsage } = props
+  const { playerData, playerCountry, discipline, viewRace, componentUsage, key } = props
 
   const history = useHistory()
 
@@ -42,7 +42,7 @@ export default function PlayerCard(props) {
     }
   }
 
-  console.log(playerData)
+  // console.log(playerData)
   
   return (
 
@@ -55,7 +55,7 @@ export default function PlayerCard(props) {
         
         : */}
           
-        <div className="player-container" id={componentUsage === "rankings" ? `low-detail` : `high-detail`} key={playerData.current_time} onClick={(e) => handlePlayerDetails(e)}>
+        <div className="player-container" id={componentUsage === "rankings" ? `low-detail` : `high-detail`} key={key} onClick={(e) => handlePlayerDetails(e)}>
           
           {componentUsage === "rankings" ?
             
