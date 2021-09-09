@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag"
+import XMLParser from 'react-xml-parser';
 
 import "./MatchCard.css";
 
 import {
-  getMatch,
-} from '../utils/matches'
+  getLiveMatchGoalServe
+} from '../utils/live'
 
 export default function MatchCard(props) {
-  const { matchData, tournamentGender } = props;
+  const { matchData, supportingMatchData, discipline, tournamentGender, court, round, status } = props;
   const history = useHistory();
 
   console.log(matchData)
+  console.log(supportingMatchData)
 
   const [currentMatchData, setCurrentMatchData] = useState(matchData)
 
@@ -21,34 +23,34 @@ export default function MatchCard(props) {
   const [matchInfo, setMatchInfo] = useState({
 
     tournamentEvent: tournamentGender,
-    tournamentDiscipline: "Singles",
-    tournamentRound: matchData.round_name,
+    tournamentDiscipline: discipline,
+    tournamentRound: round,
 
-    matchCourt: matchData.court,
-    matchStatus: matchData.status,
+    matchCourt: court,
+    matchStatus: status,
 
-    homeCompetitorID: matchData.home_id,
-    homeCompetitor: matchData.home_player,
+    homeCompetitorID: matchData.player[0]["@id"],
+    homeCompetitor: matchData.player[0]["@name"],
 
-    awayCompetitorID: matchData.away_id,
-    awayCompetitor: matchData.away_player
+    awayCompetitorID: matchData.player[1]["@id"],
+    awayCompetitor: matchData.player[0]["@name"]
 
   })
 
   const [scoreInfo, setScoreInfo] = useState({
 
-    setOneScoreHome: "",
-    setOneScoreAway: "",
-    setTwoScoreHome: "",
-    setTwoScoreAway: "",
-    setThreeScoreHome: "",
-    setThreeScoreAway: "",
-    setFourScoreHome: "",
-    setFourScoreAway: "",
-    setFiveScoreHome: "",
-    setFiveScoreAway: "",
-    serviceScoreHome: "",
-    serviceScoreAway: "",
+    setOneScoreHome: matchData.player[0]["@s1"].split(".")[0],
+    setOneScoreAway: matchData.player[1]["@s1"].split(".")[0],
+    setTwoScoreHome: matchData.player[0]["@s2"].split(".")[0],
+    setTwoScoreAway: matchData.player[1]["@s2"].split(".")[0],
+    setThreeScoreHome: matchData.player[0]["@s3"].split(".")[0],
+    setThreeScoreAway: matchData.player[1]["@s3"].split(".")[0],
+    setFourScoreHome: matchData.player[0]["@s4"].split(".")[0],
+    setFourScoreAway: matchData.player[1]["@s4"].split(".")[0],
+    setFiveScoreHome: matchData.player[0]["@s5"].split(".")[0],
+    setFiveScoreAway: matchData.player[1]["@s5"].split(".")[0],
+    serviceScoreHome: matchData.player[0]["@game_score"],
+    serviceScoreAway: matchData.player[1]["@game_score"],
     server: ""
 
   })
@@ -57,36 +59,59 @@ export default function MatchCard(props) {
   const CountryCodes = require('countrycodes/countryCodes.js')
 
   useEffect(() => {
-    setCurrentMatchData(matchData)
-  }, [matchData])
-
-  useEffect(() => {
-    
-    if (match === null || (currentMatchData.id !== match.id)) {
-      console.log('setMatchData')
+    if (match === null) {
+      console.log("UseEffect #1 - MatchCard.js - MatchCard component Initializing - Setting Match with MatchData prop")
       setMatch(matchData)
     }
-    
-  }, [matchData, currentMatchData])
+  }, [])
 
   useEffect(() => {
 
     const interval = setInterval(() => {
 
-      if (matchInfo.matchStatus.toLowerCase() === "inprogress") {
+      if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-        const currentMatchID = matchData.id
+        const currentMatchID = matchData["@id"]
 
-        console.log('live data')
-        console.log(matchData)
+        console.log(currentMatchID)
+        console.log('UseEffect #2 - MatchCard.js - Interval to fetch updated Match Data from Goal Serve about to execute')
+
         const fetchMatch = async (matchID) => {
-          const data = await getMatch(matchID)
-          console.log("interval for fetchMatch within MatchCard")
-          setMatch(data)
+
+          const liveMatchDataXML = await getLiveMatchGoalServe(matchID)
+          console.log(liveMatchDataXML)
+          const liveMatchDataJSON = new XMLParser().parseFromString(liveMatchDataXML)
+          console.log(liveMatchDataJSON)
+
+          setMatch(liveMatchDataJSON)
+
+          setMatchInfo(prevState => ({
+            ...prevState,
+            matchStatus: liveMatchDataJSON.children[0].children[0].attributes.status
+          }))
+
+          setScoreInfo(prevState => ({
+            ...prevState,
+            setOneScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s1.split(".")[0],
+            setOneScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s1.split(".")[0],
+            setTwoScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s2.split(".")[0],
+            setTwoScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s2.split(".")[0],
+            setThreeScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s3.split(".")[0],
+            setThreeScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s3.split(".")[0],
+            setFourScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s4.split(".")[0],
+            setFourScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s4.split(".")[0],
+            setFiveScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s5.split(".")[0],
+            setFiveScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s5.split(".")[0],
+            serviceScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.game_score,
+            serviceScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.game_score,
+          }))
         }
+
         fetchMatch(currentMatchID)
       } else {
+
         clearInterval(interval)
+
       }
     }, 60000);
    
@@ -98,371 +123,192 @@ export default function MatchCard(props) {
 
     const currentMatch = match
 
-    if (currentMatch !== null) {
-
-      const parseTournamentRound = (tournamentRound) => {
-        switch (tournamentRound) {
-          case "round_of_128":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 128"
-            }));
-            break;
-          case "round_of_64":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 64"
-            }));
-            break;
-          case "round_of_32":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 32"
-            }));
-            break;
-          case "round_of_16":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 16"
-            }));
-            break;
-          case "round_of_8":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Quarterfinal"
-            }));
-            break;
-          case "quarterfinal":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Quarterfinal"
-            }));
-            break;
-          case "round_of_4":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Semifinal"
-            }));
-            break;
-          case "semifinal":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Semifinal"
-            }));
-            break;
-          case "round_of_2":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "FINAL"
-            }));
-            break;
-          case "final":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "FINAL"
-            }));
-            break;
-          default:
-            break;
-        }
-      };
-
-      parseTournamentRound(
-        match.round_name
-      );
-
-      const parseTournamentDiscipline = (tournamentType) => {
-        switch (tournamentType) {
-          case "singles":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "SINGLES"
-            }));
-            break;
-          case "doubles":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "DOUBLES"
-            }));
-            break;
-          case "mixed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "MIXED"
-            }));
-            break;
-          default:
-            break;
-        }
-      };
-
-      parseTournamentDiscipline(
-        matchInfo.tournamentDiscipline
-      );
-
-      const parseTournamentGender = (tournamentGender) => {
-        switch (tournamentGender) {
-          case "men":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-            break;
-          case "ATP":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-          break;
-          case "women":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "WOMEN'S"
-            }));
-            break;
-          case "WTA":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-          break;
-          case "mixed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MIXED"
-            }));
-            break;
-          default:
-            break;
-        }
-      };
-
-      parseTournamentGender(
-        tournamentGender
-      );
-
-      const parseMatchStatus = (props) => {
-        switch (props) {
-          case "not_started":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Not Started"
-            }));
-            break;
-          case "match_about_to_start":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Match To Start"
-            }));
-            break;
-          case "live":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Live"
-            }));
-            break;
-          case "closed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-            break;
-          case "ended":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-            break;
-          case "interrupted":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Interrupted"
-            }));
-            break;
-          case "suspended":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Suspended"
-            }));
-            break;
-          case "cancelled":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Cancelled"
-            }));
-            break;
-          case "delayed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Delayed"
-            }));
-            break;
-          case "abandoned":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Abandoned"
-            }));
-            break;
-          case "inprogress":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Live"
-            }));
-          break;
-          case "notstarted":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Not Started"
-            }));
-          break;
-          case "finished":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-          break;
-          default:
-            break;
-        }
-      };
-
-
-      parseMatchStatus(
-        matchData.status
-      );
-
-      const parseMatchCompetitors = (match) => {
-        setMatchInfo(prevState => ({
-          ...prevState,
-          homeCompetitorID: match.home_id
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          homeCompetitor: match.home_player
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          awayCompetitorID: match.away_id
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          awayCompetitor: match.away_player
-        }));
-      }
-
-      parseMatchCompetitors(matchData)
-
-    }
-  }, [match])
-
-  useEffect(() => {
-
-    const currentMatch = match
+    console.log(currentMatch)
 
     if (currentMatch !== null) {
 
       const handleHomeScore = () => {
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.result !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-          if (match.result === 50) {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreHome: "AD"
-            }))
+            if (match.player[0]["@game_score"] === "A") {
 
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+
+            } else {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.player[0]["@game_score"]
+              }))
+
+            }
+          
           } else {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreHome: match.result
-            }))
+            if (match.children[0].children[0].children[0].attributes.game_score === "A") {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+  
+            } else {
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.children[0].children[0].children[0].attributes.game_score
+              }))
+  
+            }
 
           }
-
 
         }
       }
 
       const handleAwayScore = () => {
         
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted") && match.result !== undefined) {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-          if (match.result === 50) {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreAway: "AD"
-            }))
-
-          } else {
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreAway: match.result
-            }))
-          }
-        }
-      }
-
-      const generateSets = () => {
-        
-        if ((matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete") && match.result !== undefined) {
-
-          const sets = ["setOneScore", "setTwoScore", "setThreeScore", "setFourScore", "setFiveScore"]
-
-          for (let i = 1; i <= 5; i++) {
-
-            let index = i - 1
-
-            let test = `home_set${i}`
-
-            if (match.result.[test] !== undefined) {
-          
-              let homeScore = sets[index] + "Home"
-              let awayScore = sets[index] + "Away"
-
-              let homeEndpoint = `home_set${i}`
-              let awayEndpoint = `away_set${i}`
+            if (match.player[1]["@game_score"] === "A") {
 
               setScoreInfo(prevState => ({
                 ...prevState,
-                [homeScore]: match.result.[homeEndpoint],
-                [awayScore]: match.result.[awayEndpoint]
+                serviceScoreAway: "AD"
+              }))
+
+            } else {
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreAway: match.player[1]["@game_score"]
               }))
             }
+
+          } else {
+
+            if (match.children[0].children[0].children[1].attributes.game_score === "A") {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+  
+            } else {
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.children[0].children[0].children[1].attributes.game_score
+              }))
+  
+            }
+
           }
         }
       }
 
       const handleServer = () => {
-        if (matchInfo.matchStatus.toLowerCase() === "live") {
-          if (match.result.serving) {
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: match.result.serving
-            }))
+        if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
+
+          if (match.player) {
+
+            if (match.player[0]["@serve"] === "True") {
+
+              console.log('generating server')
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "home"
+              }))
+
+            } else if (match.player[1]["@serve"] === "True") {
+
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "away"
+              }))
+            }
+
+          } else {
+
+            if (match.children[0].children[0].children[0].attributes.serve === "True") {
+
+              console.log('generating server')
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "home"
+              }))
+  
+            } else if (match.children[0].children[0].children[1].attributes.serve === "True") {
+  
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "away"
+              }))
+            }
+
           }
-        } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "complete") {
-          if (match.result.winner_id) {
-            if (match.result.winner_id === matchInfo.homeCompetitorID) {
+
+        } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
+
+          if (match.player) {
+
+            if (match.player[0]["@winner"] === "True") {
+
               setScoreInfo(prevState => ({
                 ...prevState,
                 server: "homeWinner"
               }))
-            } else {
+
+            } else if (match.player[1]["@winner"] === "True") {
+              
               setScoreInfo(prevState => ({
                 ...prevState,
                 server: "awayWinner"
               }))
             }
+
+          } else {
+
+            if (match.children[0].children[0].attributes.winner === "True") {
+
+              console.log('generating server')
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "homeWinner"
+              }))
+  
+            } else if (match.children[0].children[1].attributes.winner === "True") {
+  
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "awayWinner"
+              }))
+            }
+
           }
+
         }
       }
         
       handleHomeScore()
       handleAwayScore()
       handleServer()
-      generateSets(match)
+
 
     }
   }, [match, matchInfo])
@@ -472,53 +318,24 @@ export default function MatchCard(props) {
     history.push(`/match/${matchID}`);
   };
 
-  const generateCompetitor = (type) => {
-    if (matchInfo.tournamentDiscipline === "Doubles") {
+  const generateCompetitor = (index, type) => {
 
-      const competitor = matchData.type
+    if (matchInfo.tournamentDiscipline === "Doubles") {
 
       const doublesTeamInfo = {
         partnerA: {
-          name: competitor.players[0].name.split(',')[0],
-          countryCode: competitor.players[0].country_code
+          name: matchInfo.homeCompetitor.split('/ ')[0]
         },
         partnerB: {
-          name: competitor.players[1].name.split(',')[0],
-          countryCode: competitor.players[1].country_code
+          name: matchInfo.homeCompetitor.split('/ ')[1]
         },
-        seed: competitor.seed
       }
-
-      const partnerAAlpha2Country = getCountryISO2(doublesTeamInfo.partnerA.countryCode)
-      const partnerBAlpha2Country = getCountryISO2(doublesTeamInfo.partnerB.countryCode)
 
       return (
 
         <div className="competitor-name-container" id={type}>
 
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={partnerAAlpha2Country}
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-              aria-label="United States"
-            />
-            
-            <p className="player-country-seperator">/</p>
-
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={partnerBAlpha2Country}
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-              aria-label="United States"
-            />
-
-          <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}{' '}{(competitor.seed !== null || competitor.seed !== undefined) ? doublesTeamInfo.seed : ''}</p>
+          <p className="competitor-name">{doublesTeamInfo.partnerA.name}{'/'}{doublesTeamInfo.partnerB.name}</p>
 
         </div>
 
@@ -526,28 +343,71 @@ export default function MatchCard(props) {
 
     } else {
 
-      const competitor = matchData.[type]
-      const competitorName = competitor.full_name
-      const competitorRanking = '(' + competitor.ranking + ')'
+      const competitor = matchData.player[index]
+      const competitorName = competitor["@name"].split(". ")[1]
+
+      const generateRanking = (type) => {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
+
+          const ranking = '(' + supportingMatchData[0].home.ranking + ')'
+          return ranking
+
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
+
+          const ranking = '(' + supportingMatchData[0].away.ranking + ')'
+          return ranking
+
+        } else {
+
+          const ranking = ""
+          return ranking
+
+        }
+      }
+
+      const competitorRanking = generateRanking(type)
         console.log(competitorRanking)
-      const competitorCountry = CountryCodes.getCountry(competitor.country)
-        console.log(competitorCountry)
-      const competitorCountryCode = competitorCountry.iso2
-        console.log(competitorCountryCode)  
+
+      const generateCountry = (type) => {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
+  
+          const country = supportingMatchData[0].home.country
+          return country
+  
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
+  
+          const country = supportingMatchData[0].away.country
+          return country
+  
+        }
+      } 
 
       return (
 
         <div className="competitor-name-container" id={type}>
 
-            <ReactCountryFlag
-              className="emojiFlag"
-              countryCode={competitorCountryCode}
-              aria-label="United States"
-              style={{
-                fontSize: '150%',
-                lineHeight: '150%',
-            }}
-            />
+
+          {supportingMatchData !== "No Corresponding Match" ?
+            
+            <>
+
+              <ReactCountryFlag
+                className="emojiFlag"
+                countryCode={CountryCodes.getCountry(generateCountry(type)).iso2}
+                aria-label="United States"
+                style={{
+                  fontSize: '150%',
+                  lineHeight: '150%',
+                }}
+              />
+              
+            </>
+
+            :
+
+            <></>
+
+          }
 
           <p className="competitor-name">{competitorName}{' '}{(competitorRanking !== null && competitorRanking !== undefined) ? competitorRanking : ''}</p>
 
@@ -557,9 +417,9 @@ export default function MatchCard(props) {
     }
   }
   
-  const homePlayer = generateCompetitor("home")
+  const homePlayer = generateCompetitor(0, "home")
 
-  const awayPlayer = generateCompetitor("away")
+  const awayPlayer = generateCompetitor(1, "away")
 
   return (
     <div

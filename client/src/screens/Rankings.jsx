@@ -79,26 +79,37 @@ export default function Rankings(props) {
   const handleEventSwitch = () => {
     if (event === "WTA") {
       setEvent("ATP")
-      setActivateSwitch(true)
+      // setActivateSwitch(true)
     } else if (event === "ATP") {
       setEvent("WTA")
-      setActivateSwitch(true)
+      // setActivateSwitch(true)
     }
   }
 
   const handleDisciplineSwitch = () => {
     if (discipline === "Singles") {
       setDiscipline("Doubles")
-      setActivateSwitch(true)
+      // setActivateSwitch(true)
     } else if (discipline === "Doubles") {
       setDiscipline("Singles")
-      setActivateSwitch(true)
+      // setActivateSwitch(true)
     }
   }
 
   const handleRaceSwitch = () => {
     setViewRace(!viewRace)
+    // setActivateSwitch(true)
+  }
+
+  const handleSwitch = (switchType) => {
     setActivateSwitch(true)
+    if (switchType === "Event") {
+      handleEventSwitch()
+    } else if (switchType === "Discipline") {
+      handleDisciplineSwitch()
+    } else if (switchType === "Race") {
+      handleRaceSwitch()
+    }
   }
 
   // The Below UseEffect activates when ActivateSwitch is true, thereby changing the current ranking data fed to the Players component and rendered as individual PlayerCards
@@ -121,7 +132,7 @@ export default function Rankings(props) {
     } else if (loaded && activateSwitch && event === "ATP" && discipline === "Doubles" && viewRace === true) {
       setRankingCategory(maleDoublesRaceRankings)
     }
-  }, [activateSwitch])
+  }, [event, discipline, viewRace])
 
 // Below UseEffect triggers when RankingCategory changes AND when ActivateSwitch is TRUE. It sets ActivateSwitch back to false.
 
@@ -153,7 +164,7 @@ export default function Rankings(props) {
 
                 <p className="tour-view-switch-container-copy">ATP</p>
 
-                <Switch onChange={handleEventSwitch} checked={event === "WTA" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+                <Switch onChange={(e) => handleSwitch("Event")} checked={event === "WTA" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
                 <p className="tour-view-switch-container-copy">WTA</p>
 
@@ -163,7 +174,7 @@ export default function Rankings(props) {
 
                 <p className="discipline-view-switch-container-copy">SINGLES</p>
 
-                <Switch onChange={handleDisciplineSwitch} checked={discipline === "Doubles" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+                <Switch onChange={(e) => handleSwitch("Discipline")} checked={discipline === "Doubles" ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
                 <p className="discipline-view-switch-container-copy">DOUBLES</p>
 
@@ -173,7 +184,7 @@ export default function Rankings(props) {
 
                 <p className="discipline-view-switch-container-copy">ROLLING</p>
 
-                <Switch onChange={handleRaceSwitch} checked={viewRace ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
+                <Switch onChange={(e) => handleSwitch("Race")} checked={viewRace ? true : false} onColor="#F39C12" checkedIcon={false} uncheckedIcon={false} />
 
                 <p className="discipline-view-switch-container-copy">RACE</p>
 
