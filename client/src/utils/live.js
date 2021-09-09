@@ -14,7 +14,7 @@ export const getLiveMatchesGoalServe = async () => {
 }
 
 export const getLiveMatchGoalServe = async (matchID) => {
-  const resp = await goalServeAPI.get(`tennis_scores/match?id=${matchID}home?json=1`)
+  const resp = await goalServeAPI.get(`tennis_scores/match?id=${matchID}`)
   console.log(resp.data)
   return resp.data
 }

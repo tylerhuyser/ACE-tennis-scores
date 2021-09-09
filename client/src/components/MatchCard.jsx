@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag"
+import XMLParser from 'react-xml-parser';
 
 import "./MatchCard.css";
 
@@ -38,16 +39,16 @@ export default function MatchCard(props) {
 
   const [scoreInfo, setScoreInfo] = useState({
 
-    setOneScoreHome: matchData.player[0]["@s1"],
-    setOneScoreAway: matchData.player[1]["@s1"],
-    setTwoScoreHome: matchData.player[0]["@s2"],
-    setTwoScoreAway: matchData.player[1]["@s2"],
-    setThreeScoreHome: matchData.player[0]["@s3"],
-    setThreeScoreAway: matchData.player[1]["@s3"],
-    setFourScoreHome: matchData.player[0]["@s4"],
-    setFourScoreAway: matchData.player[1]["@s4"],
-    setFiveScoreHome: matchData.player[0]["@s5"],
-    setFiveScoreAway: matchData.player[1]["@s5"],
+    setOneScoreHome: matchData.player[0]["@s1"].split(".")[0],
+    setOneScoreAway: matchData.player[1]["@s1"].split(".")[0],
+    setTwoScoreHome: matchData.player[0]["@s2"].split(".")[0],
+    setTwoScoreAway: matchData.player[1]["@s2"].split(".")[0],
+    setThreeScoreHome: matchData.player[0]["@s3"].split(".")[0],
+    setThreeScoreAway: matchData.player[1]["@s3"].split(".")[0],
+    setFourScoreHome: matchData.player[0]["@s4"].split(".")[0],
+    setFourScoreAway: matchData.player[1]["@s4"].split(".")[0],
+    setFiveScoreHome: matchData.player[0]["@s5"].split(".")[0],
+    setFiveScoreAway: matchData.player[1]["@s5"].split(".")[0],
     serviceScoreHome: matchData.player[0]["@game_score"],
     serviceScoreAway: matchData.player[1]["@game_score"],
     server: ""
@@ -58,36 +59,59 @@ export default function MatchCard(props) {
   const CountryCodes = require('countrycodes/countryCodes.js')
 
   useEffect(() => {
-    setCurrentMatchData(matchData)
-  }, [matchData])
-
-  useEffect(() => {
-    
-    if (match === null || (currentMatchData.id !== match.id)) {
-      console.log('setMatchData')
+    if (match === null) {
+      console.log("UseEffect #1 - MatchCard.js - MatchCard component Initializing - Setting Match with MatchData prop")
       setMatch(matchData)
     }
-    
-  }, [matchData, currentMatchData])
+  }, [])
 
   useEffect(() => {
 
     const interval = setInterval(() => {
 
-      if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
+      if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
         const currentMatchID = matchData["@id"]
 
-        console.log('live data')
-        console.log(matchData)
+        console.log(currentMatchID)
+        console.log('UseEffect #2 - MatchCard.js - Interval to fetch updated Match Data from Goal Serve about to execute')
+
         const fetchMatch = async (matchID) => {
-          const data = await getLiveMatchGoalServe(matchID)
-          console.log("interval for fetchMatch within MatchCard")
-          setMatch(data)
+
+          const liveMatchDataXML = await getLiveMatchGoalServe(matchID)
+          console.log(liveMatchDataXML)
+          const liveMatchDataJSON = new XMLParser().parseFromString(liveMatchDataXML)
+          console.log(liveMatchDataJSON)
+
+          setMatch(liveMatchDataJSON)
+
+          setMatchInfo(prevState => ({
+            ...prevState,
+            matchStatus: liveMatchDataJSON.children[0].children[0].attributes.status
+          }))
+
+          setScoreInfo(prevState => ({
+            ...prevState,
+            setOneScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s1.split(".")[0],
+            setOneScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s1.split(".")[0],
+            setTwoScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s2.split(".")[0],
+            setTwoScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s2.split(".")[0],
+            setThreeScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s3.split(".")[0],
+            setThreeScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s3.split(".")[0],
+            setFourScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s4.split(".")[0],
+            setFourScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s4.split(".")[0],
+            setFiveScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.s5.split(".")[0],
+            setFiveScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.s5.split(".")[0],
+            serviceScoreHome: liveMatchDataJSON.children[0].children[0].children[0].attributes.game_score,
+            serviceScoreAway: liveMatchDataJSON.children[0].children[0].children[1].attributes.game_score,
+          }))
         }
+
         fetchMatch(currentMatchID)
       } else {
+
         clearInterval(interval)
+
       }
     }, 60000);
    
@@ -99,427 +123,183 @@ export default function MatchCard(props) {
 
     const currentMatch = match
 
-    if (currentMatch !== null) {
-
-      const parseTournamentRound = (tournamentRound) => {
-        switch (tournamentRound) {
-          case "round_of_128":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 128"
-            }));
-            break;
-          case "1/128":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 128"
-            }));
-          break;
-          case "round_of_64":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 64"
-            }));
-            break;
-          case "1/64":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 64"
-            }));
-          break;
-          case "round_of_32":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 32"
-            }));
-            break;
-          case "1/32":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 32"
-            }));
-          break;
-          case "round_of_16":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 16"
-            }));
-            break;
-          case "1/16":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Round of 16"
-            }));
-          break;
-          case "round_of_8":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Quarterfinal"
-            }));
-            break;
-          case "1/8":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Quarterfinal"
-            }));
-          break;
-          case "quarterfinal":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Quarterfinal"
-            }));
-            break;
-          case "round_of_4":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Semifinal"
-            }));
-            break;
-          case "1/4":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Semifinal"
-            }));
-          break;
-          case "semifinal":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Semifinal"
-            }));
-            break;
-          case "round_of_2":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Final"
-            }));
-            break;
-          case "1/2":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Final"
-            }));
-          break;
-          case "final":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: "Final"
-            }));
-            break;
-          default:
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentRound: tournamentRound
-            }));
-            break;
-        }
-      };
-
-      parseTournamentRound(
-        round
-      );
-
-      const parseTournamentDiscipline = (tournamentType) => {
-        switch (tournamentType) {
-          case "singles":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "SINGLES"
-            }));
-            break;
-          case "doubles":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "DOUBLES"
-            }));
-            break;
-          case "mixed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: "MIXED"
-            }));
-            break;
-          default:
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentDiscipline: discipline
-            }))
-            break;
-        }
-      };
-
-      parseTournamentDiscipline(
-        discipline
-      );
-
-      const parseTournamentGender = (tournamentGender) => {
-        switch (tournamentGender) {
-          case "men":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-            break;
-          case "ATP":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-          break;
-          case "women":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "WOMEN'S"
-            }));
-            break;
-          case "WTA":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MEN'S"
-            }));
-          break;
-          case "mixed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: "MIXED"
-            }));
-            break;
-          default:
-            setMatchInfo(prevState => ({
-              ...prevState,
-              tournamentEvent: tournamentGender
-            }));
-            break;
-        }
-      };
-
-      parseTournamentGender(
-        tournamentGender
-      );
-
-      const parseMatchStatus = (props) => {
-        switch (props) {
-          case "not_started":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Not Started"
-            }));
-            break;
-          case "match_about_to_start":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Match To Start"
-            }));
-            break;
-          case "live":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Live"
-            }));
-            break;
-          case "closed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-            break;
-          case "ended":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-            break;
-          case "interrupted":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Interrupted"
-            }));
-            break;
-          case "suspended":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Suspended"
-            }));
-            break;
-          case "cancelled":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Cancelled"
-            }));
-            break;
-          case "delayed":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Delayed"
-            }));
-            break;
-          case "abandoned":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Abandoned"
-            }));
-            break;
-          case "inprogress":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Live"
-            }));
-          break;
-          case "notstarted":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Not Started"
-            }));
-          break;
-          case "finished":
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: "Complete"
-            }));
-          break;
-          default:
-            setMatchInfo(prevState => ({
-              ...prevState,
-              matchStatus: status
-            }));
-            break;
-        }
-      };
-
-
-      parseMatchStatus(
-        status
-      );
-
-      const parseMatchCompetitors = (match) => {
-        setMatchInfo(prevState => ({
-          ...prevState,
-          homeCompetitorID: matchData.player[0]["@id"]
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          homeCompetitor: matchData.player[0]["@name"]
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          awayCompetitorID: matchData.player[1]["@id"]
-        }));
-        setMatchInfo(prevState => ({
-          ...prevState,
-          awayCompetitor: matchData.player[1]["@name"]
-        }));
-      }
-
-      parseMatchCompetitors(matchData)
-
-    }
-  }, [match])
-
-  useEffect(() => {
-
-    const currentMatch = match
+    console.log(currentMatch)
 
     if (currentMatch !== null) {
 
       const handleHomeScore = () => {
-        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-          if (match.player[0]["@game_score"] === "A") {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreHome: "AD"
-            }))
+            if (match.player[0]["@game_score"] === "A") {
 
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+
+            } else {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.player[0]["@game_score"]
+              }))
+
+            }
+          
           } else {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreHome: match.player[0]["@game_score"]
-            }))
+            if (match.children[0].children[0].children[0].attributes.game_score === "A") {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+  
+            } else {
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.children[0].children[0].children[0].attributes.game_score
+              }))
+  
+            }
 
           }
-
 
         }
       }
 
       const handleAwayScore = () => {
         
-        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
+        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-          if (match.player[1]["@game_score"] === "A") {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreAway: "AD"
-            }))
+            if (match.player[1]["@game_score"] === "A") {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreAway: "AD"
+              }))
+
+            } else {
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreAway: match.player[1]["@game_score"]
+              }))
+            }
 
           } else {
-            setScoreInfo(prevState => ({
-              ...prevState,
-              serviceScoreAway: match.player[1]["@game_score"]
-            }))
+
+            if (match.children[0].children[0].children[1].attributes.game_score === "A") {
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: "AD"
+              }))
+  
+            } else {
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                serviceScoreHome: match.children[0].children[0].children[1].attributes.game_score
+              }))
+  
+            }
+
           }
-        }
-      }
-
-      const generateSets = (match) => {
-        
-        if (matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "ended" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "interrupted" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
-
-          setScoreInfo(prevState => ({
-            ...prevState,
-            setOneScoreHome: match.player[0]["@s1"],
-            setOneScoreAway: match.player[1]["@s1"],
-            setTwoScoreHome: match.player[0]["@s2"],
-            setTwoScoreAway: match.player[1]["@s2"],
-            setThreeScoreHome: match.player[0]["@s3"],
-            setThreeScoreAway: match.player[1]["@s3"],
-            setFourScoreHome: match.player[0]["@s4"],
-            setFourScoreAway: match.player[1]["@s4"],
-            setFiveScoreHome: match.player[0]["@s5"],
-            setFiveScoreAway: match.player[1]["@s5"],
-            serviceScoreHome: match.player[0]["@game_score"],
-            serviceScoreAway: match.player[1]["@game_score"],
-          }))
-
         }
       }
 
       const handleServer = () => {
-        if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "Set 1" || matchInfo.matchStatus.toLowerCase() === "Set 2" || matchInfo.matchStatus.toLowerCase() === "Set 3" || matchInfo.matchStatus.toLowerCase() === "Set 4" || matchInfo.matchStatus.toLowerCase() === "Set 5") {
+        if (matchInfo.matchStatus.toLowerCase() === "inprogress" || matchInfo.matchStatus.toLowerCase() === "live" || matchInfo.matchStatus.toLowerCase() === "set 1" || matchInfo.matchStatus.toLowerCase() === "set 2" || matchInfo.matchStatus.toLowerCase() === "set 3" || matchInfo.matchStatus.toLowerCase() === "set 4" || matchInfo.matchStatus.toLowerCase() === "set 5") {
 
-          if (match.player[0]["@serve"] === "True") {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: "home"
-            }))
+            if (match.player[0]["@serve"] === "True") {
 
-          } else if (match.player[1]["@serve"] === "True") {
-            
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: "away"
-            }))
+              console.log('generating server')
+
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "home"
+              }))
+
+            } else if (match.player[1]["@serve"] === "True") {
+
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "away"
+              }))
+            }
+
+          } else {
+
+            if (match.children[0].children[0].children[0].attributes.serve === "True") {
+
+              console.log('generating server')
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "home"
+              }))
+  
+            } else if (match.children[0].children[0].children[1].attributes.serve === "True") {
+  
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "away"
+              }))
+            }
+
           }
-
 
         } else if (matchInfo.matchStatus.toLowerCase() === "closed" || matchInfo.matchStatus.toLowerCase() === "finished" || matchInfo.matchStatus.toLowerCase() === "complete" || matchInfo.matchStatus.toLowerCase() === "retired") {
 
-          if (match.player[0]["@winner"] === "True") {
+          if (match.player) {
 
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: "homeWinner"
-            }))
+            if (match.player[0]["@winner"] === "True") {
 
-          } else if (match.player[1]["@winner"] === "True") {
-            
-            setScoreInfo(prevState => ({
-              ...prevState,
-              server: "awayWinner"
-            }))
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "homeWinner"
+              }))
+
+            } else if (match.player[1]["@winner"] === "True") {
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "awayWinner"
+              }))
+            }
+
+          } else {
+
+            if (match.children[0].children[0].attributes.winner === "True") {
+
+              console.log('generating server')
+  
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "homeWinner"
+              }))
+  
+            } else if (match.children[0].children[1].attributes.winner === "True") {
+  
+              console.log('generating server')
+              
+              setScoreInfo(prevState => ({
+                ...prevState,
+                server: "awayWinner"
+              }))
+            }
+
           }
 
         }
@@ -528,7 +308,7 @@ export default function MatchCard(props) {
       handleHomeScore()
       handleAwayScore()
       handleServer()
-      generateSets(match)
+
 
     }
   }, [match, matchInfo])
@@ -621,12 +401,12 @@ export default function MatchCard(props) {
       const competitorName = competitor["@name"].split(". ")[1]
 
       const generateRanking = (type) => {
-        if (supportingMatchData.length !== undefined && type === "home") {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
 
           const ranking = '(' + supportingMatchData[0].home.ranking + ')'
           return ranking
 
-        } else if (supportingMatchData.length !== undefined && type === "away") {
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
 
           const ranking = '(' + supportingMatchData[0].away.ranking + ')'
           return ranking
@@ -643,12 +423,12 @@ export default function MatchCard(props) {
         console.log(competitorRanking)
 
       const generateCountry = (type) => {
-        if (supportingMatchData.length !== undefined && type === "home") {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
   
           const country = supportingMatchData[0].home.country
           return country
   
-        } else if (supportingMatchData.length !== undefined && type === "away") {
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
   
           const country = supportingMatchData[0].away.country
           return country
@@ -661,7 +441,7 @@ export default function MatchCard(props) {
         <div className="competitor-name-container" id={type}>
 
 
-          {supportingMatchData.length !== undefined ?
+          {supportingMatchData !== "No Corresponding Match" ?
             
             <>
 

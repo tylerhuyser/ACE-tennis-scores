@@ -26,9 +26,9 @@ export default function Matches(props) {
           key={matchData.id}
           discipline={discipline}
           tournamentGender={tournamentGender}
-          supportingMatchData={(correspondingMatchData === null || correspondingMatchData === undefined) ? "No Corresponding Match" : correspondingMatchData}
-          court={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData[0].court}
-          round={(correspondingMatchData === null || correspondingMatchData === undefined) ? "" : correspondingMatchData[0].round_name}
+          supportingMatchData={(correspondingMatchData === null || correspondingMatchData === undefined || correspondingMatchData.length === 0) ? "No Corresponding Match" : correspondingMatchData}
+          court={(correspondingMatchData === null || correspondingMatchData === undefined || correspondingMatchData.length === 0) ? "" : correspondingMatchData[0].court}
+          round={(correspondingMatchData === null || correspondingMatchData === undefined || correspondingMatchData.length === 0) ? "" : correspondingMatchData[0].round_name}
           status={matchData["@status"]}
         />
       )

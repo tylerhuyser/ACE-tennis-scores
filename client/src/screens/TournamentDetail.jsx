@@ -271,8 +271,6 @@ export default function TournamentDetail(props) {
 
         console.log(completedSinglesMatchesDataGoalServe)
         console.log(completedDoublesMatchesDataGoalServe)
-        // console.log(combinedDoublesMatchesDataGoalServe[0].match.length)
-        // console.log(combinedSinglesMatchesDataGoalServe[0].match["@status"])
 
         const filterLiveSinglesMatchesGoalServe = () => {
 
@@ -280,11 +278,25 @@ export default function TournamentDetail(props) {
 
             if (combinedSinglesMatchesDataGoalServe[0].match.length === undefined) {
 
-              const filteredSinglesMatchesDataGoalServe = []
+              let filteredSinglesMatchesDataGoalServe = []
 
               if (combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
 
-                return filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                console.log(combinedSinglesMatchesDataGoalServe)
+
+                console.log(combinedSinglesMatchesDataGoalServe[0])
+
+                console.log(combinedSinglesMatchesDataGoalServe[0].match)
+
+                console.log(combinedSinglesMatchesDataGoalServe[0].match["@status"])
+
+                const filteredLiveSinglesMatchesDataGoalServe = filteredSinglesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+
+                console.log(filteredLiveSinglesMatchesDataGoalServe)
+
+                console.log(filteredSinglesMatchesDataGoalServe)
+
+                return filteredSinglesMatchesDataGoalServe
 
               } else {
 
@@ -315,6 +327,8 @@ export default function TournamentDetail(props) {
         }
         
         const liveSinglesMatchesDataGoalServe = filterLiveSinglesMatchesGoalServe()
+
+        console.log(liveSinglesMatchDetailsGoalServe)
 
         const filterLiveDoublesMatchesGoalServe = () => {
 
@@ -475,7 +489,7 @@ export default function TournamentDetail(props) {
 
             <div className="tournament-category-container">
 
-              <p className="tournament-date">{`${currentTournamentRapidAPI.start_date} - ${currentTournamentRapidAPI.end_date}`}</p>
+              <p className="tournament-date">{`${currentTournamentRapidAPI.start_date.split("-").splice(1).join("/")} - ${currentTournamentRapidAPI.end_date.split("-").splice(1).join("/")}`}</p>
 
               <img className="tournament-category-icon" alt="tournament-category-icon" src={tournamentCategoryIcon} />
           
