@@ -173,6 +173,8 @@ export default function TournamentDetail(props) {
           )
         })
 
+        console.log(combinedDoublesMatchDetailsGoalServe)
+
         const filterCompletedSinglesMatchesGoalServe = () => {
 
           if (combinedSinglesMatchesDataGoalServe.length > 0) {
@@ -226,7 +228,7 @@ export default function TournamentDetail(props) {
 
               if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Finished" || combinedSinglesMatchesDataGoalServe[0].match["@status"] === "Retired") {
 
-                const filteredCompletedDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                const filteredCompletedDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
 
                 return filteredDoublesMatchesDataGoalServe
 
@@ -345,6 +347,16 @@ export default function TournamentDetail(props) {
         }
 
         const liveDoublesMatchesDataGoalServe = filterLiveDoublesMatchesGoalServe()
+
+        console.log("combined")
+        console.log(combinedSinglesMatchesDataGoalServe)
+        console.log(combinedDoublesMatchesDataGoalServe)
+        console.log("completed")
+        console.log(completedSinglesMatchesDataGoalServe)
+        console.log(completedDoublesMatchesDataGoalServe)
+        console.log("live")
+        console.log(liveSinglesMatchesDataGoalServe)
+        console.log(liveDoublesMatchesDataGoalServe)
 
         setCombinedSinglesMatchDetailsGoalServe(combinedSinglesMatchesDataGoalServe)
         setCombinedDoublesMatchDetailsGoalServe(combinedDoublesMatchesDataGoalServe)

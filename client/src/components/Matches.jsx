@@ -7,11 +7,15 @@ import "./Matches.css";
 export default function Matches(props) {
   const { matchesData, supportingMatchesData, view, discipline, tournamentGender } = props;
 
+  console.log(matchesData)
+
   const matches =
     matchesData &&
     matchesData?.map((matchData, index) => {
 
-      const correspondingMatchData = supportingMatchesData && supportingMatchesData?.filter((match) => (match.title.includes(matchData.player[0]["@name"].split(" ")[1]) || match.title.includes(matchData.player[1]["@name"].split(" ")[1])))
+      console.log(supportingMatchesData)
+
+      const correspondingMatchData = supportingMatchesData && supportingMatchesData?.filter((match) => { console.log(matchData); console.log(match); return (match.title.includes(matchData.player[0]["@name"].split(" ")[1]) || match.title.includes(matchData.player[1]["@name"].split(" ")[1])) })
 
       return (
         <MatchCard
