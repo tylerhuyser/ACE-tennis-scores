@@ -344,7 +344,7 @@ export default function MatchCard(props) {
     } else {
 
       const competitor = matchData.player[index]
-      const competitorName = competitor["@name"].split(". ")[1]
+      const competitorName = competitor["@name"].split(". ")[competitor["@name"].split(". ").length - 1]
 
       const generateRanking = (type) => {
         if (supportingMatchData !== "No Corresponding Match" && type === "home") {
