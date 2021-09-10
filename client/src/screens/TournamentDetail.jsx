@@ -315,7 +315,7 @@ export default function TournamentDetail(props) {
 
               if (combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 1" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 2" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 3" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 4" || combinedDoublesMatchesDataGoalServe[0].match["@status"] === "Set 5") {
 
-                const filteredLiveDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedSinglesMatchesDataGoalServe[0].match)
+                const filteredLiveDoublesMatchesDataGoalServe = filteredDoublesMatchesDataGoalServe.push(combinedDoublesMatchesDataGoalServe[0].match)
                 
                 return filteredDoublesMatchesDataGoalServe
 
