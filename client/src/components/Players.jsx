@@ -73,8 +73,6 @@ export default function Players(props) {
 
   const players = generatePlayers(rankingCategory)
 
-  // console.log(players[1])
-
   return (
 
     <>

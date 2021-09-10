@@ -45,7 +45,6 @@ export default function PlayerDetail(props) {
 
       const gatherPlayerData = async (currentPlayerID) => {
         const playerInfo = await getPlayer(currentPlayerID)
-        console.log(playerInfo)
         localStorage.setItem('playerDetails', JSON.stringify(playerInfo))
         setPlayerData(playerInfo)
       }
@@ -106,7 +105,6 @@ export default function PlayerDetail(props) {
 
   useEffect(() => {
 
-    console.log(playerData)
     console.log('PlayerData and PlayerSchedule/Results are being checked')
 
     if (dataLoaded) {
@@ -129,8 +127,6 @@ export default function PlayerDetail(props) {
     />
       
   )})
-
-  console.log(playerResults)
 
   const handleChangeView = (view) => {
     switch (view) {

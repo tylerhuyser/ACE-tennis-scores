@@ -11,10 +11,6 @@ export default function ResultsContainer (props) {
   const [uniqueTournaments, setUniqueTournaments] = useState(null)
 
   const currentYear = new Date().getFullYear()
-  
-  console.log(currentYear)
-  console.log(playerResults)
-  console.log(uniqueTournaments)
 
   useEffect(() => {
 

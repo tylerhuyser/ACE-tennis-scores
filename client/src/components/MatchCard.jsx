@@ -13,9 +13,6 @@ export default function MatchCard(props) {
   const { matchData, supportingMatchData, discipline, tournamentGender, court, round, status } = props;
   const history = useHistory();
 
-  console.log(matchData)
-  console.log(supportingMatchData)
-
   const [currentMatchData, setCurrentMatchData] = useState(matchData)
 
   const [match, setMatch] = useState(null)
@@ -73,15 +70,13 @@ export default function MatchCard(props) {
 
         const currentMatchID = matchData["@id"]
 
-        console.log(currentMatchID)
         console.log('UseEffect #2 - MatchCard.js - Interval to fetch updated Match Data from Goal Serve about to execute')
 
         const fetchMatch = async (matchID) => {
 
           const liveMatchDataXML = await getLiveMatchGoalServe(matchID)
-          console.log(liveMatchDataXML)
           const liveMatchDataJSON = new XMLParser().parseFromString(liveMatchDataXML)
-          console.log(liveMatchDataJSON)
+
 
           setMatch(liveMatchDataJSON)
 
@@ -283,7 +278,7 @@ export default function MatchCard(props) {
 
             if (match.children[0].children[0].attributes.winner === "True") {
 
-              console.log('generating server')
+              console.log('generating winner')
   
               setScoreInfo(prevState => ({
                 ...prevState,
@@ -292,7 +287,7 @@ export default function MatchCard(props) {
   
             } else if (match.children[0].children[1].attributes.winner === "True") {
   
-              console.log('generating server')
+              console.log('generating winner')
               
               setScoreInfo(prevState => ({
                 ...prevState,
@@ -366,7 +361,6 @@ export default function MatchCard(props) {
       }
 
       const competitorRanking = generateRanking(type)
-        console.log(competitorRanking)
 
       const generateCountry = (type) => {
         if (supportingMatchData !== "No Corresponding Match" && type === "home") {

@@ -10,8 +10,6 @@ export default function Home (props) {
 
   const { tournaments, currentDate } = props
 
-  console.log(tournaments)
-
   const currentTournaments = tournaments.filter((tournament) => {
     
     const startDate = new Date(tournament.start_date)
@@ -40,8 +38,6 @@ export default function Home (props) {
     />
       
   )})
-
-  console.log(currentTournaments)
 
   return (
     <div className="home-container">

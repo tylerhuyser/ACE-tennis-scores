@@ -10,7 +10,6 @@ export const getTournaments = async () => {
 
 export const getCurrentTournaments = async () => {
   try {
-    console.log('inside api')
     const resp = await api.get(`/tournaments/ongoing.json${key}`)
     return resp.data
   }
@@ -43,6 +42,5 @@ export const getTournamentsRapidAPI = async (year) => {
   const atpResponse = await rapidAPI.get(`/tournaments/ATP/${year}`)
   const wtaResponse = await rapidAPI.get(`/tournaments/WTA/${year}`)
   const allTournaments = atpResponse.data.results.concat(wtaResponse.data.results)
-  console.log(allTournaments)
   return allTournaments
 }

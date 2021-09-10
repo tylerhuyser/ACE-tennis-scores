@@ -41,19 +41,10 @@ export default function PlayerCard(props) {
 
     }
   }
-
-  // console.log(playerData)
   
   return (
 
     <>
-      
-      {/* { !loaded ?
-        
-        <div className="empty-div-playerCard">
-        </div>
-        
-        : */}
           
         <div className="player-container" id={componentUsage === "rankings" ? `low-detail` : `high-detail`} key={key} onClick={(e) => handlePlayerDetails(e)}>
           

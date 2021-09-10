@@ -43,16 +43,11 @@ export default function Rankings(props) {
       
       const gatherRankings = async () => {
         const combinedRankingsData = await herokuRankings()
-        console.log(combinedRankingsData)
 
         const combinedRankings = JSON.parse(combinedRankingsData[0].data)
-        console.log(combinedRankings)
 
         const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
         const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
-
-        console.log(ATPRANKINGS)
-        console.log(WTARANKINGS)
 
         setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
         setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))

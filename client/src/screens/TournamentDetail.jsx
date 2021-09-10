@@ -67,9 +67,6 @@ export default function TournamentDetail(props) {
 
     if (tournaments !== undefined && tournaments !== null) {
 
-      console.log(tournaments)
-      console.log(params)
-
       console.log("TournamentDetail.js - UseEffect #1a - finding currentTournamentData using params and tournaments prop")
 
       const currentTournamentData = tournaments.find((tournament) => parseInt(params.id) === parseInt(tournament.id))
@@ -77,7 +74,6 @@ export default function TournamentDetail(props) {
       setCurrentTournamentLoadedRapidAPI(true)
 
       console.log("TournamentDetail.js - UseEffect #1a - currentTournamentRapidAPI set")
-      console.log(currentTournamentData)
 
     } else {
 
@@ -101,7 +97,6 @@ export default function TournamentDetail(props) {
 
       const gatherCurrentTournamentSchedule = async (params, currentYear, currentMonth, currentDay) => {
         const tournamentScheduleData = await getDailyTournamentMatchesAndResults(params.id, currentYear, currentMonth, currentDay)
-        console.log(tournamentScheduleData)
 
         setCurrentTournamentScheduleRapidAPI(tournamentScheduleData)
         setCurrentTournamentScheduleLoadedRapidAPI(true)
@@ -125,8 +120,6 @@ export default function TournamentDetail(props) {
           const completedSinglesMatchesData = currentTournamentScheduleRapidAPI.filter((match) => (match.status.toLowerCase() === "finished" || match.status === "retired"))
           setCompletedSinglesMatchesRapidAPI(completedSinglesMatchesData)
           setCompletedMatchesLoadedRapidAPI(true)
-          console.log(dailyResults)
-          console.log(completedSinglesMatchesData)
   
           console.log("TournamentDetail.js - UseEffect #3a - completedSinglesMatches filtered from RapidAPI data set")
   
@@ -142,14 +135,13 @@ export default function TournamentDetail(props) {
           console.log("TournamentDetail.js - UseEffect #3b - filtering live singles matches from RapidAPI data")
   
           const liveSinglesMatchesDataRapidAPI = currentTournamentScheduleRapidAPI.filter((match) => (match.status === "inprogress"))
-          console.log(liveSinglesMatchesDataRapidAPI)
         
         if ((liveSinglesMatchesDataRapidAPI === undefined) || (liveSinglesMatchesDataRapidAPI.length === 0)) {
-            console.log(liveSinglesMatchesDataRapidAPI)
+
             setLiveSinglesMatchesRapidAPI("Currently No Live Matches")
             setLiveMatchesLoadedRapidAPI(true)
         } else if ((liveSinglesMatchesDataRapidAPI !== undefined)) {
-            console.log(liveSinglesMatchesDataRapidAPI)
+
             setLiveSinglesMatchesRapidAPI(liveSinglesMatchesDataRapidAPI)
             setLiveMatchesLoadedRapidAPI(true)
           }
@@ -168,7 +160,6 @@ export default function TournamentDetail(props) {
       const gatherLiveMatchDetailsDataGoalServe = async (currentTournamentRapidAPI) => {
         
         const liveMatchDetailsDataGoalServe = await getLiveMatchesGoalServe()
-        console.log(liveMatchDetailsDataGoalServe)
 
         const combinedSinglesMatchesDataGoalServe = liveMatchDetailsDataGoalServe.category.filter((tournament) => {
           return (
@@ -181,11 +172,6 @@ export default function TournamentDetail(props) {
             (tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.name.toLowerCase()) || tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.city.toLowerCase())) && tournament["@name"].toLowerCase().includes(currentTournamentRapidAPI.code.toLowerCase()) && tournament["@name"].toLowerCase().includes('doubles')
           )
         })
-
-        console.log(combinedSinglesMatchesDataGoalServe)
-        console.log(combinedDoublesMatchesDataGoalServe)
-        console.log(combinedSinglesMatchesDataGoalServe.length)
-        console.log(combinedDoublesMatchesDataGoalServe.length)
 
         const filterCompletedSinglesMatchesGoalServe = () => {
 
@@ -273,9 +259,6 @@ export default function TournamentDetail(props) {
 
         const completedDoublesMatchesDataGoalServe = filterCompletedDoublesMatchesGoalServe()
 
-        console.log(completedSinglesMatchesDataGoalServe)
-        console.log(completedDoublesMatchesDataGoalServe)
-
         const filterLiveSinglesMatchesGoalServe = () => {
 
           if (combinedSinglesMatchesDataGoalServe.length > 0) {
@@ -320,8 +303,6 @@ export default function TournamentDetail(props) {
         
         const liveSinglesMatchesDataGoalServe = filterLiveSinglesMatchesGoalServe()
 
-        console.log(liveSinglesMatchDetailsGoalServe)
-
         const filterLiveDoublesMatchesGoalServe = () => {
 
           if (combinedDoublesMatchesDataGoalServe.length > 0) {
@@ -364,11 +345,6 @@ export default function TournamentDetail(props) {
         }
 
         const liveDoublesMatchesDataGoalServe = filterLiveDoublesMatchesGoalServe()
-        
-        console.log(completedSinglesMatchesDataGoalServe)
-        console.log(completedDoublesMatchesDataGoalServe)
-        console.log(liveSinglesMatchesDataGoalServe)
-        console.log(liveDoublesMatchesDataGoalServe)
 
         setCombinedSinglesMatchDetailsGoalServe(combinedSinglesMatchesDataGoalServe)
         setCombinedDoublesMatchDetailsGoalServe(combinedDoublesMatchesDataGoalServe)

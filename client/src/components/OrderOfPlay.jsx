@@ -12,8 +12,6 @@ export default function OrderOfPlay(props) {
 
   const generateMatch = (match) => {
 
-    console.log(match)
-
       const competitorA = match.home
       const competitorB = match.away
 
@@ -29,8 +27,6 @@ export default function OrderOfPlay(props) {
 
       const matchTime = new Date(match.date).toLocaleTimeString()
       const matchTimeString = matchTime.slice(0,-6) + matchTime.substring(matchTime.length - 3)
-      console.log(matchTime)
-      console.log(matchTimeString)
 
       return (
 

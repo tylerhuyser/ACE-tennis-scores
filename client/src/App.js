@@ -45,7 +45,6 @@ function App () {
       const gatherTournaments = async (currentYear) => {
         console.log('gathering tournaments -- UseEffect # 1 + API Call #1 from RapidAPI in App.js')
         const tournamentData = await getTournamentsRapidAPI(currentYear)
-        console.log(tournamentData)
         setTournaments(tournamentData.sort((a,b) => (a.start_date > b.start_date) ? 1 : -1 ))
         localStorage.setItem('tournaments', JSON.stringify(tournamentData))
         localStorage.setItem('createdAt', today)
@@ -56,7 +55,7 @@ function App () {
     } else {
 
       console.log('retrieving Tournaments from Local Storage -- UseEffect #1 in App.js')
-      console.log(JSON.parse(tournamentData))
+
       setTournaments(JSON.parse(tournamentData))
       setTournamentsLoaded(true)
 
@@ -70,8 +69,6 @@ function App () {
     const month = currentMonth
     const year = currentYear
 
-    console.log(tournamentsLoaded)
-
     if (tournamentsLoaded) {
 
       console.log('gathering dailySchedule -- UseEffect #2 + API Call #2 from RapidAPI in App.js')
@@ -80,8 +77,6 @@ function App () {
 
         const dailyScheduleRawData = await getDailyMatchesRapidAPI(currentYear, currentMonth, currentDay)
 
-        console.log(dailyScheduleRawData)
-
         const dailyScheduleData = []
 
         dailyScheduleRawData.map((event) => 
@@ -89,8 +84,6 @@ function App () {
           dailyScheduleData.push(event.matches)
           
         )
-
-        console.log(dailyScheduleData.flat())
 
         if (dailyScheduleData.length === 0) {
 
@@ -118,14 +111,10 @@ function App () {
       if (scheduleData.length > 0) {
 
         setDailyResults(scheduleData)
-        
-        console.log(dailyResults)
 
       } else if (scheduleData.length === 0) {
 
         setDailyResults("Currently No Results")
-        
-        console.log(dailyResults)
 
       }
 
@@ -148,8 +137,6 @@ function App () {
       if (liveMatchData.length !== 0) {
 
         setLiveMatches(dailySchedule.filter(match => match.status === "inprogress"))
-
-        console.log(liveMatches)
 
       } else if (liveMatchData.length === 0) {
 
