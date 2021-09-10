@@ -46,7 +46,9 @@ export const herokuRankings = async () => {
   const config = {
     method: 'get',
     headers: {
-      'Authorization': `Bearer ${tokenData.data.token}`
+      'Authorization': `Bearer ${tokenData.data.token}`,
+      'Access-Control-Allow-Origin': '*',
+      "Content-Type": "application/json"
     }
   }
 
