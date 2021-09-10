@@ -41,7 +41,7 @@ export const herokuRankings = async () => {
     }
   }
 
-  const tokenData = await axios(`http://localhost:8080/${process.env.REACT_APP_HEROKU_URL}auth/login`, authConfig)
+  const tokenData = await axios(`${process.env.REACT_APP_HEROKU_URL}auth/login`, authConfig)
 
   const config = {
     method: 'get',
@@ -50,7 +50,7 @@ export const herokuRankings = async () => {
     }
   }
 
-  const resp = await axios(`http://localhost:8080/${process.env.REACT_APP_HEROKU_URL}rankings`, config)
+  const resp = await axios(`${process.env.REACT_APP_HEROKU_URL}rankings`, config)
   return resp.data
   
 }
