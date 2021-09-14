@@ -1,9 +1,11 @@
-# ACE-tennis-scores
+# ACE-Tennis-Scores
 
-An app that lets users to access live ATP, WTA, and ITF tennis scores, weekly draws, and player statistics.
+An app that lets users to access live ATP, WTA, and ITF tennis scores and weekly rankings.
 
-[Deployed Site](https://practical-mcclintock-bb06eb.netlify.app/) can be accessed here.
+[Deployed Site](https://www.ace-tennis-scores.com/) can be accessed here.
 
 ## Features
 
 ### Live Scores
+
+Ace Tennis Scores provides users with live, point-by-point tennis scores. 
