@@ -349,9 +349,6 @@ export default function MatchCard(props) {
 
         } else if (supportingMatchData !== "No Corresponding Match" && type === "away" && supportingMatchData[0].away) {
 
-          console.log(supportingMatchData)
-          console.log(supportingMatchData[0].away)
-          console.log(supportingMatchData[0].away.ranking)
 
           const ranking = '(' + supportingMatchData[0].away.ranking + ')'
           return ranking
