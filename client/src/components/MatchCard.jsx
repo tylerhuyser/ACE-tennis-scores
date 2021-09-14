@@ -342,12 +342,16 @@ export default function MatchCard(props) {
       const competitorName = competitor["@name"].split(". ")[competitor["@name"].split(". ").length - 1]
 
       const generateRanking = (type) => {
-        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home" && supportingMatchData[0].home) {
 
           const ranking = '(' + supportingMatchData[0].home.ranking + ')'
           return ranking
 
-        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away" && supportingMatchData[0].away) {
+
+          console.log(supportingMatchData)
+          console.log(supportingMatchData[0].away)
+          console.log(supportingMatchData[0].away.ranking)
 
           const ranking = '(' + supportingMatchData[0].away.ranking + ')'
           return ranking
@@ -363,12 +367,12 @@ export default function MatchCard(props) {
       const competitorRanking = generateRanking(type)
 
       const generateCountry = (type) => {
-        if (supportingMatchData !== "No Corresponding Match" && type === "home") {
+        if (supportingMatchData !== "No Corresponding Match" && type === "home" && supportingMatchData[0].home) {
   
           const country = supportingMatchData[0].home.country
           return country
   
-        } else if (supportingMatchData !== "No Corresponding Match" && type === "away") {
+        } else if (supportingMatchData !== "No Corresponding Match" && type === "away" && supportingMatchData[0].away) {
   
           const country = supportingMatchData[0].away.country
           return country
@@ -381,7 +385,7 @@ export default function MatchCard(props) {
         <div className="competitor-name-container" id={type}>
 
 
-          {supportingMatchData !== "No Corresponding Match" ?
+          {supportingMatchData !== "No Corresponding Match" && supportingMatchData[0].home && supportingMatchData[0].away ?
             
             <>
 
