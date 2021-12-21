@@ -1,6 +1,6 @@
 # ACE-Tennis-Scores
 
-<img src="https://i.imgur.com/QrNgXZ8.png" width="60%" />
+<img src="https://media4.giphy.com/media/fnhoe4BFhhRyuMRahU/giphy.gif?cid=790b7611f7d69afe470be4dee0c3b46a00e2286ad296c6b4&rid=giphy.gif&ct=g" width="60%" />
 
 An app that lets users to access live ATP, WTA, and ITF tennis scores and weekly rankings.
 
