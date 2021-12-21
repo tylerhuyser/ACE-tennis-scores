@@ -49,14 +49,14 @@ export default function Rankings(props) {
         const ATPRANKINGS = combinedRankings.rankings.ATPRANKINGS
         const WTARANKINGS = combinedRankings.rankings.WTARANKINGS
 
-        setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
-        setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+        setMaleSinglesRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data)
+        setFemaleSinglesRankings(JSON.parse(WTARANKINGS.WTASINGLESRANKINGS).data)
+        setMaleSinglesRaceRankings(JSON.parse(ATPRANKINGS.ATPSINGLESRACERANKINGS).data)
+        setFemaleSinglesRaceRankings(JSON.parse(WTARANKINGS.WTASINGLESRACERANKINGS).data)
+        setMaleDoublesRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRANKINGS).data)
+        setFemaleDoublesRankings(JSON.parse(WTARANKINGS.WTADOUBLESRANKINGS).data)
+        setMaleDoublesRaceRankings(JSON.parse(ATPRANKINGS.ATPDOUBLESRACERANKINGS).data)
+        setFemaleDoublesRaceRankings(JSON.parse(WTARANKINGS.WTADOUBLESRACERANKINGS).data)
 
         setRankingCategory(JSON.parse(ATPRANKINGS.ATPSINGLESRANKINGS).data.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
         

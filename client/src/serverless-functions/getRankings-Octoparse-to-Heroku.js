@@ -29,6 +29,14 @@ async function octoparseAPIConfig () {
   }
 };
 
+function checkIfRankingsExist(rankingsData) {
+  if (!rankingsData.dataList) {
+    return 
+  } else if (rankingsDataList) {
+    return JSON.stringify(rankingsData.dataList.sort((a,b) => (parseInt(a.ranking) > parseInt(b.ranking)) ? 1 : -1 ))
+  }
+}
+
 async function getATPSinglesRankings (token) {
   
   try {
@@ -47,7 +55,7 @@ async function getATPSinglesRankings (token) {
       
       console.log(`ATP Singles Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -78,7 +86,7 @@ async function getATPSinglesRaceRankings (token) {
       
       console.log(`ATP Singles Race Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -109,7 +117,7 @@ async function getATPDoublesRankings (token) {
       
       console.log(`ATP Doubles Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -140,7 +148,7 @@ async function getATPDoublesRaceRankings (token) {
       
       console.log(`ATP Doubles Race Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -171,7 +179,7 @@ async function getWTASinglesRankings (token) {
       
       console.log(`WTA Singles Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -202,7 +210,7 @@ async function getWTASinglesRaceRankings (token) {
       
       console.log(`WTA Singles Race Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -233,7 +241,7 @@ async function getWTADoublesRankings (token) {
       
       console.log(`WTA Doubles Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
@@ -264,7 +272,7 @@ async function getWTADoublesRaceRankings (token) {
       
       console.log(`WTA Doubles Race Rankings: ${resp.data}`);
     
-      const rankings = JSON.stringify(resp.data)
+      const rankings = checkIfRankingsExist(resp.data)
       
       return(rankings);
     
