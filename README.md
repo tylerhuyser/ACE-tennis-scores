@@ -14,7 +14,7 @@ Ace Tennis Scores provides users with live, point-by-point tennis scores.
 
 When a user views a tournament, a list of live, completed, and upcoming matches is presented. 
 
-<!-- GIF OF FRONT PAGE LOADING HERE -->
+<img src="https://media0.giphy.com/media/o4cFtlUaXkx12iUIbc/giphy.gif?cid=790b7611de876a9df9dd1e0ea79751069edaf4a763e52c31&rid=giphy.gif&ct=g" width="400px" />
 
 For live matches, setInterval is used in order to refresh the score rendered every sixty seconds. 
 
